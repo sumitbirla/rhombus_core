@@ -1,0 +1,97 @@
+<h2><%= @affiliate.name %></h2>
+
+<% unless @affiliate.id.nil? %>
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#">Summary</a></li>
+  <li><%= link_to "Categories", categories_admin_system_affiliate_path(@affiliate) %></li>
+  <li><%= link_to "Products", products_admin_system_affiliate_path(@affiliate) %></li>
+</ul>
+<% end %>
+
+<%= simple_form_for([:admin, :system, @affiliate], html: { class: 'form-inline' }) do |f| %>
+
+  <%= render 'admin/shared/error_messages', object: f.object %>
+  
+  <div class="row">
+  <div class="col-md-6">
+	  <%= f.input :name %>
+	  <%= f.input :slug %>
+	  <%= f.input :code %>
+	  <%= f.input :contact_person %>
+	  <%= f.input :street1 %>
+	  <%= f.input :street2 %>
+	  <%= f.input :city %>
+	  <%= f.input :state %>
+	  <%= f.input :zip %>
+	  <%= f.input :country %>
+	  
+  </div>
+
+  <div class="col-md-6">
+	  <%= f.input :featured %>
+	  <%= f.input :active %>
+	  <%= f.input :phone %>
+	  <%= f.input :fax %>
+	  <%= f.input :email %>
+	  <%= f.input :website %>
+  </div>
+  </div>
+
+
+  <div class="form-group string optional password">
+	  <label class="string optional control-label" for="logo">Logo</label>
+	  <div class="controls" style="display: inline;">
+		  <input type="text" id="affiliate_logo" name="affiliate[logo]" value="<%= @affiliate.logo %>" class="string optional span4"/> 
+		  <input type="button" value="Browse Server" class="btn btn-default btn-sm" onclick="javascript:BrowseServer();">
+	  </div>
+  </div>
+  
+  <%= f.input :description, input_html: { class: 'span6', rows: 8 } %>
+  
+  <div class="form-actions">
+  	<%= f.button :submit %>
+  </div>
+<% end %>
+
+
+<%= content_for :title do %>
+	Affiliates: <%= @affiliate.name %>
+<% end %>
+
+
+<% content_for :menu do
+    render "admin/shared/system_menu"
+end %>
+
+
+<% content_for :breadcrumbs do %>
+	<li><a href="#">System</a></li>
+	<li><%= link_to "Affiliates", admin_system_affiliates_path %></li>
+    <% if @affiliate.id.nil? %>
+        <li class="active"><%= @affiliate.name %></li>
+    <% else %>
+	    <li><%= link_to @affiliate.name, admin_system_affiliate_path(@affiliate) %></li>
+        <li class="active">edit</li>
+    <% end %>
+<% end %>
+
+
+<% content_for :head do %>
+	<script type="text/javascript" src="/ckfinder/ckfinder.js"></script>
+	<script>
+	function BrowseServer()
+	{
+		// You can use the "CKFinder" class to render CKFinder in a page:
+		var finder = new CKFinder( { connectorPath : '<%= Cache.setting('System', 'Static Files Url') %>/ckfinder/core/connector/php/connector.php' });
+		//finder.basePath = '../';	// The path for the installation of CKFinder (default = "/ckfinder/").
+		finder.selectActionFunction = SetFileField;
+		finder.popup();
+	}
+
+	// This is a sample function which is called when a file is selected in CKFinder.
+	function SetFileField( fileUrl )
+	{
+		document.getElementById('affiliate_logo').value = fileUrl.substring(<%= Cache.setting('System', 'Static Files Url').length %>);
+	}
+	</script>
+<% end %>

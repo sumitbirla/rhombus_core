@@ -1,0 +1,59 @@
+<style>
+    .form-inline .control-label { width: 110px; }
+</style>
+
+<h2><i class="icon-user"></i> &nbsp;<%= @user.name %></h2>
+<hr/>
+<%= simple_form_for([:admin, :system,  @user], html: { class: 'form-inline' }) do |f| %>
+
+  <%= render 'admin/shared/error_messages', object: f.object %>
+  
+  <%= f.input :password_digest, as: :hidden %>
+  <%= f.input :name, input_html: { class: 'span5' } %>
+  <%= f.association :role %>
+  <%= f.association :affiliate %>
+  <%= f.input :email  %>
+  <%= f.input :phone %>
+  <%= f.input :birth_date %>
+  <%= f.input :gender, as: :radio_buttons, collection: [ 'male', 'female' ]  %>
+  <%= f.input :avatar_url %>
+  <%= f.input :locale %>
+  <%= f.input :location %>
+  <%= f.input :time_zone %>
+  <%= f.input :pin  %>
+  <%= f.input :referral_key %>
+  <%= f.input :approved %>
+  <%= f.input :vip %>
+  
+  <div class="form-group string optional password">
+	<label class="string optional control-label" for="password">Password</label>
+	<input type="text" name="password" class="string optional"/> (leave blank if not updating)
+  </div>
+  
+  <div class="form-actions">
+  	<%= f.button :submit %>
+  </div>
+<% end %>
+
+
+
+<%= content_for :title do %>
+	Users: <%= @user.name %>
+<% end %>
+
+
+<% content_for :menu do
+    render "admin/shared/system_menu"
+end %>
+
+
+<% content_for :breadcrumbs do %>
+	<li><a href="#">System</a></li>
+	<li><%= link_to "Users", admin_system_users_path %></li>
+    <% if @user.id.nil? %>
+        <li class="active"><%= @user.name %></li>
+    <% else %>
+	    <li><%= link_to @user.name, admin_system_user_path(@user) %></li>
+	    <li class="active">edit</li>
+    <% end %>
+<% end %>

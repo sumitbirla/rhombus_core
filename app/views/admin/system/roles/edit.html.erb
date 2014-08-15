@@ -1,0 +1,72 @@
+<style>
+    .form-inline .control-label { width: 120px; }
+</style>
+<h2><%= @role.name %></h2>
+
+<hr/>
+
+<%= simple_form_for([:admin, :system, @role], html: { class: 'form-inline' }) do |f| %>
+  <%= f.input :name , wrapper_html: { style: 'margin-bottom: 5px;' }%>
+  <%= f.input :default, wrapper_html: { style: 'margin-bottom: 5px;' } %>
+  <%= f.input :super_user %>
+  
+  <hr/>
+  <% 
+  prev_section = ''
+  prev_resource = ''
+  
+  Permission.all.each do | permission | 
+	  
+	  checked = ''
+	  perm_exists = @role.role_permissions.find { |rp| rp.permission_id == permission.id }
+	  checked = 'checked' if perm_exists
+	  
+	  if permission.section != prev_section %>
+	  
+		  <% if prev_section != '' %>
+	  </table>
+	  <% end %>
+	  <h4><%= permission.section%></h4>
+	  <table class="table table-condensed table-bordered summary">
+	  <% end
+	  
+	  if permission.resource != prev_resource %>
+	  
+		  <% if prev_resource != '' && permission.section == prev_section %>
+	  </td></tr>
+	  <% end %>
+  <tr>
+	  <td width="180"><%= permission.resource.titlecase.pluralize %></td>
+	  <td>
+	  <% end %>
+	  <input type="checkbox" name="permission_ids[]" value="<%= permission.id %>" <%= checked %> class="checkbox inline"> <%= permission.action %> &nbsp; &nbsp;  &nbsp; &nbsp;
+  <% 
+  prev_section = permission.section
+  prev_resource = permission.resource
+  end%>
+</td>
+</tr>
+  </table>
+  
+  <div class="form-actions">
+  	 <%= f.button :submit %>
+  </div>
+<% end %>
+
+
+
+<%= content_for :title do %>
+	Roles: <%= @role.name %>
+<% end %>
+
+
+<% content_for :menu do
+    render "admin/shared/system_menu"
+end %>
+
+
+<% content_for :breadcrumbs do %>
+	<li><a href="#">System</a></li>
+	<li><%= link_to "Roles", admin_system_roles_path %></li>
+	<li class="active"><%= @role.name %></li>
+<% end %>

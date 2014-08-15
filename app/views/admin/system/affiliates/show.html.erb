@@ -1,0 +1,173 @@
+<div class="pull-right">
+    <%= link_to "products", products_admin_system_affiliate_path(@affiliate), class: "btn btn-sm btn-default" %>
+    <%= link_to "edit", edit_admin_system_affiliate_path(@affiliate), class: "btn btn-sm btn-default" %>
+</div>
+<h2><%= @affiliate.name %></h2>
+<hr/>
+
+<div class="arow">
+	
+	<div class="col-md-8">
+		<table class="table table-bordered table-condensed summary">
+		  <tr>
+		    <td width="160">Name</td>
+		    <td><%= @affiliate.name %> </td>
+		  </tr>
+		  <% unless @affiliate.slug.blank? %>
+		  <tr>
+		  	<td>Slug</td>
+		    <td><%= @affiliate.slug %> </td>
+		  </tr>
+		  <% end %>
+		  <% unless @affiliate.code.blank? %>
+		  <tr>
+		  	<td>Code</td>
+		    <td><%= @affiliate.code %> </td>
+		  </tr>
+		  <% end %>
+		  <% unless @affiliate.contact_person.blank? %>
+		  <tr>
+		  	<td>Contact person</td>
+		    <td><%= @affiliate.contact_person %> </td>
+		  </tr>
+		  <% end %>
+		  <% unless @affiliate.street1.blank? %>
+		  <tr>
+		  	<td>Street1</td>
+		    <td><%= @affiliate.street1 %> </td>
+		  </tr>
+		  <% end %>
+		  <% unless @affiliate.street2.blank? %>
+		  <tr>
+		  	<td>Street2</td>
+		    <td><%= @affiliate.street2 %> </td>
+		  </tr>
+		  <% end %>
+		  <% unless @affiliate.city.blank? %>
+		  <tr>
+		  	<td>City</td>
+		    <td><%= @affiliate.city %> </td>
+		  </tr>
+		  <% end %>
+		  <% unless @affiliate.state.blank? %>
+		  <tr>
+		  	<td>State</td>
+		    <td><%= @affiliate.state %> </td>
+		  </tr>
+		  <% end %>
+		  <% unless @affiliate.zip.blank? %>
+		  <tr>
+		  	<td>Zip</td>
+		    <td><%= @affiliate.zip %> </td>
+		  </tr>
+		  <% end %>
+		  <% unless @affiliate.country.blank? %>
+		  <tr>
+		  	<td>Country</td>
+		    <td><%= @affiliate.country %> </td>
+		  </tr>
+		  <% end %>
+		  <% unless @affiliate.phone.blank? %>
+		  <tr>
+		  	<td>Phone</td>
+		    <td><a href="tel:<%= @affiliate.phone %>"><%= @affiliate.phone %></a></td>
+		  </tr>
+		  <% end %>
+		  <% unless @affiliate.fax.blank? %>
+		  <tr>
+		  	<td>Fax</td>
+		    <td><%= @affiliate.fax %> </td>
+		  </tr>
+		  <% end %>
+		  <% unless @affiliate.website.blank? %>
+		  <tr>
+		  	<td>Website</td>
+		    <td><%= link_to @affiliate.website, @affiliate.website %> </td>
+		  </tr>
+		  <% end %>
+		  <% unless @affiliate.description.blank? %>
+		  <tr>
+		  	<td>Description</td>
+		    <td><%= raw @affiliate.description %> </td>
+		  </tr>
+		  <% end %>
+		</table>
+		
+		<% if @affiliate.campaigns.length > 0 %>
+		<h4>Marketing Campaigns</h4>
+		<table class="table table-striped table-condensed">
+			<tr>
+				<th>Campaign</th>
+				<th>Signup Commission</th>
+				<th>Sale Commission</th>
+				<th>Raw clicks</th>
+				<th>Unique clicks</th>
+				<th>Signups</th>
+				<th>Orders</th>
+			</tr>
+			<% @affiliate.campaigns.each do |campaign| %>
+			<tr>
+				<td><%= link_to campaign.name, edit_admin_marketing_affiliate_campaign_path(campaign) %></td>
+				<td>$<%= campaign.signup_commission %></td>
+				<td><%= campaign.sale_commission %>%</td>
+				<td><%= campaign.raw_clicks %></td>
+				<td><%= campaign.unique_clicks %></td>
+				<td><%= campaign.signups %></td>
+				<td><%= campaign.orders %></td>
+			</tr>
+			<% end %>
+		</table>
+		<% end %>
+	</div>
+	
+	<div class="col-md-4">
+		<h4>Logo</h4>
+		<% unless @affiliate.logo.blank? %>
+		<img src="<%= cdn_image_url(@affiliate.logo, 240, 240, 0)%>" alt="logo" class="img-polaroid" />
+		<% end %>
+		
+		<hr/>
+		
+		<h4>Flags</h4>
+		<% if @affiliate.active %>
+		<span class="label label-success">active</span> &nbsp; 
+		<% else %>
+		<span class="label label-danger">disabled</span> &nbsp; 
+		<% end %>
+
+		<% if @affiliate.featured %>
+		<span class="label label-warning">featured</span> &nbsp; 
+		<% end %>
+		
+		<% if @affiliate.products.count > 0 %>
+		<span class="label label-info"><%= @affiliate.products.count %> products</span> &nbsp; 
+		<% end %>
+		
+		<hr/>
+		
+		<% if @affiliate.categories.length > 0 %>
+		<h4>Categories</h4>
+		<ul>
+			<% @affiliate.categories.each do |cat| %>
+			<li><%= cat.name %></li>
+			<% end %>
+		</ul>
+		<% end %>
+	</div>
+</div>
+
+
+<%= content_for :title do %>
+	Affiliates: <%= @affiliate.name %>
+<% end %>
+
+
+<% content_for :menu do
+    render "admin/shared/system_menu"
+end %>
+
+<% content_for :breadcrumbs do %>
+	<li><a href="#">System</a></li>
+	<li><%= link_to "Affiliates", admin_system_affiliates_path %></li>
+	<li class="active"><%= @affiliate.name %></li>
+<% end %>

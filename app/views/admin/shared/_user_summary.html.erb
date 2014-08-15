@@ -1,0 +1,110 @@
+<div class="pull-right" style="margin-top: 16px;">
+    <%= link_to "edit", edit_admin_system_user_path(@user), class: "btn btn-default btn-sm" %> &nbsp;
+    <%= link_to "login as", login_admin_system_user_path(@user), class: "btn btn-warning btn-sm"%>
+</div>
+<h2>
+  <% if @user.avatar_url.blank? %>
+      <i class="fa fa-user"></i>
+  <% else %>
+      <%= image_tag @user.avatar_url, size: "50x50" %>
+  <% end %>
+  <%= @user.name %>
+</h2>
+
+<div class="row" style="margin-left: 0px;">
+	<div class="col-md-6">
+		<table class="table table-bordered table-condensed summary">
+		  <tr>
+		  	<td>Role</td>
+		    <td><%= user.role.name %></td>
+		  </tr>
+		  <% unless user.affiliate_id.nil? %>
+		  <tr>
+		    <td>Affiliate</td>
+		    <td><%= link_to user.affiliate, admin_system_affiliate_path(user.affiliate) %></td>
+		  </tr>
+		  <% end %>
+		  <% unless user.email.blank? %>
+		  <tr>
+		  	<td>Email</td>
+		    <td><%= mail_to user.email %> </td>
+		  </tr>
+		  <% end %>
+		  <% unless user.phone.blank? %>
+		  <tr>
+		  	<td>Phone Number</td>
+		    <td><a href="tel:<%= user.phone %>"><%= user.phone %></a></td>
+		  </tr>
+		  <% end %>
+		  <% unless user.birth_date.nil? %>
+		  <tr>
+		  	<td>Birth Date</td>
+		    <td><%= user.birth_date %> </td>
+		  </tr>
+		  <% end %>
+		  <% unless user.gender.blank? %>
+		  <tr>
+		  	<td>Gender</td>
+		    <td><%= user.gender %> </td>
+		  </tr>
+		  <% end %>
+		  <% unless user.pin.blank? %>
+		  <tr>
+		  	<td>Pin</td>
+		    <td><%= user.pin %> </td>
+		  </tr>
+		  <% end %>
+  		  <% unless user.time_zone.blank? %>
+  		  <tr>
+  		  	<td>Time Zone</td>
+  		    <td><%= user.time_zone %> </td>
+  		  </tr>
+  		  <% end %>
+          <% unless user.locale.blank? %>
+              <tr>
+                <td>Locale</td>
+                <td><%= user.locale %> </td>
+              </tr>
+          <% end %>
+          <% unless user.location.blank? %>
+              <tr>
+                <td>Location</td>
+                <td><%= user.location %> </td>
+              </tr>
+          <% end %>
+		</table>
+	</div>
+	
+	<div class="col-md-6">
+		<table class="table table-bordered table-condensed summary">
+		  <tr>
+		  	<td>Referral Key</td>
+		    <td><%= user.referral_key %> </td>
+		  </tr>
+		  <tr>
+		  	<td>Referral Clicks</td>
+		    <td><%= user.referral_clicks %> </td>
+		  </tr>
+		  <tr>
+		  	<td>Referral Signups</td>
+		    <td><%= user.referral_signups %> </td>
+		  </tr>
+		  <tr>
+		  	<td>Joined</td>
+		    <td><%= systime user.created_at %> </td>
+		  </tr>
+		  <tr>
+		  	<td>Last Login</td>
+		    <td>
+				<% last_login = Login.order('timestamp DESC').find_by(user_id: user.id) 
+				unless last_login.nil?
+				%>
+				<%= systime Login.order('timestamp DESC').find_by(user_id: user.id).timestamp %>
+				<% else %>
+				- never -
+				<% end %>
+			</td>
+		  </tr>
+		</table>
+	</div>
+</div>

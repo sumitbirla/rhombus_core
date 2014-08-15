@@ -1,0 +1,34 @@
+<h2><%= @setting.section %>: <%= @setting.key%></h2>
+<hr/>
+
+<%= simple_form_for [:admin, :system, @setting ], html: { class: 'form-inline'} do |f| %>
+
+	<%= render 'admin/shared/error_messages', object: f.object %>
+	
+	<%= f.input :section %>
+	<%= f.input :key %>
+	<%= f.input :value %>
+	<%= f.input :value_type, as: :select, collection: [ 'string', 'number', 'boolean'] %>
+	<%= f.input :description, as: :text, input_html: { class: 'span6' } %>
+	
+	<div class="form-actions">
+		<%= f.button :submit %>
+	</div>
+
+<% end %>
+
+
+<% content_for :title do %>
+    Settings: <%= @setting.section %>: <%= @setting.key%>
+<% end %>
+
+
+<% content_for :menu do
+    render "admin/shared/system_menu"
+end %>
+
+<% content_for :breadcrumbs do %>
+	<li><a href="#">System</a></li>
+	<li><%= link_to "Settings", admin_system_settings_path %></li>
+	<li class="active"><%= @setting.section %>: <%= @setting.key%></li>
+<% end %>

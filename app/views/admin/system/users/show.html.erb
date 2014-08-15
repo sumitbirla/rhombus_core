@@ -1,0 +1,40 @@
+<%=  render partial: 'admin/shared/user_summary', locals: { user: @user } %>
+<%=  render partial: 'admin/shared/user_tabs', locals: { user: @user, counts: @counts, selected: :logins } %>
+
+<%= will_paginate @logins %>
+<table class="table table-striped table-condensed">
+	<tr>
+		<th>Timestamp</th>
+        <Th>Source</Th>
+		<th>IP Address</th>
+		<th>Platform</th>
+		<th>Browser</th>
+	</tr>
+	<% @logins.each do | login | 
+		user_agent = UserAgent.parse(login.user_agent)%>
+	<tr>
+		<td><%= systime login.timestamp %></td>
+        <td><%= login.source %></td>
+		<td><%= login.ip_address %></td>
+		<td><%= user_agent.platform %></td>
+		<td><%= user_agent.browser %> <%= user_agent.version %></td>
+	</tr>
+	<% end %>
+</table>
+
+
+<%= content_for :title do %>
+	Users: <%= @user.name %>
+<% end %>
+
+
+<% content_for :menu do
+    render "admin/shared/system_menu"
+end %>
+
+
+<% content_for :breadcrumbs do %>
+	<li><a href="#">System</a></li>
+	<li><%= link_to "Users", admin_system_users_path %></li>
+	<li class="active"><%= @user.name %></li>
+<% end %>

@@ -1,0 +1,11 @@
+        <li class="<%= 'active' if request.original_url.include? 'admin/system' %>">
+          <a href="#"><i class="fa fa-wrench fa-fw"></i> System  <span class="fa arrow"></span></a>
+          <ul class="nav nav-second-level">
+            <li><%= link_to "Users", admin_system_users_path %></li>
+            <li><%= link_to "Affiliates", admin_system_affiliates_path %></li>
+            <li><%= link_to "Notifications", admin_system_notifications_path %></li>
+            <li><%= link_to "Recent logins", admin_system_logins_path %></li>
+            <li><%= link_to "Settings", admin_system_settings_path %></li>
+            <li><%= link_to "Roles & permissions", admin_system_roles_path %></li>
+          </ul>
+        </li>

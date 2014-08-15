@@ -1,0 +1,10 @@
+<ul class="nav nav-tabs">
+    <li class="<%= "active" if selected == :logins %>"><%= link_to "Recent Logins", admin_system_user_path(user) %></li>
+    <li class="<%= "active" if selected == :packages %>"><%= link_to "Packages #{counts[:packages]}", packages_admin_system_user_path(user) %></li>
+    <li class="<%= "active" if selected == :orders %>"><%= link_to "Orders #{counts[:orders]}", orders_admin_system_user_path(user) %></li>
+    <li class="<%= "active" if selected == :payment_methods %>"><%= link_to "Payment Methods #{counts[:payment_methods]}", payment_methods_admin_system_user_path(user) %></li>
+    <li class="<%= "active" if selected == :locations %>"><%= link_to "Locations #{counts[:locations]}", locations_admin_system_user_path(user) %></li>
+    <li class="<%= "active" if selected == :cases %>"><%= link_to "Cases #{counts[:cases]}", cases_admin_system_user_path(user) %></li>
+    <li class="<%= "active" if selected == :vouchers %>"><%= link_to "Vouchers #{counts[:vouchers]}", vouchers_admin_system_user_path(user) %></li>
+    <li class="<%= "active" if selected == :pictures %>"><%= link_to "Pictures #{counts[:pictures]}", pictures_admin_system_user_path(user) %></li>
+</ul>
