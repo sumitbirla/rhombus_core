@@ -50,6 +50,7 @@ Rails.application.routes.draw do
       resources :settings
       resources :logins
       resources :notifications
+      resources :categories
     end
     
   end

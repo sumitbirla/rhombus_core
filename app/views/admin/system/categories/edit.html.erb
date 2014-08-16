@@ -1,0 +1,94 @@
+<style>
+    .form-inline .control-label { width: 100px; }
+</style>
+<h2><%= @category.name %></h2>
+<hr/>
+<div class="row-fluid">
+	
+
+<%= simple_form_for([:admin, :system, @category], html: { class: 'form-inline span8' }) do |f| %>
+
+  <%= render 'admin/shared/error_messages', object: f.object %>
+  
+  <%= f.hidden_field :entity_type, value: @category.entity_type  %>
+  <%= f.association :parent, collection: Category.select("id, name").where(entity_type: @category.entity_type, parent_id: nil) %>
+  <%= f.input :name, input_html: { class: 'span6' } %>
+  <%= f.input :slug %>
+  <%= f.input :sort %>
+  <%= f.input :hidden %>
+  <div class="form-group string optional brand_website">
+	  <label class="string optional control-label" for="brand_website">Image path</label>
+      <%= f.input_field :image_path %>
+	  <input type="button" value="Browse Server" class="btn btn-primary" onclick="javascript:BrowseServer();">
+  </div>
+  <%= f.input :desc1, as: :text, input_html: { class: 'span12', rows: 9 } %>
+  <%= f.input :desc2, as: :text, input_html: { class: 'span12', rows: 9 } %>
+  <%= f.input :desc3, as: :text, input_html: { class: 'span12', rows: 9 } %>
+  
+  <div class="form-actions">
+  	<%= f.button :submit %>
+  </div>
+<% end %>
+
+<% unless @category.image_path.blank? %>
+<div class="col-md-4">
+	<img src="<%= cdn_image_url @category.image_path, 250, 250, 0 %>" alt="image" class="img-polaroid"/>
+</div>
+<% end %>
+
+
+<% content_for :menu do
+	if ['product', 'daily_deal'].include? @category.entity_type
+    	render "admin/shared/store_menu"
+	elsif ['affiliate'].include? @category.entity_type
+		render "admin/shared/system_menu"
+	else
+		render "admin/shared/web_menu"
+	end
+end %>
+
+
+
+<% content_for :title do %>
+<%= @category.name %>
+<% end %>
+
+
+
+<% content_for :breadcrumbs do %>
+	<li><a href="#">Web Content</a></li>
+	<li><a href="#"><%= link_to @category.entity_type.titlecase + ' Categories', admin_system_categories_path(type: @category.entity_type)%></a></li>
+	<li class="active"><%= @category.name %></li>
+<% end %>
+
+
+
+<% content_for :head do %>
+	<script type="text/javascript" src="/ckfinder/ckfinder.js"></script>
+	<script>
+	function BrowseServer()
+	{
+		// You can use the "CKFinder" class to render CKFinder in a page:
+		var finder = new CKFinder( { connectorPath : '<%= Cache.setting('System', 'Static Files Url') %>/ckfinder/core/connector/php/connector.php' });
+		//finder.basePath = '../';	// The path for the installation of CKFinder (default = "/ckfinder/").
+		finder.selectActionFunction = SetFileField;
+		finder.popup();
+	}
+
+	// This is a sample function which is called when a file is selected in CKFinder.
+	function SetFileField( fileUrl )
+	{
+		document.getElementById( 'category_image_path' ).value = fileUrl.substring(<%= Cache.setting('System', 'Static Files Url').length %>);
+	}
+	
+	$(document).ready(function() {
+		$("#category_name").blur(function() {   
+	    	var url = $("#category_slug").val();
+	        if (url == '') {
+	        	url = $("#category_name").val().toLowerCase().replace('&', '').replace('/', '').replace(' ', '-').replace("'", '').replace(' ', '');
+	            $("#category_slug").val(url);
+	        }
+	     });
+	});
+	</script>
+<% end %>

@@ -1,0 +1,226 @@
+<h2>Admin Dashboard</h2>
+<hr/>
+
+
+<!-- /.row -->
+<div class="row">
+  <div class="col-lg-3 col-md-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-3">
+            <i class="fa fa-comments fa-5x"></i>
+          </div>
+          <div class="col-xs-9 text-right">
+            <div class="huge">26</div>
+            <div>New Comments!</div>
+          </div>
+        </div>
+      </div>
+      <a href="#">
+        <div class="panel-footer">
+          <span class="pull-left">View Details</span>
+          <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+          <div class="clearfix"></div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-6">
+    <div class="panel panel-green">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-3">
+            <i class="fa fa-tasks fa-5x"></i>
+          </div>
+          <div class="col-xs-9 text-right">
+            <div class="huge">12</div>
+            <div>New Tasks!</div>
+          </div>
+        </div>
+      </div>
+      <a href="#">
+        <div class="panel-footer">
+          <span class="pull-left">View Details</span>
+          <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+          <div class="clearfix"></div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-6">
+    <div class="panel panel-yellow">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-3">
+            <i class="fa fa-shopping-cart fa-5x"></i>
+          </div>
+          <div class="col-xs-9 text-right">
+            <div class="huge">124</div>
+            <div>New Orders!</div>
+          </div>
+        </div>
+      </div>
+      <a href="#">
+        <div class="panel-footer">
+          <span class="pull-left">View Details</span>
+          <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+          <div class="clearfix"></div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-6">
+    <div class="panel panel-red">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-3">
+            <i class="fa fa-support fa-5x"></i>
+          </div>
+          <div class="col-xs-9 text-right">
+            <div class="huge">13</div>
+            <div>Support Tickets!</div>
+          </div>
+        </div>
+      </div>
+      <a href="#">
+        <div class="panel-footer">
+          <span class="pull-left">View Details</span>
+          <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+          <div class="clearfix"></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+<!-- /.row -->
+
+
+
+<div class="row" style="margin-left: 0;">
+	<div class="col-md-9">
+
+      <% if Rails.configuration.modules.include? :store %>
+		<h4>Recent orders</h4>
+		<% recent_orders = Order.where.not(status: 'in cart').order('submitted DESC').take(8) %>
+		<table class="table table-striped table-condensed">
+			<tr>
+				<th>Order #</th>
+				<th>Date</th>
+				<th>Customer</th>
+				<th>Amount</th>
+				<th>Status</th>
+			</tr>
+			<% recent_orders.each do |order| %>
+			<tr>
+				<td><%= link_to order.id, admin_store_order_path(order) %></td>
+				<td><%= systime order.submitted if order.submitted %></td>
+				<td>
+					<% if order.user_id.nil? %>
+						<%= order.shipping_name || order.billing_name %>
+					<% else %>
+					<%= link_to order.user, admin_system_user_path(order.user_id) %>
+					<% end %>
+				</td>
+				<td><%= number_to_currency(order.total) %></td>
+				<td><%= order_status(order) %></td>
+			</tr>
+			<% end %>
+		</table>
+      <% end %>
+	</div>
+	
+	<div class="col-md-3">
+		<table class="table table-condensed table-bordered">
+          <% if Rails.configuration.modules.include? :cms %>
+			<tr>
+				<td><%= link_to "Locations", admin_cms_locations_path %></td>
+				<td><%= Location.count %></td>
+			</tr>
+			<tr>
+				<td><%= link_to "Pages", admin_cms_pages_path %></td>
+				<td><%= Page.count %></td>
+			</tr>
+			<tr>
+				<td><%= link_to "Photo Albums", admin_cms_photo_albums_path %></td>
+				<td><%= PhotoAlbum.count %></td>
+			</tr>
+          <% end %>
+
+          <% if Rails.configuration.modules.include? :store %>
+			<tr>
+				<td><%= link_to "Brands", admin_store_brands_path %></td>
+				<td><%= Brand.count %></td>
+			</tr>
+			<tr>
+				<td><%= link_to "Products", admin_store_products_path %></td>
+				<td><%= Product.count %></td>
+			</tr>
+			<tr>
+				<td><%= link_to "Orders", admin_store_orders_path %></td>
+				<td><%= Order.count %></td>
+			</tr>
+			<tr>
+				<td><%= link_to "Daily deals", admin_store_daily_deals_path %></td>
+				<td><%= DailyDeal.count %></td>
+			</tr>
+          <% end %>
+
+          <% if Rails.configuration.modules.include? :ticketing %>
+			<tr>
+				<td><%= link_to "Cases", admin_ticketing_cases_path %></td>
+				<td><%= Case.count %></td>
+			</tr>
+          <% end %>
+
+          <% if Rails.configuration.modules.include? :marketing %>
+			<tr>
+				<td><%= link_to "Email subscribers", admin_marketing_email_subscribers_path %></td>
+				<td><%= EmailSubscriber.count %></td>
+			</tr>
+			<tr>
+				<td><%= link_to "Email lists", admin_marketing_email_lists_path %></td>
+				<td><%= EmailList.count %></td>
+			</tr>
+			<tr>
+				<td><%= link_to "Email blasts", admin_marketing_email_blasts_path %></td>
+				<td><%= EmailBlast.count %></td>
+			</tr>
+          <% end %>
+			<tr>
+				<td><%= link_to "Affiliates", admin_system_affiliates_path %></td>
+				<td><%= Affiliate.count %></td>
+			</tr>
+			<tr>
+				<td><%= link_to "Users", admin_system_users_path %></td>
+				<td><%= User.count %></td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+
+
+<% content_for :title do %>
+	Dashboard
+<% end %>
+
+
+<% content_for :breadcrumbs do %>
+	<li class="active">Dashboard</li>
+<% end %>
+
+<% content_for :menu do %>
+
+		<ul class="nav nav-list"> 
+		  <li class="nav-header">Admin Menu</li>        
+		  <li class="active"><a href="index"><i class="icon-home"></i> Dashboard</a></li>
+          <li><a href="#"><i class="icon-envelope"></i> Messages</li>
+          <li><a href="#"><i class="icon-comment"></i> Comments</a></li>
+		  <li><a href="#"><i class="icon-user"></i> Members</a></li>
+          <li class="divider"></li>
+		  <li><a href="#"><i class="icon-comment"></i> Settings</a></li>
+		  <li><a href="#"><i class="icon-share"></i> Logout</a></li>
+		</ul>
+
+<% end %>

@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
       <meta charset="utf-8">
-      <title><%= Cache.setting('System', 'Website Name')%>: <%= yield :title %></title>
+      <title><%= Cache.setting(:system, 'Website Name')%>: <%= yield :title %></title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="description" content="">
       <meta name="author" content="Rhombus CMS, Inc.">
@@ -70,7 +70,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/admin"><i class="fa fa-home"></i> <%= Cache.setting("System", "Website Name") %> Administration</a>
+      <a class="navbar-brand" href="/admin"><i class="fa fa-home"></i> <%= Cache.setting(:system, "Website Name") %> Administration</a>
     </div>
     <!-- /.navbar-header -->
 
@@ -142,6 +142,7 @@
 
         <li><a href="/admin"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a></li>
 
+		<%= render "admin/shared/cms_menu" %>
         <%= render "admin/shared/system_menu" %>
       </ul>
 
