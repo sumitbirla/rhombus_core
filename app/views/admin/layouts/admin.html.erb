@@ -142,7 +142,11 @@
 
         <li><a href="/admin"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a></li>
 
-		<%= render "admin/shared/cms_menu" %>
+		<%= render "admin/shared/billing_menu" if Rails.configuration.modules.include?(:billing) %>
+		<%= render "admin/shared/cms_menu" if Rails.configuration.modules.include?(:cms) %>
+		<%= render "admin/shared/store_menu" if Rails.configuration.modules.include?(:store) %>
+		<%= render "admin/shared/marketing_menu" if Rails.configuration.modules.include?(:marketing) %>
+		<%= render "admin/shared/ticketing_menu" if Rails.configuration.modules.include?(:ticketing) %>
         <%= render "admin/shared/system_menu" %>
       </ul>
 

@@ -26,7 +26,7 @@
 		  <% if prev_section != '' %>
 	  </table>
 	  <% end %>
-	  <h4><%= permission.section%></h4>
+	  <h4><%= permission.section.titlecase%></h4>
 	  <table class="table table-condensed table-bordered summary">
 	  <% end
 	  
@@ -36,7 +36,7 @@
 	  </td></tr>
 	  <% end %>
   <tr>
-	  <td width="180"><%= permission.resource.titlecase.pluralize %></td>
+	  <td width="180"><%= permission.resource.titlecase %></td>
 	  <td>
 	  <% end %>
 	  <input type="checkbox" name="permission_ids[]" value="<%= permission.id %>" <%= checked %> class="checkbox inline"> <%= permission.action %> &nbsp; &nbsp;  &nbsp; &nbsp;
