@@ -162,7 +162,7 @@ class Admin::BaseController < ActionController::Base
   end
 
   def rpc_exec(cmd, params)
-    fs_host = Cache.setting('PBX', 'Freeswitch Host')
+    fs_host = Cache.setting(:pbx, 'FreeSWITCH Host')
     @@client ||= XMLRPC::Client.new(fs_host, "/RPC2", 8080, nil, nil, "freeswitch", "works", nil, nil)
     @@client.call("freeswitch.api", cmd, params)
   end
