@@ -8,6 +8,7 @@ require 'country_select'
 require 'cancan'
 require 'will_paginate'
 require 'bootstrap-will_paginate'
+require 'numeric'
 
 module RhombusCore
 end
