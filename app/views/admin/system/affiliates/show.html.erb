@@ -93,7 +93,7 @@
 		  <% end %>
 		</table>
 		
-		<% if @affiliate.campaigns.length > 0 %>
+		<% if Rails.configuration.modules.include?('marketing') && @affiliate.campaigns.length > 0 %>
 		<h4>Marketing Campaigns</h4>
 		<table class="table table-striped table-condensed">
 			<tr>
@@ -139,7 +139,7 @@
 		<span class="label label-warning">featured</span> &nbsp; 
 		<% end %>
 		
-		<% if @affiliate.products.count > 0 %>
+		<% if Rails.configuration.modules.include?('store') && AffiliateProduct.where(affiliate_id: @affiliate.id).count > 0 %>
 		<span class="label label-info"><%= @affiliate.products.count %> products</span> &nbsp; 
 		<% end %>
 		
