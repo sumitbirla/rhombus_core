@@ -1,5 +1,5 @@
 <%=  render partial: 'admin/shared/user_summary', locals: { user: @user } %>
-<%=  render partial: 'admin/shared/user_tabs', locals: { user: @user, counts: @counts, selected: :logins } %>
+
 
 <%= will_paginate @logins %>
 <table class="table table-striped table-condensed">

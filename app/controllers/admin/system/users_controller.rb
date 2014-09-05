@@ -125,22 +125,22 @@ class Admin::System::UsersController < Admin::BaseController
 
 
   def get_counts(user)
-    num_orders = Order.where(user_id: user.id, status: Order.valid_statuses).count
-    num_packages = UserPackage.where(user_id: user.id).count
-    num_locations = Location.where(user_id: user.id).count
-    num_payment_methods = PaymentMethod.where(user_id: user.id).count
-    num_cases =  Case.where(user_id: user.id).count
-    num_vouchers =  UserVoucherHistory.where(user_id: user.id).count
-    num_pictures = Picture.where(user_id: user.id).count
+    #num_orders = Order.where(user_id: user.id, status: Order.valid_statuses).count
+    #num_packages = UserPackage.where(user_id: user.id).count
+    #num_locations = Location.where(user_id: user.id).count
+    #num_payment_methods = PaymentMethod.where(user_id: user.id).count
+    #num_cases =  Case.where(user_id: user.id).count
+    #num_vouchers =  UserVoucherHistory.where(user_id: user.id).count
+    #num_pictures = Picture.where(user_id: user.id).count
 
     h = {}
-    h[:orders] = '(' + num_orders.to_s + ')' if num_orders > 0
-    h[:packages] = '(' + num_packages.to_s + ')'  if num_packages > 0
-    h[:locations] = '(' + num_locations.to_s + ')'  if num_locations > 0
-    h[:payment_methods] = '(' + num_payment_methods.to_s + ')'  if num_payment_methods > 0
-    h[:cases] = '(' + num_cases.to_s + ')'  if num_cases > 0
-    h[:vouchers] = '(' + num_vouchers.to_s + ')'  if num_vouchers > 0
-    h[:pictures] = '(' + num_pictures.to_s + ')'  if num_pictures > 0
+    #h[:orders] = '(' + num_orders.to_s + ')' if num_orders > 0
+    #h[:packages] = '(' + num_packages.to_s + ')'  if num_packages > 0
+    #h[:locations] = '(' + num_locations.to_s + ')'  if num_locations > 0
+    #h[:payment_methods] = '(' + num_payment_methods.to_s + ')'  if num_payment_methods > 0
+    #h[:cases] = '(' + num_cases.to_s + ')'  if num_cases > 0
+    #h[:vouchers] = '(' + num_vouchers.to_s + ')'  if num_vouchers > 0
+    #h[:pictures] = '(' + num_pictures.to_s + ')'  if num_pictures > 0
 
     h
   end
