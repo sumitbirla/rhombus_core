@@ -154,7 +154,7 @@ class CreateTables < ActiveRecord::Migration
       t.string   "referral_key"
       t.integer  "referral_clicks",  default: 0, null: false
       t.integer  "referral_signups", default: 0, null: false
-      t.boolean  "approved"
+      t.string   "status", limit: 16
       t.boolean  "vip"
       t.datetime "created_at"
       t.datetime "updated_at"
