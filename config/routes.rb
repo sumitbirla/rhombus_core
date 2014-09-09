@@ -14,7 +14,6 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback', to: 'sessions#create_omniauth'
   
   namespace :account do
-    root 'profile#show'
     get 'profile/edit' => 'profile#edit'
     patch 'profile/edit' => 'profile#update'
   end
