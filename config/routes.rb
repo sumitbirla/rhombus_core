@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   resources :sessions
   resources :users
 
@@ -50,6 +51,7 @@ Rails.application.routes.draw do
       resources :logins
       resources :notifications
       resources :categories
+      resources :search_paths
     end
     
   end

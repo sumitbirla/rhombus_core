@@ -1,0 +1,29 @@
+<h2>Search Help</h2>
+<hr/>
+
+<div class="alert alert-warning">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Error!</strong> You did not type a search criteria.
+</div>
+
+
+<h3>Type <code>search_selector search_term</code></h3>
+
+<table class="table table-striped table-condensed">
+  <tr>
+    <th>selector</th>
+    <th>description</th>
+  </tr>
+  <% SearchPath.order(:short_code).each do |sp| %>
+  <tr>
+    <td><code><%= sp.short_code %></code></td>
+    <td><%= sp.description %></td>
+  </tr>
+  <% end %>
+</table>
+
+
+<% content_for :title do %>
+    Search Help
+<% end %>
+

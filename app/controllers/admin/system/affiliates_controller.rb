@@ -1,7 +1,7 @@
 class Admin::System::AffiliatesController < Admin::BaseController
   def index
     @affiliates = Affiliate.page(params[:page]).order('created_at DESC')
-    @affiliates = @affiliates.where("name LIKE '%#{params[:q]}%'") unless params[:q].nil?
+    @affiliates = @affiliates.where("name LIKE '%#{params[:q]}%' OR code = '#{params[:q]}'") unless params[:q].nil?
   end
 
   def new

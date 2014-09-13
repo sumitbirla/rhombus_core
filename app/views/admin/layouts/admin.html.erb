@@ -17,7 +17,6 @@
       <script src="/rhombus_core/sb-admin-2/js/sb-admin-2.js"></script>
       <script src="/rhombus_core/sb-admin-2/js/plugins/metisMenu/metisMenu.min.js"></script>
 	  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
-      <script src="/rhombus_core/js/bootstrap-datepicker.js"></script>
 	  <script src="//cdn1.tampahost.net/js/rails.js"></script>
 
 	  <%= csrf_meta_tags %>
@@ -132,12 +131,12 @@
 
         <li class="sidebar-search">
           <form action="/admin/search" class="input-group custom-search-form">
-            <input type="text" name="q" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
-                                  <i class="fa fa-search"></i>
-                                </button>
-                            </span>
+           <input type="text" name="q" class="form-control" placeholder="Search...">
+           <span class="input-group-btn">
+           	<button class="btn btn-default">
+            	<i class="fa fa-search"></i>
+            </button>
+            </span>
           </form>
           <!-- /input-group -->
         </li>

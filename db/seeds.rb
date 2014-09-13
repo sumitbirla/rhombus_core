@@ -12,6 +12,11 @@ Setting.create(section: 'system', key: 'SMTP Server', value: '127.0.0.1', value_
 Setting.create(section: 'system', key: 'Facebook App ID', value: 'xxxxxxxxxx', value_type: 'string')
 Setting.create(section: 'system', key: 'Facebook App Secret', value: 'xxxxxxxxxx', value_type: 'string')
 
+
+SearchPath.create(short_code: 'aff', url: '/admin/system/affiliates', description: 'Search for affiliate by name or code')
+SearchPath.create(short_code: 'u', url: '/admin/system/users', description: 'Search for user by name or email address')
+
+
 Permission.create(section: 'system', resource: 'admin', action: 'login')
 
 Permission.create(section: 'system', resource: 'user', action: 'read')

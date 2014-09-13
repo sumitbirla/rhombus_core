@@ -1,0 +1,30 @@
+<style>
+    .form-inline .control-label { width: 120px; }
+</style>
+
+<h2><%= @search_path.short_code %></h2>
+<hr/>
+<%= simple_form_for([:admin, :system, @search_path], html: { class: 'form-inline' }) do |f| %>
+
+  <%= render 'admin/shared/error_messages', object: f.object %>
+  
+  <%= f.input :short_code, input_html: { class: 'short' } %>
+  <%= f.input :url %>
+  <%= f.input :description, as: :text %>
+
+  <%= f.button :submit %>
+
+<% end %>
+
+
+
+<% content_for :title do %>
+    <%= @search_path.short_code %>
+<% end %>
+
+
+<% content_for :breadcrumbs do %>
+	<li><a href="#">System</a></li>
+	<li><%= link_to "Search Paths", admin_system_search_paths_path %></li>
+	<li class="active"><%= @search_path.short_code %></li>
+<% end %>
