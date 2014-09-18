@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency "omniauth-facebook"
   s.add_dependency "useragent"
   s.add_dependency "country_select"
+  s.add_dependency "countries"
   s.add_dependency "cancan"
   s.add_dependency "will_paginate", "~> 3.0"
   s.add_dependency "bootstrap-will_paginate"
