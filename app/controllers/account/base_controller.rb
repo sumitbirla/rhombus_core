@@ -1,6 +1,7 @@
 class Account::BaseController < ApplicationController
   before_filter :require_login
   helper_method :current_user
+  layout 'account'
   
   def require_login
     unless logged_in?
