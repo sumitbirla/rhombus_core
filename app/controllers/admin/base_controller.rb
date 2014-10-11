@@ -1,5 +1,5 @@
 require "xmlrpc/client"
-
+require "digest/md5"
 
 class Admin::BaseController < ActionController::Base
   force_ssl  if Rails.env.production?
@@ -26,9 +26,16 @@ class Admin::BaseController < ActionController::Base
   private
   
   def require_login
-    unless current_user && current_user.role.super_user
-      flash[:error] = "You must be logged in to access this page"
-      redirect_to admin_login_path(redirect: request.fullpath)
+    # bypass login requrements if digest parameter is passed
+    if params[:digest] && params[:id]
+      unless params[:digest] == Digest::MD5.hexdigest(params[:id].to_s + Cache.setting('System', 'Security Token')) 
+        return render text: "Invalid Url: #{request.url}", status: 403
+      end
+    else
+      unless current_user && current_user.role.super_user
+        flash[:error] = "You must be logged in to access this page"
+        redirect_to admin_login_path(redirect: request.fullpath)
+      end
     end
   end
   
