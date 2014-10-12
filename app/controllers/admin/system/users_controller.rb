@@ -4,6 +4,11 @@ class Admin::System::UsersController < Admin::BaseController
   def index
     @users = User.includes(:role).page(params[:page]).order('created_at DESC')
     @users = @users.where("name LIKE '%#{params[:q]}%' OR email LIKE '%#{params[:q]}%'") unless params[:q].nil?
+    
+    respond_to do |format|
+      format.html
+      format.csv { send_data User.to_csv }
+    end
   end
 
   def new

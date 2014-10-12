@@ -32,6 +32,10 @@
 	<% end %>
 </table>
 
+<div class="table-summary">
+	<%= number_with_delimiter(@users.total_entries) %> records | <%= link_to 'CSV', admin_system_users_path(format: :csv) %>
+</div>
+
 
 
 <%= content_for :title do %>

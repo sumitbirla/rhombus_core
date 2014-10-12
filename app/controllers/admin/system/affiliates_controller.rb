@@ -1,7 +1,12 @@
 class Admin::System::AffiliatesController < Admin::BaseController
   def index
-    @affiliates = Affiliate.page(params[:page]).order('created_at DESC')
+    @affiliates = Affiliate.order('created_at DESC')
     @affiliates = @affiliates.where("name LIKE '%#{params[:q]}%' OR code = '#{params[:q]}'") unless params[:q].nil?
+    
+    respond_to do |format|
+      format.html { @affiliates = @affiliates.page(params[:page]) }
+      format.csv { send_data @affiliates.to_csv }
+    end
   end
 
   def new

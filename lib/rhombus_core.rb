@@ -10,6 +10,7 @@ require 'cancan'
 require 'will_paginate'
 require 'bootstrap-will_paginate'
 require 'numeric'
+require 'csv'
 
 module RhombusCore
 end

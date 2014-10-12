@@ -24,6 +24,11 @@
 </table>
 
 
+<div class="table-summary">
+	<%= number_with_delimiter(@logins.total_entries) %> records | <%= link_to 'CSV', admin_system_logins_path(format: :csv) %>
+</div>
+
+
 <% content_for :title do %>
     Recent Logins
 <% end %>
