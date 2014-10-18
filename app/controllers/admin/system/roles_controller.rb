@@ -15,8 +15,10 @@ class Admin::System::RolesController < Admin::BaseController
     if @role.save
       
       # Save permissions
-      params[:permission_ids].each do |id|
-        RolePermission.create role_id: @role.id, permission_id: id
+      unless params[:permission_ids].nil?
+        params[:permission_ids].each do |id|
+          RolePermission.create role_id: @role.id, permission_id: id
+        end
       end
       
       # Un-default other roles if necessary

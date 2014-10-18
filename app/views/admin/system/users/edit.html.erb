@@ -22,7 +22,7 @@
   <%= f.input :time_zone %>
   <%= f.input :pin  %>
   <%= f.input :referral_key %>
-  <%= f.input :status, input_html: { class: 'short' } %>
+  <%= f.input :status, as: :select, collection: ['active', 'pending', 'deactived'], input_html: { class: 'short' } %>
   <%= f.input :vip %>
   
   <div class="form-group string optional password">
