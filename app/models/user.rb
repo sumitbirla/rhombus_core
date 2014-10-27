@@ -59,6 +59,10 @@ class User < ActiveRecord::Base
   def to_s
     name
   end
+  
+  def name_with_id
+    "[#{id}] #{name}"
+  end
 
   def record_login(request, source)
     Login.create user_id: id, source: source, timestamp: DateTime.now,
