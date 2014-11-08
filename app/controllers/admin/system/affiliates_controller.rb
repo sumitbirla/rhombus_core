@@ -81,7 +81,6 @@ class Admin::System::AffiliatesController < Admin::BaseController
   private
   
   def affiliate_params
-    params.require(:affiliate).permit(:name, :slug, :code, :active, :featured, :contact_person, :street1, :street2, 
-    :city, :state, :zip, :country, :phone,:fax,:website,:logo,:description)
+    params.require(:affiliate).permit!
   end
 end
