@@ -14,8 +14,14 @@
 		user_agent = UserAgent.parse(login.user_agent)%>
 	<tr>
 		<td><%= systime login.timestamp %></td>
-		<td><%= link_to login.user, admin_system_user_path(login.user)  %></td>
-        <td><%= login.source %></td>
+		<td>
+    <% unless login.user.nil? %>
+      <%= link_to login.user, admin_system_user_path(login.user)  %>
+    <% else %>
+      User: <%= login.user_id %>
+    <% end %>
+    </td>
+    <td><%= login.source %></td>
 		<td><%= login.ip_address %></td>
 		<td><%= user_agent.platform %></td>
 		<td><%= user_agent.browser %> <%= user_agent.version %></td>
