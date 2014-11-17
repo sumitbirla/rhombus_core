@@ -29,8 +29,8 @@
 			<% end %>
 		</td>
 		<td>
-			<%= link_to "new item", new_admin_cms_category_path(type: params[:type], parent_id: cat.id) %> &nbsp;
-			<%= link_to "edit", edit_admin_cms_category_path(cat) %> &nbsp; 
+			<%= link_to "new item", new_admin_system_category_path(type: params[:type], parent_id: cat.id) %> &nbsp;
+			<%= link_to "edit", edit_admin_system_category_path(cat) %> &nbsp; 
 			<%= link_to "delete", 
 						  { action: "destroy", id: cat.id }, 
 						  method: :delete, 
@@ -45,7 +45,7 @@
 		<td><%= child.slug %></td>
 		<td><%= raw tick !child.hidden %></td>
 		<td>
-			<%= link_to "edit", edit_admin_cms_category_path(child) %> &nbsp; 
+			<%= link_to "edit", edit_admin_system_category_path(child) %> &nbsp; 
 			<%= link_to "delete", 
 						  { action: "destroy", id: child.id }, 
 						  method: :delete, 
