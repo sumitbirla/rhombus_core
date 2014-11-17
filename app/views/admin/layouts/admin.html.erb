@@ -10,12 +10,14 @@
     <link href="/rhombus_core/sb-admin-2/css/bootstrap.min.css" rel="stylesheet">
     <link href="/rhombus_core/sb-admin-2/css/sb-admin-2.css" rel="stylesheet">
     <link href="/rhombus_core/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/rhombus_core/datepicker/css/datepicker3.css" rel="stylesheet" type="text/css">
 	  <link href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.css" rel="stylesheet">
 
     <script src="/rhombus_core/sb-admin-2/js/jquery-1.11.0.js"></script>
 	  <script src="//code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
     <script src="/rhombus_core/sb-admin-2/js/bootstrap.min.js"></script>
     <script src="/rhombus_core/sb-admin-2/js/sb-admin-2.js"></script>
+    <script src="/rhombus_core/datepicker/js/bootstrap-datepicker.js"></script>
     <script src="/rhombus_core/sb-admin-2/js/plugins/metisMenu/metisMenu.min.js"></script>
 	  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
 	  <script src="//cdn1.tampahost.net/js/rails.js"></script>
@@ -64,6 +66,8 @@
     	var wavesurfer_initialized = false;
 
       $(document).ready(function() {
+        
+        $('.date').datepicker({format: 'yyyy-mm-dd', autoclose: true});
     
         $('.audio').click(function(e) {
             $("#audio-file").val($(this).attr("href"));
