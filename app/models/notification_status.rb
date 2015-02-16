@@ -12,5 +12,5 @@
 #
 
 class NotificationStatus < ActiveRecord::Base
-  self.table_name = 'core_authorization_statuses'
+  self.table_name = 'core_notification_statuses'
 end

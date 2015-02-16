@@ -5,6 +5,7 @@ admin = User.create( name: 'Admin User', email: 'admin@example.com', role_id: r1
 
 Setting.create(section: 'system', key: 'Website Name', value: 'Some Website', value_type: 'string')
 Setting.create(section: 'system', key: 'Website URL', value: 'http://localhost', value_type: 'string')
+Setting.create(section: 'system', key: 'Static Files Url', value: 'http://localhost', value_type: 'string')
 Setting.create(section: 'system', key: 'Time Zone', value: 'Eastern Time (US & Canada)', value_type: 'string')
 Setting.create(section: 'system', key: 'From Email Address', value: 'admin@example.com', value_type: 'string')
 Setting.create(section: 'system', key: 'From Email Name', value: 'Example Admin', value_type: 'string')
