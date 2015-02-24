@@ -29,3 +29,10 @@
       <%= flash[:error] %>
     </div>
 <% end %>
+
+<% unless flash[:success].nil? %>
+    <div class="bs-callout bs-callout-warning">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <%= flash[:success] %>
+    </div>
+<% end %>
