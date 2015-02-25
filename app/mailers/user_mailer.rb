@@ -1,6 +1,6 @@
 class UserMailer < ActionMailer::Base
 
-  default from: Cache.setting('System', 'From Email Address')
+  default from: "#{Cache.setting(:system, 'From Email Name')} <#{Cache.setting(:system, 'From Email Address')}>"
 
 
   def welcome_email(user)
