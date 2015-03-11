@@ -1,5 +1,5 @@
 <div class="pull-right">
-    <%= link_to "products", products_admin_system_affiliate_path(@affiliate), class: "btn btn-sm btn-default" %>
+    <%= link_to "products", admin_store_affiliate_products_path(affiliate_id: @affiliate.id), class: "btn btn-sm btn-default" %>
     <%= link_to "edit", edit_admin_system_affiliate_path(@affiliate), class: "btn btn-sm btn-default" %>
 </div>
 <h2><%= @affiliate.name %></h2>
