@@ -45,4 +45,14 @@ class Affiliate < ActiveRecord::Base
     end
   end
   
+  def address_as_text
+    address = street1
+    address = address + "\n" + street2 unless street2.blank?
+    address = address + "\n" + city unless city.blank?
+    address = address + ', ' + state unless state.blank?
+    address = address + ', ' + zip unless zip.blank?
+    address = address + "\n" + country unless country.blank?
+    address
+  end
+  
 end
