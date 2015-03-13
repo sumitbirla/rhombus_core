@@ -51,7 +51,6 @@ class Affiliate < ActiveRecord::Base
     address = address + "\n" + city unless city.blank?
     address = address + ', ' + state unless state.blank?
     address = address + ', ' + zip unless zip.blank?
-    address = address + "\n" + country unless country.blank?
     address
   end
   
