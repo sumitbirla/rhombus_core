@@ -14,9 +14,9 @@
 
 class Setting < ActiveRecord::Base
   self.table_name = 'core_settings'
-  
+  belongs_to :domain
   validates_presence_of :section, :key, :value, :value_type
-  validates_uniqueness_of :key, scope: :section
+  validates_uniqueness_of :key, scope: [:domain_id, :section]
   
   def to_s
     value

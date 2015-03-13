@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
   end
   
   def create
-    user = User.find_by_email(params[:email])
+    user = User.find_by(domain_id: Rails.configuration.domain_id, email: params[:email])
 
     if user && (user.password_digest.nil? || user.password_digest.length < 20)
       flash[:error] = "Invalid login. Did you log in using Facebook?"
@@ -35,7 +35,8 @@ class SessionsController < ApplicationController
     if user.nil?
 
       # WARNING:  extra.raw_info is Facebook specific
-      user = User.new name: auth.info.name,
+      user = User.new Rails.configuration.domain_id,
+                      name: auth.info.name,
                       email: auth.info.email,
                       role_id: Role.find_by(default: true).id,
                       location: auth.info.location,

@@ -1,0 +1,28 @@
+<h2><%= @domain.name %></h2>
+<hr/>
+
+<%= simple_form_for([:admin, :system, @domain], html: { class: 'form-inline' }) do |f| %>
+  
+  <%= render 'admin/shared/error_messages', object: f.object %>
+  <%= f.input :name %>
+  <%= f.input :url %>
+  <%= f.button :submit %>
+
+<% end %>
+
+
+
+
+<% content_for :title do %>
+	Brands: <%= @domain.name %>
+<% end %>
+
+
+
+<% content_for :breadcrumbs do %>
+	<li><a href="#">eCommerce</a></li>
+	<li><%= link_to "Domains", admin_system_domains_path %></li>
+	<li class="active"><%= @domain.name %></li>
+<% end %>
+
+

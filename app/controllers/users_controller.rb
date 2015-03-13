@@ -19,6 +19,7 @@ class UsersController < ApplicationController
       return render 'new'
     end
 
+    @user.domain_id = Rails.configuration.domain_id
     @user.role_id = Role.find_by(default: true).id
     @user.password_digest = BCrypt::Password.create(@user.password)
     @user.referral_key = SecureRandom.hex(5)
@@ -48,7 +49,7 @@ class UsersController < ApplicationController
 
   def reset_password_email
 
-    user = User.find_by(email: params[:email])
+    user = User.find_by(email: params[:email], domain_id: Rails.configuration.domain_id)
     unless user
       flash[:notice] = 'This email does not exist in our system.'
       return redirect_to :back

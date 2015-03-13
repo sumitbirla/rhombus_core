@@ -1,7 +1,7 @@
 class Admin::System::SettingsController < Admin::BaseController
   
   def index
-    @settings = Setting.all.order('section, created_at')
+    @settings = Setting.where(domain_id: cookies[:domain_id]).order('section, created_at')
   end
 
   def new
@@ -11,6 +11,7 @@ class Admin::System::SettingsController < Admin::BaseController
 
   def create
     @setting = Setting.new(setting_params)
+    @setting.domain = cookies[:domain_id]
     
     if @setting.save
       redirect_to action: 'index', notice: 'Setting was successfully created.'
@@ -50,7 +51,7 @@ class Admin::System::SettingsController < Admin::BaseController
   private
   
     def setting_params
-      params.require(:setting).permit(:section, :key, :value, :value_type, :description)
+      params.require(:setting).permit!
     end
   
 end

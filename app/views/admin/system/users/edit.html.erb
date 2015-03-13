@@ -10,6 +10,7 @@
   
   <%= f.input :password_digest, as: :hidden %>
   <%= f.input :name, input_html: { class: 'span5' } %>
+  <%= f.association :domain %>
   <%= f.association :role %>
   <%= f.association :affiliate %>
   <%= f.input :email  %>

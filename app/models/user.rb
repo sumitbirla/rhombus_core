@@ -33,11 +33,12 @@ class User < ActiveRecord::Base
   
   attr_accessor :password, :password_confirmation, :current_password
 
+  belongs_to :domain
   belongs_to :role
   belongs_to :affiliate
   validates_presence_of :name, :role_id
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
-  validates_uniqueness_of :email
+  validates_uniqueness_of :email, scope: :domain_id
   
   def self.to_csv
     CSV.generate do |csv|

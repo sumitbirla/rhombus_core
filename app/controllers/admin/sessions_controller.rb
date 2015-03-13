@@ -11,6 +11,7 @@ class Admin::SessionsController < Admin::BaseController
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
       user.record_login(request, 'admin')
+      cookies[:domain_id] = { :value => Domain.first.id, :expires => 1.year.from_now } if cookies[:domain_id].nil?
 
       unless params[:redirect].blank?
         redirect_to params[:redirect]

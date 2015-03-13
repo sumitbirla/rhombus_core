@@ -21,7 +21,6 @@
     <script src="/rhombus_core/sb-admin-2/js/plugins/metisMenu/metisMenu.min.js"></script>
 	  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
 	  <script src="//cdn.tampahost.net/js/rails.js"></script>
-    <script src="/rhombus_pbx/wavesurfer.min.js"></script>
 
 	  <%= csrf_meta_tags %>
 	  
@@ -64,13 +63,18 @@
       
       <script>
   
-      var wavesurfer = Object.create(WaveSurfer);
-    	var wavesurfer_initialized = false;
+      /*var wavesurfer = Object.create(WaveSurfer);
+    	var wavesurfer_initialized = false;*/
 
       $(document).ready(function() {
         
+        $("#domain-selector").on("change", function() {
+          window.location = "/admin/system/domains/" + $(this).val() + "/set_current";
+        });
+        
         $('.date-field').datepicker({format: 'yyyy-mm-dd', autoclose: true});
     
+        /*
         $('.audio').click(function(e) {
             $("#audio-file").val($(this).attr("href"));
             e.preventDefault();
@@ -112,7 +116,7 @@
           $('.play').click(function() {
             wavesurfer.playPause(); 
           });
-      
+      */
         });
       </script>
 	  
@@ -140,6 +144,13 @@
 
 
     <ul class="nav navbar-top-links navbar-right">
+    <li>
+      <select name="domain_id" id="domain-selector">
+      <% Domain.order(:name).all.each do |domain| %>
+        <option value="<%= domain.id %>" <%= "selected" if cookies["domain_id"] == domain.id.to_s %>><%= domain.name %></option>
+      <% end %>
+      </select>
+    </li>
     <!-- /.dropdown -->
     <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">

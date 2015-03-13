@@ -2,7 +2,7 @@ class Admin::System::UsersController < Admin::BaseController
   skip_before_filter :require_login, only: :password_reset
 
   def index
-    @users = User.includes(:role).page(params[:page]).order('created_at DESC')
+    @users = User.where(domain_id: cookies[:domain_id]).includes(:role).page(params[:page]).order('created_at DESC')
     @users = @users.where("name LIKE '%#{params[:q]}%' OR email LIKE '%#{params[:q]}%'") unless params[:q].nil?
     
     respond_to do |format|
