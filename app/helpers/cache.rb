@@ -1,7 +1,21 @@
 module Cache
 
-  def self.setting(section, key) 
-    Rails.cache.fetch("setting:#{section}:#{key}") do 
+  def self.setting(*args)
+    section = args[0]
+    key = args[1]
+    
+    # if only two parameters are passed, return defeault domain setting
+    if args.length == 2
+      domain = Domain.find_by(default: true)
+      section = args[0]
+      key = args[1]
+    else
+      domain = args[0]
+      section = args[1]
+      key = args[2]
+    end
+     
+    Rails.cache.fetch("setting:#{domain}:#{section}:#{key}") do 
       s = Setting.find_by(section: section, key: key)
       s.value unless s.nil?
     end
