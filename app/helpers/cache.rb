@@ -16,7 +16,7 @@ module Cache
     end
      
     Rails.cache.fetch("setting:#{domain}:#{section}:#{key}") do 
-      s = Setting.find_by(section: section, key: key)
+      s = Setting.find_by(domain_id: domain, section: section, key: key)
       s.value unless s.nil?
     end
   end
