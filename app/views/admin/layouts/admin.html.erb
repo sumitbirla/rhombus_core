@@ -146,7 +146,7 @@
     <ul class="nav navbar-top-links navbar-right">
     <li>
       <select name="domain_id" id="domain-selector">
-      <% Domain.order(:name).all.each do |domain| %>
+      <% Cache.domains.each do |domain| %>
         <option value="<%= domain.id %>" <%= "selected" if cookies["domain_id"] == domain.id.to_s %>><%= domain.name %></option>
       <% end %>
       </select>

@@ -8,6 +8,7 @@ class Admin::BaseController < ActionController::Base
   layout 'admin/layouts/admin'
   before_filter :require_login
   
+  helper_method :current_domain
   helper_method :current_user
   helper_method :tick
   helper_method :cdn_image_url
@@ -44,7 +45,11 @@ class Admin::BaseController < ActionController::Base
   end
   
   def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    @current_user ||= Cache.user(session[:user_id])
+  end
+  
+  def current_domain
+    Cache.domains.find { |x| x.id == cookies[:domain_id].to_i }
   end
   
   def tick(obj)
@@ -52,7 +57,7 @@ class Admin::BaseController < ActionController::Base
   end
   
   def sys_time_zone
-    @timezone ||= Cache.setting('System', 'Time Zone')
+    @timezone ||= Cache.setting(current_domain.id, :system, 'Time Zone')
   end
   
   def systime(time)
@@ -119,7 +124,7 @@ class Admin::BaseController < ActionController::Base
       path = pic.file_path
     end
     
-    Cache.setting('System', 'Static Files Url') + "/cache/#{width}x#{height}-#{mode}" + path
+    Cache.setting(current_domain.id, :system, 'Static Files Url') + "/cache/#{width}x#{height}-#{mode}" + path
   end
   
   

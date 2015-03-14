@@ -12,6 +12,7 @@ class Admin::System::DomainsController < Admin::BaseController
     @domain = Domain.new(domain_params)
     
     if @domain.save
+      Rails.cache.delete :domains
       redirect_to action: 'index', notice: 'Domain was successfully created.'
     else
       render 'edit'
@@ -30,6 +31,7 @@ class Admin::System::DomainsController < Admin::BaseController
     @domain = Domain.find(params[:id])
     
     if @domain.update(domain_params)
+      Rails.cache.delete :domains
       redirect_to action: 'index', notice: 'Domain was successfully updated.'
     else
       render 'edit'
@@ -39,6 +41,8 @@ class Admin::System::DomainsController < Admin::BaseController
   def destroy
     @domain = Domain.find(params[:id])
     @domain.destroy
+    
+    Rails.cache.delete :domains
     redirect_to action: 'index', notice: 'Domain has been deleted.'
   end
   

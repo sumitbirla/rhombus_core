@@ -1,4 +1,16 @@
 module Cache
+  
+  def self.domains
+    Rails.cache.fetch(:domains) do
+      Domain.order(:name).all.load
+    end
+  end
+  
+  def self.user(id)
+    Rails.cache.fetch("user-#{id}", expires_in: 2.minutes) do 
+      User.includes(:role).find(id)
+    end
+  end
 
   def self.setting(*args)
     section = args[0]
@@ -6,7 +18,7 @@ module Cache
     
     # if only two parameters are passed, return defeault domain setting
     if args.length == 2
-      domain = Domain.find_by(default: true)
+      domain = domains.find { |x| x.default }
       section = args[0]
       key = args[1]
     else
