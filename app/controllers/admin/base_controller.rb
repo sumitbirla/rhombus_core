@@ -45,6 +45,7 @@ class Admin::BaseController < ActionController::Base
   end
   
   def current_user
+    return nil unless session[:user_id]
     @current_user ||= Cache.user(session[:user_id])
   end
   
