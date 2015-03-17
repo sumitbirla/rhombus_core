@@ -85,6 +85,12 @@
 		    <td><%= link_to @affiliate.website, @affiliate.website %> </td>
 		  </tr>
 		  <% end %>
+		  <% unless @affiliate.facebook_page.blank? %>
+		  <tr>
+		  	<td>Facebook</td>
+		    <td><%= link_to @affiliate.facebook_page, @affiliate.facebook_page %> </td>
+		  </tr>
+		  <% end %>
 		  <% unless @affiliate.payment_terms.blank? %>
 		  <tr>
 		  	<td>Payment terms</td>
