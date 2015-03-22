@@ -29,7 +29,7 @@ class Admin::BaseController < ActionController::Base
   def require_login
     # bypass login requrements if digest parameter is passed
     if params[:digest] && params[:id]
-      unless params[:digest] == Digest::MD5.hexdigest(params[:id].to_s + Cache.setting('System', 'Security Token')) 
+      unless params[:digest] == Digest::MD5.hexdigest(params[:id].to_s + Cache.setting(Rails.configuration.domain_id, :system, 'Security Token')) 
         return render text: "Invalid Url: #{request.url}", status: 403
       end
     else
@@ -58,7 +58,7 @@ class Admin::BaseController < ActionController::Base
   end
   
   def sys_time_zone
-    @timezone ||= Cache.setting(current_domain.id, :system, 'Time Zone')
+    @timezone ||= Cache.setting(Rails.configuration.domain_id, :system, 'Time Zone')
   end
   
   def systime(time)
@@ -125,7 +125,7 @@ class Admin::BaseController < ActionController::Base
       path = pic.file_path
     end
     
-    Cache.setting(current_domain.id, :system, 'Static Files Url') + "/cache/#{width}x#{height}-#{mode}" + path
+    Cache.setting(Rails.configuration.domain_id, :system, 'Static Files Url') + "/cache/#{width}x#{height}-#{mode}" + path
   end
   
   

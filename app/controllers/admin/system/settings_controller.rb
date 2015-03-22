@@ -11,7 +11,7 @@ class Admin::System::SettingsController < Admin::BaseController
 
   def create
     @setting = Setting.new(setting_params)
-    @setting.domain = cookies[:domain_id]
+    @setting.domain_id = cookies[:domain_id]
     
     if @setting.save
       redirect_to action: 'index', notice: 'Setting was successfully created.'
