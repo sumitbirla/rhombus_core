@@ -26,6 +26,10 @@ class Category < ActiveRecord::Base
   validates_presence_of :entity_type, :name, :sort, :slug
   validates_uniqueness_of :slug, scope: :entity_type
   
+  def to_s
+    name
+  end
+  
   def cache_key
     "category:#{slug}"
   end
