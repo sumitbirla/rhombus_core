@@ -57,7 +57,7 @@ class UsersController < ApplicationController
 
     # create a temporary token
     token = TemporaryToken.create user_id: user.id, value: SecureRandom.hex(5), expires: Time.now + 1.day
-    reset_url = Cache.setting('System', 'Website URL') + '/resetp/' + token.value
+    reset_url = Cache.setting(Rails.configuration.domain_id, :system, 'Website URL') + '/resetp/' + token.value
 
     begin
       UserMailer.reset_password_email(user, reset_url).deliver

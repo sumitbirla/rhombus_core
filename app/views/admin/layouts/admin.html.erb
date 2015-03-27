@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
     <meta charset="utf-8">
-    <title><%= Cache.setting(:system, 'Website Name')%>: <%= yield :title %></title>
+    <title><%= Cache.setting(Rails.configuration.domain_id, :system, 'Website Name')%>: <%= yield :title %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Rhombus CMS, Inc.">
