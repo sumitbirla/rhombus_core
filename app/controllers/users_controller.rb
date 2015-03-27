@@ -51,7 +51,7 @@ class UsersController < ApplicationController
 
     user = User.find_by(email: params[:email], domain_id: Rails.configuration.domain_id)
     unless user
-      flash[:notice] = 'This email does not exist in our system.'
+      flash.now[:notice] = 'This email does not exist in our system.'
       return redirect_to :back
     end
 
@@ -61,9 +61,9 @@ class UsersController < ApplicationController
 
     begin
       UserMailer.reset_password_email(user, reset_url).deliver
-      flash[:notice] = "Password reset instructions have been emailed to #{user.email}"
+      flash.now[:notice] = "Password reset instructions have been emailed to #{user.email}"
     rescue Exception => e
-      flash[:error] = e.message
+      flash.now[:error] = e.message
       return redirect_to :back
     end
 
@@ -76,7 +76,7 @@ class UsersController < ApplicationController
     @token = TemporaryToken.find_by(value: params[:id])
 
     unless @token
-      flash[:notice] = "This link appears to be invalid.  Please re-request password reset or contact customer support."
+      flash.now[:notice] = "This link appears to be invalid.  Please re-request password reset or contact customer support."
       return render 'shared/notice'
     end
 
@@ -102,7 +102,7 @@ class UsersController < ApplicationController
     @token.user.update_attribute(:password_digest, BCrypt::Password.create(@user.password))
     @token.destroy
 
-    flash[:notice] = 'You password has been reset. You may now log in with your new password.'
+    flash.now[:notice] = 'Your password has been reset. You may now log in with your new password.'
     redirect_to login_path
   end
 
