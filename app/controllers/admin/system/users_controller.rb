@@ -128,7 +128,7 @@ class Admin::System::UsersController < Admin::BaseController
     begin
       user = User.find(params[:id])
       UserMailer.welcome_email(user).deliver
-      flash[:info] = "Welcome email send to #{user.email}"
+      flash[:info] = "Welcome email sent to #{user.email}"
     rescue => e
       flash[:error] = e.message
     end
