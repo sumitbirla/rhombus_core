@@ -5,6 +5,10 @@ class UserMailer < ActionMailer::Base
 
   def welcome_email(user)
     @user = user
+    
+    @website_name = Cache.setting(user.domain_id, :system, 'Website Name')
+    @website_url = Cache.setting(user.domain_id, :system, 'Website URL')
+    
     from_name = Cache.setting(user.domain_id, :system, 'From Email Name')
     from_email = Cache.setting(user.domain_id, :system, 'From Email Address')
 
