@@ -1,7 +1,13 @@
 <div class="pull-right" style="margin-top: 16px;">
-    <%= link_to "edit", edit_admin_system_user_path(@user), class: "btn btn-default btn-sm" %> &nbsp;
-    <%= link_to "login as", login_admin_system_user_path(@user), class: "btn btn-warning btn-sm"%>
+  <%= link_to welcome_email_admin_system_user_path(@user), class: "btn btn-default btn-sm" do %>
+    <i class="fa fa-envelope"></i> welcome email
+  <% end %> &nbsp;
+  <%= link_to login_admin_system_user_path(@user), class: "btn btn-default btn-sm" do %> 
+    <i class="fa fa-user"></i> login as
+  <% end %> &nbsp;
+  <%= link_to "edit", edit_admin_system_user_path(@user), class: "btn btn-default btn-sm" %>
 </div>
+
 <h2>
   <% if @user.avatar_url.blank? %>
       <i class="fa fa-user"></i>

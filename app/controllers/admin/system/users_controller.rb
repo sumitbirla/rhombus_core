@@ -123,6 +123,18 @@ class Admin::System::UsersController < Admin::BaseController
     session[:user_id] = params[:id]
     redirect_to root_path
   end
+  
+  def welcome_email
+    begin
+      user = User.find(params[:id])
+      UserMailer.welcome_email(user).deliver
+      flash[:info] = "Welcome email send to #{user.email}"
+    rescue => e
+      flash[:error] = e.message
+    end
+    
+    redirect_to :back
+  end
 
   def password_reset
     render 'password_reset', layout: 'admin/layouts/dialog'

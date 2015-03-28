@@ -37,6 +37,7 @@ Rails.application.routes.draw do
         member do
           get 'logins' => 'users#show'
           get 'login' => 'users#login'
+          get 'welcome_email'
         end
       end
       resources :affiliates do
