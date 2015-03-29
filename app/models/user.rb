@@ -71,9 +71,8 @@ class User < ActiveRecord::Base
                  ip_address: request.remote_ip, user_agent: request.user_agent
   end
   
-	private
-		def normalize_phone
-			self.phone.gsub!(/\D/, '')
-		end
+	def normalize_phone
+	  self.phone.gsub!(/\D/, '')
+	end
 
 end
