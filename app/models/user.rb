@@ -39,6 +39,7 @@ class User < ActiveRecord::Base
   validates_presence_of :name, :role_id
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
   validates_uniqueness_of :email, scope: :domain_id
+  before_validation :normalize_phone
   
   def self.to_csv
     CSV.generate do |csv|
@@ -69,5 +70,10 @@ class User < ActiveRecord::Base
     Login.create user_id: id, source: source, timestamp: DateTime.now,
                  ip_address: request.remote_ip, user_agent: request.user_agent
   end
+  
+	private
+		def normalize_phone
+			self.phone.gsub!(/\D/, '')
+		end
 
 end
