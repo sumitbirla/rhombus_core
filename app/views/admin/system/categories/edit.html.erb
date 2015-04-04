@@ -34,7 +34,7 @@
 
   <% unless @category.image_path.blank? %>
   <div class="col-md-4">
-  	<img src="<%= cdn_image_url @category.image_path, 250, 250, 0 %>" alt="image" class="img-thumbnail"/>
+  	<img src="<%= cdn_image_url @category.image_path, 400, 300, 0 %>" alt="image" class="img-responsive"/>
   </div>
   <% end %>
 
