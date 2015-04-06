@@ -46,6 +46,13 @@ module Cache
     end
   end
   
+  def self.featured_affiliate(category_slug)
+    Rails.cache.fetch("featured-affiliate-#{category_slug}") do
+      cat = Category.find_by(slug: category_slug, entity_type: :affiliate)
+      Affiliate.where(active: true, featured: true, id: AffiliateCategory.select(:affiliate_id).where(category_id: cat.id)).first
+    end
+  end
+  
   def self.category(slug, entity_type) 
     Rails.cache.fetch("category:#{slug}:#{entity_type}") do 
       Category.includes(:children).where(slug: slug, entity_type: entity_type).first

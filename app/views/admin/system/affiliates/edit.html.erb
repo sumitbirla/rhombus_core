@@ -48,11 +48,10 @@
 	  </div>
   </div>
   
-  <%= f.input :description, input_html: { class: 'span6', rows: 8 } %>
+  <%= f.input :summary, as: :text, input_html: { rows: 3 } %>
+  <%= f.input :description, input_html: { rows: 10 } %>
+  <%= f.button :submit %>
   
-  <div class="form-actions">
-  	<%= f.button :submit %>
-  </div>
 <% end %>
 
 

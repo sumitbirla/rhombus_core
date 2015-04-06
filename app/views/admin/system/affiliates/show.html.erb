@@ -100,7 +100,7 @@
 		  <% unless @affiliate.description.blank? %>
 		  <tr>
 		  	<td>Description</td>
-		    <td><%= raw @affiliate.description %> </td>
+		    <td><%= raw @affiliate.description.gsub("\n", "<br>") %> </td>
 		  </tr>
 		  <% end %>
 		</table>
