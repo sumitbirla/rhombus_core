@@ -21,8 +21,6 @@ class Admin::BaseController < ActionController::Base
   helper_method :sortable
   helper_method :duration
   helper_method :duration_int
-  helper_method :agent_desc
-  helper_method :rpc_exec
 
   private
   
@@ -166,20 +164,6 @@ class Admin::BaseController < ActionController::Base
   def duration_int(h, val)
     return 0 if h.nil? || h[val].nil?
     h[val].to_f
-  end
-
-  def agent_status_desc(code)
-    statuses = Rails.cache.fetch('fs_agent_statuses') do
-      FsAgentStatus.all
-    end
-
-    statuses.find { |x| x.code == code }
-  end
-
-  def rpc_exec(cmd, params)
-    fs_host = Cache.setting(:pbx, 'FreeSWITCH Host')
-    @@client ||= XMLRPC::Client.new(fs_host, "/RPC2", 8080, nil, nil, "freeswitch", "works", nil, nil)
-    @@client.call("freeswitch.api", cmd, params)
   end
   
 end
