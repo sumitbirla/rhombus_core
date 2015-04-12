@@ -1,4 +1,5 @@
 module ImageHelper
+  
   def cdn_image_url(pic, width, height, mode)
     if pic.kind_of? String
       path = pic
@@ -8,4 +9,5 @@ module ImageHelper
 
     Cache.setting(Rails.configuration.domain_id, :system, 'Static Files Url') + "/cache/#{width}x#{height}-#{mode}" + path
   end
+  
 end
