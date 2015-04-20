@@ -72,7 +72,7 @@ class User < ActiveRecord::Base
   end
   
 	def normalize_phone
-	  self.phone.gsub!(/\D/, '')
+	  self.phone.gsub!(/\D/, '') unless self.phone.nil?
 	end
 
 end
