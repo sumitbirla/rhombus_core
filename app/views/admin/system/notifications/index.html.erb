@@ -9,7 +9,7 @@
 		<th>Title</th>
 		<th>Recipient</th>
 		<th>Views</th>
-		<th>&nbsp;</th>
+		<th class="actions">&nbsp;</th>
 	</tr>
 	<% @notifications.each do |notification| %>
 	<tr>
@@ -23,7 +23,7 @@
 			<% end %>
 		</td>
 		<td><%= notification.views.count %></td>
-		<td>
+		<td class="actions">
 			<%= link_to "edit", edit_admin_system_notification_path(notification) %> &nbsp;
 			<%= link_to "delete", 
 						  { action: "destroy", id: notification.id }, 

@@ -10,7 +10,7 @@
 		<th>Name</th>
 		<th>Slug</th>
 		<th>Visible</th>
-		<th>&nbsp;</th>
+		<th class="actions">&nbsp;</th>
 	</tr>
 	<% top_levels.each do |cat| 
 		children = @categories.select { |c| c.parent_id == cat.id }
@@ -28,7 +28,7 @@
 			<span class="label label-success">yes</span>
 			<% end %>
 		</td>
-		<td>
+		<td class="actions">
 			<%= link_to "new item", new_admin_system_category_path(type: params[:type], parent_id: cat.id) %> &nbsp;
 			<%= link_to "edit", edit_admin_system_category_path(cat) %> &nbsp; 
 			<%= link_to "delete", 
@@ -44,7 +44,7 @@
 		<td> - <%= child.name %></td>
 		<td><%= child.slug %></td>
 		<td><%= raw tick !child.hidden %></td>
-		<td>
+		<td class="actions">
 			<%= link_to "edit", edit_admin_system_category_path(child) %> &nbsp; 
 			<%= link_to "delete", 
 						  { action: "destroy", id: child.id }, 

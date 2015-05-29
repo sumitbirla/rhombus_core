@@ -11,7 +11,7 @@
 		<th>Email</th>
 		<th>Role</th>
 		<th>Created</th>
-		<th>&nbsp;</th>
+		<th class="actions">&nbsp;</th>
 	</tr>
 	<% @users.each do |user| %>
 	<tr>
@@ -19,7 +19,7 @@
 		<td><%= user.email %>
 		<td><%= user.role.name %></td>
 		<td><%= systime user.created_at %></td>
-		<td>
+		<td class="actions">
 			<%= link_to "edit", edit_admin_system_user_path(user) %> &nbsp;
 			<%= link_to "delete", 
 						  { action: "destroy", id: user.id }, 

@@ -13,14 +13,14 @@
 	<th>Name</th>
 	<th>Contact person</th>
 	<th>Location</th>
-	<th>&nbsp;</th>
+	<th class="actions">&nbsp;</th>
   </tr>
   <% @affiliates.each do | affiliate | %>
     <tr>
 	  <td><%= link_to affiliate.name, admin_system_affiliate_path(affiliate) %></td>
 	  <td><%= affiliate.contact_person %></td>
 	  <td><%= affiliate.city %>, <%= affiliate.state %></td>
-	  <td>
+	  <td class="actions">
 	  	<%= link_to "edit", edit_admin_system_affiliate_path(affiliate) %> &nbsp; 
 		<%= link_to "delete", { action: "destroy", id: affiliate.id }, method: :delete,  data: { confirm: "Are you sure?" } %>
 	  </td>

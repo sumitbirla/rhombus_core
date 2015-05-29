@@ -9,7 +9,7 @@
 		<th>Name</th>
 		<th>Website</th>
     <th>Default?</th>
-		<th>&nbsp;</th>
+		<th class="actions">&nbsp;</th>
 	</tr>
 	<% @domains.each do |domain| %>
 	<tr>
@@ -21,7 +21,7 @@
         <span class="label label-success">default</span>
       <% end %>
     </th>
-		<td>
+		<td class="actions">
 			<%= link_to "edit", edit_admin_system_domain_path(domain) %> &nbsp;
       <% unless domain.default %>
 			<%= link_to "delete", 
