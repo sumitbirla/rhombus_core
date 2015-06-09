@@ -30,7 +30,10 @@ class Affiliate < ActiveRecord::Base
   
   has_many :affiliate_categories
   has_many :categories, through: :affiliate_categories
-  validates_presence_of :name
+  validates_presence_of :name, :street1, :city, :state, :zip, :country, :contact_person, :email
+  
+  # following used only during signup (not stored in database)
+  attr_accessor :password, :password_confirmation
   
   def to_s
     name
