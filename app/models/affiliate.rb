@@ -31,6 +31,8 @@ class Affiliate < ActiveRecord::Base
   has_many :affiliate_categories
   has_many :categories, through: :affiliate_categories
   validates_presence_of :name, :street1, :city, :state, :zip, :country, :contact_person, :email
+  validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+  validates_uniqueness_of :name
   
   # following used only during signup (not stored in database)
   attr_accessor :password, :password_confirmation
@@ -55,6 +57,26 @@ class Affiliate < ActiveRecord::Base
     address = address + ', ' + state unless state.blank?
     address = address + ', ' + zip unless zip.blank?
     address
+  end
+  
+  def valid_password?
+    
+    if password.blank?
+      errors.add(:password, "cannot be blank")
+      return false
+    end
+    
+    if password.length < 5
+      errors.add(:password, "is too short")
+      return false
+    end
+    
+    if password != password_confirmation
+      errors.add(:base, "passwords do not match")
+      return false
+    end
+    
+    return true
   end
   
 end
