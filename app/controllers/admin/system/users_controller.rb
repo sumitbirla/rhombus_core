@@ -29,8 +29,6 @@ class Admin::System::UsersController < Admin::BaseController
 
   def show
     @user = User.find(params[:id])
-    @logins = Login.where(user_id: @user.id).paginate(page: params[:page], per_page: 10).order('timestamp DESC')
-
     @counts = get_counts(@user)
   end
 
@@ -127,7 +125,7 @@ class Admin::System::UsersController < Admin::BaseController
   def welcome_email
     begin
       user = User.find(params[:id])
-      UserMailer.welcome_email(user).deliver
+      UserMailer.welcome_email(user).deliver_now
       flash[:info] = "Welcome email sent to #{user.email}"
     rescue => e
       flash[:error] = e.message
