@@ -31,42 +31,10 @@
 		    <td><%= @affiliate.contact_person %> </td>
 		  </tr>
 		  <% end %>
-		  <% unless @affiliate.street1.blank? %>
 		  <tr>
-		  	<td>Street1</td>
-		    <td><%= @affiliate.street1 %> </td>
+		  	<td>Address</td>
+		    <td><%= raw @affiliate.address_as_text(delimiter: "<br>") %> </td>
 		  </tr>
-		  <% end %>
-		  <% unless @affiliate.street2.blank? %>
-		  <tr>
-		  	<td>Street2</td>
-		    <td><%= @affiliate.street2 %> </td>
-		  </tr>
-		  <% end %>
-		  <% unless @affiliate.city.blank? %>
-		  <tr>
-		  	<td>City</td>
-		    <td><%= @affiliate.city %> </td>
-		  </tr>
-		  <% end %>
-		  <% unless @affiliate.state.blank? %>
-		  <tr>
-		  	<td>State</td>
-		    <td><%= @affiliate.state %> </td>
-		  </tr>
-		  <% end %>
-		  <% unless @affiliate.zip.blank? %>
-		  <tr>
-		  	<td>Zip</td>
-		    <td><%= @affiliate.zip %> </td>
-		  </tr>
-		  <% end %>
-		  <% unless @affiliate.country.blank? %>
-		  <tr>
-		  	<td>Country</td>
-		    <td><%= @affiliate.country %> </td>
-		  </tr>
-		  <% end %>
 		  <% unless @affiliate.phone.blank? %>
 		  <tr>
 		  	<td>Phone</td>
@@ -146,11 +114,20 @@
 
 <div class="row">
   <div class="col-md-12">
+    
+    <% mods = Rails.configuration.modules %>
+    
     <ul class="nav nav-tabs" role="tablist">
-      <li role="presentation" class="<%= "active" if ["campaigns", "", nil].include? params[:q] %>"><a href="<%= admin_system_affiliate_path(@affiliate, q: "campaigns")%>" role="tab">Marketing Campaigns</a></li>
-      <li role="presentation" class="<%= "active" if params[:q] == "orders" %>"><a href="<%= admin_system_affiliate_path(@affiliate, q: "orders")%>" role="tab">Orders</a></li>
-      <li role="presentation" class="<%= "active" if params[:q] == "commissions" %>"><a href="<%= admin_system_affiliate_path(@affiliate, q: "commissions")%>" role="tab">Commissions</a></li>
-      <li role="presentation" class="<%= "active" if params[:q] == "payments" %>"><a href="<%= admin_system_affiliate_path(@affiliate, q: "payments")%>" role="tab">Payments</a></li>
+      
+      <% if mods.include? :marketing %>
+        <li role="presentation" class="<%= "active" if ["campaigns", "", nil].include? params[:q] %>"><a href="<%= admin_system_affiliate_path(@affiliate, q: "campaigns")%>" role="tab">Marketing Campaigns</a></li>
+        <li role="presentation" class="<%= "active" if params[:q] == "commissions" %>"><a href="<%= admin_system_affiliate_path(@affiliate, q: "commissions")%>" role="tab">Commissions</a></li>
+        <li role="presentation" class="<%= "active" if params[:q] == "payments" %>"><a href="<%= admin_system_affiliate_path(@affiliate, q: "payments")%>" role="tab">Payments</a></li>
+      <% end %>
+      
+      <% if mods.include? :store %>
+        <li role="presentation" class="<%= "active" if params[:q] == "orders" %>"><a href="<%= admin_system_affiliate_path(@affiliate, q: "orders")%>" role="tab">Orders</a></li>
+      <% end %>
     </ul>
 		
     
