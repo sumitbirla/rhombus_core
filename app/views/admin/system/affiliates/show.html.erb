@@ -208,7 +208,10 @@
     			<% campaigns.each do |campaign| 
             earning =  Order.where(affiliate_campaign_id: campaign.id)
                             .where.not(status: ["in cart", "cancelled"])
-                            .sum(:total) * campaign.sale_commission / 100.0 %>
+                            .sum(:total) * campaign.sale_commission / 100.0 
+                            
+            earning += campaign.signup_commission * campaign.signups
+            %>
     			<tr>
     				<td><%= link_to campaign.name, edit_admin_marketing_affiliate_campaign_path(campaign) %></td>
     				<td class="text-center"><%= number_to_currency campaign.signup_commission %></td>

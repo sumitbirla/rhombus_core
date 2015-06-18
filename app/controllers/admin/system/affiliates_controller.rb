@@ -1,7 +1,8 @@
 class Admin::System::AffiliatesController < Admin::BaseController
   def index
     @affiliates = Affiliate.order('created_at DESC')
-    @affiliates = @affiliates.where("name LIKE '%#{params[:q]}%' OR code = '#{params[:q]}'") unless params[:q].nil?
+    @affiliates = @affiliates.where("name LIKE '%#{params[:q]}%' OR code = '#{params[:q]}'") unless params[:q].blank?
+    @affiliates = @affiliates.joins(:affiliate_categories).where("core_affiliate_categories.category_id = #{params[:category_id]}") unless params[:category_id].blank?
     
     respond_to do |format|
       format.html { @affiliates = @affiliates.page(params[:page]) }
