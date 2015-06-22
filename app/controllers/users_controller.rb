@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.password.length < 5
-      @user.errors[:base] <<  "must be at least 5 characters long"
+      @user.errors[:password] <<  "must be at least 5 characters long"
       return render 'new'
     end
 
@@ -27,6 +27,11 @@ class UsersController < ApplicationController
     if @user.save
       session[:user_id] = @user.id
       @user.record_login(request, 'web')
+      
+      # subscribe user to email list
+      if params[:email_signup] == "1"
+        
+      end
 
       begin
         UserMailer.welcome_email(@user).deliver
@@ -110,7 +115,7 @@ class UsersController < ApplicationController
   private
 
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :data1, :data2)
     end
   
 end
