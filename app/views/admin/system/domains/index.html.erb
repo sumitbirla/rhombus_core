@@ -8,6 +8,8 @@
     <td>ID</td>
 		<th>Name</th>
 		<th>Website</th>
+    <th>Data1</th>
+    <th>Data2</th>
     <th>Default?</th>
 		<th class="actions">&nbsp;</th>
 	</tr>
@@ -16,6 +18,8 @@
     <td><%= domain.id %></td>
 		<td><%= link_to domain.name, edit_admin_system_domain_path(domain) %></td>
 		<td><%= link_to domain.url, domain.url %></td>
+    <td><%= domain.data1 %></td>
+    <td><%= domain.data2 %></td>
     <th>
       <% if domain.default %>
         <span class="label label-success">default</span>
