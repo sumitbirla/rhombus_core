@@ -6,6 +6,7 @@
   <li class="<%= "active" if ["logins", "", nil].include? params[:q] %>"><a href="<%= admin_system_user_path(@user, q: "logins")%>" role="tab">Logins</a></li>
   <% if mods.include? :store %>
   <li class="<%= "active" if params[:q] == "orders" %>"><a href="<%= admin_system_user_path(@user, q: "orders")%>" role="tab">Orders</a></li>
+  <li class="<%= "active" if params[:q] == "orders" %>"><a href="<%= admin_system_user_path(@user, q: "autoship")%>" role="tab">Auto Ship</a></li>
   <% end %>
   
   <% if mods.include? :ticketing %>
@@ -53,6 +54,30 @@
   		<td><%= order.shipping_city %>, <%= order.shipping_state %></td>
   		<td><%= number_to_currency(order.total) %></td>
   		<td><%= order_status(order) %></td>
+  	</tr>
+  	<% end %>
+  </table>
+  
+<% elsif params[:q] == "autoship" 
+  items = AutoShipItem.where(user_id: params[:id]) %>
+  
+  <table class="table table-striped table-condensed">
+  	<tr>
+  		<th>Item ID</th>
+      <th>Description</th>
+  		<th class="text-center">Qty</th>
+      <th class="text-center">Frequency</th>
+  		<th class="text-center">Last Shipped</th>
+  		<th class="text-center">Next Ship Date</th>
+  	</tr>
+  	<% items.each do |item| %>
+  	<tr>
+  		<td><%= link_to item.item_id, admin_store_product_path(item.product_id) %></td>
+      <td><%= item.description %></td>
+  		<td class="text-center"><%= item.quantity %></td>
+      <td class="text-center"><%= pluralize(item.days, "day") %></td>
+  		<td class="text-center"><%= item.last_shipped %></td>
+  		<td class="text-center"><%= item.next_ship_date %></td>
   	</tr>
   	<% end %>
   </table>
