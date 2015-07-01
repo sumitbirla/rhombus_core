@@ -6,7 +6,7 @@
   <li class="<%= "active" if ["logins", "", nil].include? params[:q] %>"><a href="<%= admin_system_user_path(@user, q: "logins")%>" role="tab">Logins</a></li>
   <% if mods.include? :store %>
   <li class="<%= "active" if params[:q] == "orders" %>"><a href="<%= admin_system_user_path(@user, q: "orders")%>" role="tab">Orders</a></li>
-  <li class="<%= "active" if params[:q] == "orders" %>"><a href="<%= admin_system_user_path(@user, q: "autoship")%>" role="tab">Auto Ship</a></li>
+  <li class="<%= "active" if params[:q] == "autoship" %>"><a href="<%= admin_system_user_path(@user, q: "autoship")%>" role="tab">Auto Ship</a></li>
   <% end %>
   
   <% if mods.include? :ticketing %>

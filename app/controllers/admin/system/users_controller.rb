@@ -168,9 +168,7 @@ class Admin::System::UsersController < Admin::BaseController
   private
   
     def user_params
-      params.require(:user).permit(:affiliate_id, :role_id, :email, :password_digest, :name, :phone, :birth_date,
-                                   :gender, :time_zone, :pin, :referral_key, :approved, :vip, :location, :locale,
-                                   :avatar_url)
+      params.require(:user).permit!
     end
   
 end
