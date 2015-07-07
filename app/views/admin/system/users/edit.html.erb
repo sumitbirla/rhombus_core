@@ -1,46 +1,52 @@
-<style>
-    .form-inline .control-label { width: 110px; }
-</style>
-
 <h2><i class="icon-user"></i> &nbsp;<%= @user.name %></h2>
 <hr/>
-<%= simple_form_for([:admin, :system,  @user], html: { class: 'form-inline' }) do |f| %>
 
-  <%= render 'admin/shared/error_messages', object: f.object %>
+<%= render 'admin/shared/error_messages', object: @user %>
+
+<%= simple_form_for [:admin, :system,  @user], html: { class: 'form-horizontal' }, wrapper: :horizontal_form do |f| %>
+
+  <div class="col-md-6">
+    <%= f.input :password_digest, as: :hidden %>
+    <%= f.input :name%>
+    <%= f.association :domain %>
+    <%= f.association :role %>
+    <%= f.association :affiliate %>
+    <%= f.input :email  %>
+    <%= f.input :phone %>
+    <%= f.input :birth_date, as: :string, input_html: { class: "date-field" } %>
+    <%= f.input :gender, collection: [ 'male', 'female' ]  %>
+    <%= f.input :avatar_url %>
+    <%= f.input :vip %>
+  </div>
+    
+  <div class="col-md-6">
+    <%= f.input :status, as: :select, collection: ['active', 'pending', 'deactived'] %>
+    
+    <%= f.input :pin  %>
+    <%= f.input :referral_key %>
+    <%= f.input :locale %>
+    <%= f.input :location %>
+    <%= f.input :time_zone %>
+    <%= f.input :data1 %>
+    <%= f.input :data2 %>
   
-  <%= f.input :password_digest, as: :hidden %>
-  <%= f.input :name, input_html: { class: 'span5' } %>
-  <%= f.association :domain %>
-  <%= f.association :role %>
-  <%= f.association :affiliate %>
-  <%= f.input :email  %>
-  <%= f.input :phone %>
-  <%= f.input :birth_date %>
-  <%= f.input :gender, as: :radio_buttons, collection: [ 'male', 'female' ]  %>
-  <%= f.input :avatar_url %>
-  <%= f.input :locale %>
-  <%= f.input :location %>
-  <%= f.input :time_zone %>
-  <%= f.input :pin  %>
-  <%= f.input :referral_key %>
-  <%= f.input :status, as: :select, collection: ['active', 'pending', 'deactived'], input_html: { class: 'short' } %>
-  <%= f.input :vip %>
-  <%= f.input :data1 %>
-  <%= f.input :data2 %>
-  
-  <div class="form-group string optional password">
-	<label class="string optional control-label" for="password">Password</label>
-	<input type="text" name="password" class="string optional"/> (leave blank if not updating)
+    <div class="form-group string optional password">
+      <label class="string optional col-sm-3 control-label" for="password">Password</label>
+      <div class="col-sm-9">
+        <input class="string optional form-control" type="password" name="password" id="password"> (leave blank if not updating)
+      </div>
+    </div>
   </div>
   
-  <div class="form-actions">
-  	<%= f.button :submit %>
+  <div class="col-md-12">
+    <%= f.button :submit %>
   </div>
+  
 <% end %>
 
 
 
-<%= content_for :title do %>
+<% content_for :title do %>
 	Users: <%= @user.name %>
 <% end %>
 

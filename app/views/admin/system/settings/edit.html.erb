@@ -1,7 +1,11 @@
+<style>
+    .form-horizontal .control-label { width: 120px; }
+</style>
+
 <h2><%= @setting.section %>: <%= @setting.key%></h2>
 <hr/>
 
-<%= simple_form_for [:admin, :system, @setting ], html: { class: 'form-inline'} do |f| %>
+<%= simple_form_for [:admin, :system, @setting ], html: { class: 'form-horizontal' }, wrapper: :horizontal_form  do |f| %>
 
 	<%= render 'admin/shared/error_messages', object: f.object %>
 	
@@ -9,7 +13,7 @@
 	<%= f.input :key %>
 	<%= f.input :value %>
 	<%= f.input :value_type, as: :select, collection: [ 'string', 'number', 'boolean'] %>
-	<%= f.input :description, as: :text, input_html: { class: 'span6' } %>
+	<%= f.input :description, as: :text, input_html: { rows: 10 } %>
 	
 	<div class="form-actions">
 		<%= f.button :submit %>

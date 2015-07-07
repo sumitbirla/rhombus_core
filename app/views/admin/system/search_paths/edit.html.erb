@@ -1,10 +1,10 @@
 <style>
-    .form-inline .control-label { width: 120px; }
+    .form-horizontal .control-label { width: 120px; }
 </style>
 
-<h2><%= @search_path.short_code %></h2>
+<h2>Short Code: <%= @search_path.short_code %></h2>
 <hr/>
-<%= simple_form_for([:admin, :system, @search_path], html: { class: 'form-inline' }) do |f| %>
+<%= simple_form_for [:admin, :system, @search_path],html: { class: 'form-horizontal' }, wrapper: :horizontal_form  do |f| %>
 
   <%= render 'admin/shared/error_messages', object: f.object %>
   

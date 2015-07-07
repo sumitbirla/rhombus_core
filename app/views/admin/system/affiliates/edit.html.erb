@@ -1,57 +1,61 @@
 <h2><%= @affiliate.name %></h2>
 
 <% unless @affiliate.id.nil? %>
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs" style="margin-bottom: 20px;">
   <li class="active"><a href="#">Summary</a></li>
   <li><%= link_to "Categories", categories_admin_system_affiliate_path(@affiliate) %></li>
-  <li><%= link_to "Products", products_admin_system_affiliate_path(@affiliate) %></li>
 </ul>
 <% end %>
 
-<%= simple_form_for([:admin, :system, @affiliate], html: { class: 'form-inline' }) do |f| %>
+<%= simple_form_for [:admin, :system, @affiliate], html: { class: 'form-horizontal' }, wrapper: :horizontal_form do |f| %>
 
   <%= render 'admin/shared/error_messages', object: f.object %>
   
   <div class="row">
-  <div class="col-md-6">
-	  <%= f.input :name %>
-	  <%= f.input :slug %>
-	  <%= f.input :code %>
-	  <%= f.input :contact_person %>
-	  <%= f.input :street1 %>
-	  <%= f.input :street2 %>
-	  <%= f.input :city %>
-	  <%= f.input :state %>
-	  <%= f.input :zip %>
-	  <%= f.input :country %>
+    <div class="col-md-6">
+  	  <%= f.input :name %>
+  	  <%= f.input :slug %>
+  	  <%= f.input :code %>
+  	  <%= f.input :contact_person %>
+  	  <%= f.input :street1 %>
+  	  <%= f.input :street2 %>
+  	  <%= f.input :city %>
+  	  <%= f.input :state %>
+  	  <%= f.input :zip %>
+  	  <%= f.input :country %>
+      
+      <div class="form-group string optional password">
+    	  <label class="string col-sm-3 optional control-label" for="logo">Logo</label>
+    	  <div class="controls col-sm-9">
+    		  <input type="text" id="affiliate_logo" name="affiliate[logo]" value="<%= @affiliate.logo %>" class="string optional span4"/> 
+    		  <input type="button" value="Browse Server" class="btn btn-default btn-sm" onclick="javascript:BrowseServer();">
+    	  </div>
+      </div>
 	  
-  </div>
+    </div>
 
-  <div class="col-md-6">
-	  <%= f.input :featured %>
-	  <%= f.input :active %>
-	  <%= f.input :phone %>
-	  <%= f.input :fax %>
-	  <%= f.input :email %>
-	  <%= f.input :website %>
-    <%= f.input :facebook_page %>
-    <%= f.input :payment_terms %>
-    <%= f.input :tax_id %>
-  </div>
-  </div>
+    <div class="col-md-6">
+  	  <%= f.input :featured %>
+  	  <%= f.input :active %>
+  	  <%= f.input :phone %>
+  	  <%= f.input :fax %>
+  	  <%= f.input :email %>
+  	  <%= f.input :website %>
+      <%= f.input :facebook_page %>
+      <%= f.input :payment_terms %>
+      <%= f.input :tax_id %>
+    </div>
 
-
-  <div class="form-group string optional password">
-	  <label class="string optional control-label" for="logo">Logo</label>
-	  <div class="controls" style="display: inline;">
-		  <input type="text" id="affiliate_logo" name="affiliate[logo]" value="<%= @affiliate.logo %>" class="string optional span4"/> 
-		  <input type="button" value="Browse Server" class="btn btn-default btn-sm" onclick="javascript:BrowseServer();">
-	  </div>
+    <div class="col-md-12">
+      <h4>Short Description</h4>
+    	<%= f.input_field :summary, class: "form-control text", rows: 3 %>
+      <br>
+      <h4>Long Description</h4>
+    	<%= f.input_field :description, class: "form-control text", rows: 10  %>
+      <br>
+    	<%= f.button :submit %>
+    </div>
   </div>
-  
-  <%= f.input :summary, as: :text, input_html: { rows: 3 } %>
-  <%= f.input :description, input_html: { rows: 10 } %>
-  <%= f.button :submit %>
   
 <% end %>
 
