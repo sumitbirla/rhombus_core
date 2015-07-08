@@ -13,7 +13,7 @@
     <%= f.association :affiliate %>
     <%= f.input :email  %>
     <%= f.input :phone %>
-    <%= f.input :birth_date, as: :string, input_html: { class: "date-field" } %>
+    <%= f.input :birth_date, as: :datepicker %>
     <%= f.input :gender, collection: [ 'male', 'female' ]  %>
     <%= f.input :avatar_url %>
     <%= f.input :vip %>
