@@ -168,6 +168,8 @@
       <th>Brand</th>
       <th>Expiration</th>
       <th>Last Transaction</th>
+      <th>Result</th>
+      <th>Attempts</th>
       <th>Default ?</th>
     </tr>
     <% payment_methods.each do |pm| %>
@@ -181,7 +183,10 @@
         <%= systime pm.last_transaction_date %>
        <% else %>
          -
-       <% end %></td>
+       <% end %>
+      </td>
+      <td><%= pm.last_transaction_result %></td>
+      <td><%= pm.bill_attempts %></td>
       <td><%= tick pm.default %></td>
     </tr>
     <% end %>
