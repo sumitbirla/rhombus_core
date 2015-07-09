@@ -31,17 +31,8 @@
         a.dropdown-toggle { color: #ccc; }
         ul { list-style-type: none; }
         table td { font-size: 10pt; }
-        .form-inline .control-label { width: 120px; text-align: right; padding-right: 16px;  }
-        .form-inline, .form-inline { margin: 16px; }
-        .form-inline .form-group { display: block; margin: 20px; }
-        .aform-inline .form-control { width: 60%; }
-        .form-inline .datetime select:nth-child(2) { width: 65px; }
-        .form-inline .datetime select:nth-child(3) { width: 105px; }
-        .form-inline .datetime select { width: 55px; }
-        .form-inline .date select:nth-child(2) { width: 65px; }
-        .form-inline .date select:nth-child(3) { width: 105px; }
-        .form-inline .date select { width: 55px; }
-        .form-inline textarea { width: 100%; }
+        .form-horizontal .control-label { width: 120px; }
+        
         .numeric { width: 100px; }
 		    .short { width: 10%; }
         form.categories ul { list-style-type: none;}
@@ -73,6 +64,11 @@
   
       /*var wavesurfer = Object.create(WaveSurfer);
     	var wavesurfer_initialized = false;*/
+      
+      function popup(current_time,$input){
+        alert(current_time);
+      }
+      
 
       $(document).ready(function() {
         
@@ -80,7 +76,7 @@
           window.location = "/admin/system/domains/" + $(this).val() + "/set_current";
         });
         
-        $('.datetime-field').datetimepicker({	formatTime:'g:i A', format: 'Y-m-d h:i A', });
+        $('.datetime-field').datetimepicker({	formatTime:'g:i A', format: 'Y-m-d h:i A' });
         $('.date-field').datetimepicker({format: 'Y-m-d', timepicker: false, mask: true});
         $('.input-group.date').datepicker({format: 'yyyy-mm-dd', autoclose: true});
     
