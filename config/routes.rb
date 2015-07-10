@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   patch 'resetp' => 'users#update_password'
   post 'resetp' => 'users#update_password'
 
+  get '/auth/failure', to: 'sessions#new'
   get '/auth/:provider/callback', to: 'sessions#create_omniauth'
   
   namespace :account do

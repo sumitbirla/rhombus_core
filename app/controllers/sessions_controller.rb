@@ -5,6 +5,9 @@ class SessionsController < ApplicationController
   layout 'single_column'
   
   def new
+    # delete existing facebook cookie otherwise reauth may not work
+    app_id = Cache.setting(Rails.configuration.domain_id, :system, 'Facebook App ID')
+    cookies.delete "fbsr_#{app_id}"
   end
   
   def create
