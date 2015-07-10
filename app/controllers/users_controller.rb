@@ -6,8 +6,10 @@ class UsersController < ApplicationController
     @user = User.new
   end
   
+  # Create a new user. Note that a user with this email may already exist in status "Z"
   def create
-    @user = User.new(user_params)
+    @user = User.find_by(domain_id: Rails.configuration.domain_id, email: user_params[:email], status: "Z") || User.new
+    @user.assign_attributes(user_params)
 
     if @user.password.length < 5
       @user.errors[:password] <<  "must be at least 5 characters long"
@@ -19,10 +21,12 @@ class UsersController < ApplicationController
       return render 'new'
     end
 
-    @user.domain_id = Rails.configuration.domain_id
-    @user.role_id = Role.find_by(default: true).id
-    @user.password_digest = BCrypt::Password.create(@user.password)
-    @user.referral_key = SecureRandom.hex(5)
+    @user.assign_attributes(
+            domain_id: Rails.configuration.domain_id,
+            role_id: Role.find_by(default: true).id,
+            password_digest: BCrypt::Password.create(@user.password),
+            referral_key: SecureRandom.hex(5),
+            status: :active)
 
     if @user.save
       session[:user_id] = @user.id
@@ -77,7 +81,6 @@ class UsersController < ApplicationController
 
 
   def new_password
-
     @token = TemporaryToken.find_by(value: params[:id])
 
     unless @token
@@ -86,7 +89,6 @@ class UsersController < ApplicationController
     end
 
     @user = @token.user
-
   end
 
 

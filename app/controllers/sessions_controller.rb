@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
   end
   
   def create
-    user = User.find_by(domain_id: Rails.configuration.domain_id, email: params[:email])
+    user = User.find_by(domain_id: Rails.configuration.domain_id, email: params[:email], status: "active")
 
     if user && (user.password_digest.nil? || user.password_digest.length < 20)
       flash[:error] = "Invalid login. Did you log in using Facebook?"
@@ -31,7 +31,7 @@ class SessionsController < ApplicationController
     auth = request.env['omniauth.auth']
 
     # check if user exists
-    user = User.find_by(email: auth.info.email)
+    user = User.find_by(domain_id: Rails.configuration.domain_id, email: auth.info.email)
     if user.nil?
 
       # WARNING:  extra.raw_info is Facebook specific
@@ -45,7 +45,8 @@ class SessionsController < ApplicationController
                       gender: auth.extra.raw_info.gender,
                       locale: auth.extra.raw_info.locale,
                       password_digest: SecureRandom.hex(5),
-                      referral_key: SecureRandom.hex(5)
+                      referral_key: SecureRandom.hex(5),
+                      status: :active
 
       # try to guess timezone
       tz = ActiveSupport::TimeZone[auth.extra.raw_info.timezone]

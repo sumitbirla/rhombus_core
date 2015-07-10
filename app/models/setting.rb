@@ -23,6 +23,6 @@ class Setting < ActiveRecord::Base
   end
   
   def cache_key
-    "setting:#{section}:#{key}"
+    "setting:#{domain_id}:#{section}:#{key}"
   end
 end
