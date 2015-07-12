@@ -3,7 +3,7 @@
 
 <%= render 'admin/shared/error_messages', object: @user %>
 
-<%= simple_form_for [:admin, :system,  @user], html: { class: 'form-horizontal' }, wrapper: :horizontal_form do |f| %>
+<%= simple_form_for [:admin, :system,  @user] do |f| %>
 
   <div class="col-md-6">
     <%= f.input :password_digest, as: :hidden %>

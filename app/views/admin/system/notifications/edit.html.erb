@@ -1,6 +1,6 @@
 <h2><i class="icon-bell"></i> <%= @notification.title %></h2>
 <hr/>
-<%= simple_form_for [:admin, :system, @notification], html: { class: 'form-horizontal' }, wrapper: :horizontal_form do |f| %>
+<%= simple_form_for [:admin, :system, @notification] do |f| %>
 
   <%= render 'admin/shared/error_messages', object: f.object %>
   

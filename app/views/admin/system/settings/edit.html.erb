@@ -1,7 +1,7 @@
 <h2><%= @setting.section %>: <%= @setting.key%></h2>
 <hr/>
 
-<%= simple_form_for [:admin, :system, @setting ], html: { class: 'form-horizontal' }, wrapper: :horizontal_form  do |f| %>
+<%= simple_form_for [:admin, :system, @setting ]  do |f| %>
 
 	<%= render 'admin/shared/error_messages', object: f.object %>
 	
@@ -11,9 +11,7 @@
 	<%= f.input :value_type, as: :select, collection: [ 'string', 'number', 'boolean'] %>
 	<%= f.input :description, as: :text, input_html: { rows: 10 } %>
 	
-	<div class="form-actions">
-		<%= f.button :submit %>
-	</div>
+	<%= f.button :submit %>
 
 <% end %>
 
@@ -22,10 +20,6 @@
     Settings: <%= @setting.section %>: <%= @setting.key%>
 <% end %>
 
-
-<% content_for :menu do
-    render "admin/shared/system_menu"
-end %>
 
 <% content_for :breadcrumbs do %>
 	<li><a href="#">System</a></li>
