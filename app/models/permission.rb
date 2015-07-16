@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: permissions
+# Table name: core_permissions
 #
 #  id         :integer          not null, primary key
 #  section    :string(255)      not null

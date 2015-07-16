@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: affiliate_categories
+# Table name: core_affiliate_categories
 #
 #  id           :integer          not null, primary key
 #  affiliate_id :integer          not null

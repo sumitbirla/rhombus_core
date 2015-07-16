@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: categories
+# Table name: core_categories
 #
 #  id          :integer          not null, primary key
 #  name        :string(255)      not null
@@ -9,9 +9,9 @@
 #  hidden      :boolean          default(FALSE), not null
 #  slug        :string(255)      not null
 #  sort        :integer          default(0), not null
-#  desc1       :text
-#  desc2       :text
-#  desc3       :text
+#  desc1       :text(65535)
+#  desc2       :text(65535)
+#  desc3       :text(65535)
 #  image_path  :string(255)
 #  created_at  :datetime
 #  updated_at  :datetime

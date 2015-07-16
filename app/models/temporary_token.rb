@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: temporary_tokens
+# Table name: core_temporary_tokens
 #
 #  id         :integer          not null, primary key
 #  user_id    :integer

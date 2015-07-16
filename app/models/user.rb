@@ -1,8 +1,9 @@
 # == Schema Information
 #
-# Table name: users
+# Table name: core_users
 #
 #  id               :integer          not null, primary key
+#  domain_id        :integer          not null
 #  affiliate_id     :integer
 #  role_id          :integer          not null
 #  email            :string(255)      not null
@@ -20,10 +21,13 @@
 #  referral_key     :string(255)
 #  referral_clicks  :integer          default(0), not null
 #  referral_signups :integer          default(0), not null
-#  approved         :boolean
-#  vip              :boolean
+#  approved         :boolean          default(FALSE), not null
+#  vip              :boolean          default(FALSE), not null
+#  status           :string(16)
 #  created_at       :datetime
 #  updated_at       :datetime
+#  data1            :string(255)
+#  data2            :string(255)
 #
 
 require 'bcrypt'

@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: affiliates
+# Table name: core_affiliates
 #
 #  id             :integer          not null, primary key
 #  name           :string(255)      not null
@@ -8,6 +8,7 @@
 #  slug           :string(255)      default(""), not null
 #  featured       :boolean          default(FALSE), not null
 #  active         :boolean          default(FALSE), not null
+#  tax_id         :string(255)
 #  contact_person :string(255)
 #  street1        :string(255)
 #  street2        :string(255)
@@ -20,7 +21,10 @@
 #  email          :string(255)
 #  website        :string(255)
 #  logo           :string(255)
-#  description    :text
+#  description    :text(65535)
+#  payment_terms  :string(255)
+#  facebook_page  :string(255)
+#  summary        :text(65535)
 #  created_at     :datetime
 #  updated_at     :datetime
 #

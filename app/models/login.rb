@@ -1,15 +1,13 @@
 # == Schema Information
 #
-# Table name: logins
+# Table name: core_logins
 #
 #  id         :integer          not null, primary key
+#  timestamp  :datetime         default(NULL), not null
 #  source     :string(255)
 #  user_id    :integer          not null
-#  timestamp  :datetime         not null
 #  ip_address :string(255)      not null
 #  user_agent :string(255)      not null
-#  created_at :datetime
-#  updated_at :datetime
 #
 
 class Login < ActiveRecord::Base
