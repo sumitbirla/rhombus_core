@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: role_permissions
+# Table name: core_role_permissions
 #
 #  id            :integer          not null, primary key
 #  role_id       :integer          not null

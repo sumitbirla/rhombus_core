@@ -1,13 +1,14 @@
 # == Schema Information
 #
-# Table name: settings
+# Table name: core_settings
 #
 #  id          :integer          not null, primary key
+#  domain_id   :integer          not null
 #  section     :string(255)      default(""), not null
 #  key         :string(255)      not null
 #  value       :string(255)      not null
 #  value_type  :string(255)      default(""), not null
-#  description :text
+#  description :text(65535)
 #  created_at  :datetime
 #  updated_at  :datetime
 #

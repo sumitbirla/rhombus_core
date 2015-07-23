@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: roles
+# Table name: core_roles
 #
 #  id         :integer          not null, primary key
 #  name       :string(255)      not null

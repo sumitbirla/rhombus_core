@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: notifications
+# Table name: core_notifications
 #
 #  id             :integer          not null, primary key
 #  title          :string(255)      not null
@@ -10,7 +10,7 @@
 #  web_delivery   :boolean          not null
 #  email_delivery :boolean          not null
 #  sms_delivery   :boolean          not null
-#  message        :text             not null
+#  message        :text(65535)      not null
 #  created_at     :datetime
 #  updated_at     :datetime
 #

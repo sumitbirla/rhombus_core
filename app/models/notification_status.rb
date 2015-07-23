@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: notification_statuses
+# Table name: core_notification_statuses
 #
 #  id              :integer          not null, primary key
 #  notification_id :integer          not null
