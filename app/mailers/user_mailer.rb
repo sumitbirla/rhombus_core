@@ -6,13 +6,13 @@ class UserMailer < ActionMailer::Base
   def welcome_email(user_id)
     @user = User.find(user_id)
     
-    @website_name = Cache.setting(user.domain_id, :system, 'Website Name')
-    @website_url = Cache.setting(user.domain_id, :system, 'Website URL')
+    @website_name = Cache.setting(@user.domain_id, :system, 'Website Name')
+    @website_url = Cache.setting(@user.domain_id, :system, 'Website URL')
     
-    from_name = Cache.setting(user.domain_id, :system, 'From Email Name')
-    from_email = Cache.setting(user.domain_id, :system, 'From Email Address')
+    from_name = Cache.setting(@user.domain_id, :system, 'From Email Name')
+    from_email = Cache.setting(@user.domain_id, :system, 'From Email Address')
 
-    options = { address: Cache.setting(user.domain_id, :system, 'SMTP Server') }
+    options = { address: Cache.setting(@user.domain_id, :system, 'SMTP Server') }
     mail(from: "#{from_name} <#{from_email}>",
          to: @user.email, 
          subject: "Welcome to #{@website_name}", 
