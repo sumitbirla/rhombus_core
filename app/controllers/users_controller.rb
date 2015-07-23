@@ -38,7 +38,7 @@ class UsersController < ApplicationController
       end
 
       begin
-        UserMailer.welcome_email(@user).deliver
+        UserMailer.welcome_email(@user.id).deliver_later
       rescue Exception => e
         logger.error e
       end
@@ -69,7 +69,7 @@ class UsersController < ApplicationController
     reset_url = Cache.setting(Rails.configuration.domain_id, :system, 'Website URL') + '/resetp/' + token.value
 
     begin
-      UserMailer.reset_password_email(user, reset_url).deliver
+      UserMailer.reset_password_email(user, reset_url).deliver_now
       flash.now[:notice] = "Password reset instructions have been emailed to #{user.email}"
     rescue Exception => e
       flash.now[:error] = e.message

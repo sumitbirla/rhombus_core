@@ -56,9 +56,9 @@ class SessionsController < ApplicationController
       user.time_zone = tz.tzinfo.name unless tz.nil?
 
       unless user.save
-         flash[:error] = "User account could not be created"
-         return redirect_to :back
-       end
+        flash[:error] = "User account could not be created"
+        return redirect_to :back
+      end
     end
 
     saved_auth = Authorization.find_by(user_id: user.id, provider: auth.provider)

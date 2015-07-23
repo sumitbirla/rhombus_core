@@ -3,8 +3,8 @@ class UserMailer < ActionMailer::Base
   default from: "#{Cache.setting(Rails.configuration.domain_id, :system, 'From Email Name')} <#{Cache.setting(Rails.configuration.domain_id, :system, 'From Email Address')}>"
 
 
-  def welcome_email(user)
-    @user = user
+  def welcome_email(user_id)
+    @user = User.find(user_id)
     
     @website_name = Cache.setting(user.domain_id, :system, 'Website Name')
     @website_url = Cache.setting(user.domain_id, :system, 'Website URL')

@@ -196,7 +196,7 @@
 
   <% @user_packages = UserPackage.joins(:package)
                                 .where("bill_packages.domain_id = #{cookies[:domain_id]}")
-                                .where(recurr_status: 'A')
+                                .where(recurr_status: 'A', user_id: @user.id)
                                 .includes(:package)
                                 .paginate(page: params[:page], per_page: 10)
                                 .order(recurr_date: :desc) %>
@@ -285,6 +285,7 @@
       <th>Command</th>
       <th>SMS</th>
       <th>Source</th>
+      <th>Status</th>
     </tr>
     <% dids.each do |d| %>
     <tr>
@@ -306,7 +307,7 @@
   
 <% elsif params[:q] == "vm" %>
 
-  <% vm_messages = PbxVmMessage.where(user: params[:id]).order(created_epoch: :desc).paginate(page: params[:page], per_page: 10)  %>
+  <% vm_messages = PbxVmMessage.where(domain: "user-#{@user.id}").order(created_epoch: :desc).paginate(page: params[:page], per_page: 10)  %>
 
   <%= will_paginate vm_messages %>
   <table class="table table-condensed table-striped messages">
