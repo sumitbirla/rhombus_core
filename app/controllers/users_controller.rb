@@ -114,6 +114,12 @@ class UsersController < ApplicationController
   end
 
 
+  def status
+    user = User.find(params[:id])
+    render json: { status: user.nil? ? "not found" : user.status }
+  end
+  
+
   private
 
     def user_params

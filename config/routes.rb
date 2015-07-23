@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
 
   resources :sessions
-  resources :users
+  resources :users do 
+    member do 
+      get 'status'
+    end
+  end 
 
   get 'login' => 'sessions#new'
   get 'logout' => 'sessions#destroy'
