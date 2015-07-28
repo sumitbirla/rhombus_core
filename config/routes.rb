@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     
     root 'dashboard#index'
     
+    get 'clear_cache' => 'dashboard#clear_cache'
     get 'login' => 'sessions#new'
     get 'logout' => 'sessions#destroy'
     get 'password_reset' => 'system/users#password_reset'

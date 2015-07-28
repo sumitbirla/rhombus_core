@@ -67,5 +67,5 @@ class Admin::BaseController < ActionController::Base
 
     link_to title, h, {:class => css_class}
   end
-  
+
 end
