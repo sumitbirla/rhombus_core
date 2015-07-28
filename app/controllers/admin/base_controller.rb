@@ -12,7 +12,6 @@ class Admin::BaseController < ActionController::Base
   helper_method :current_user
   helper_method :systime
   helper_method :sysdate
-  helper_method :sortable
 
   private
   
@@ -55,17 +54,6 @@ class Admin::BaseController < ActionController::Base
     time.in_time_zone(sys_time_zone).strftime("%m/%d/%Y").html_safe
   end
 
-  def sortable(column, title = nil)
-    title ||= column.titleize
-    css_class = (column == sort_column) ? "current #{sort_direction}" : nil
-    direction = (column == sort_column && sort_direction == "asc") ? "desc" : "asc"
-
-    h = {:sort => column, :direction => direction}
-    params.each do |k,v|
-      h[k] = v unless v.empty? || ['direction', 'sort'].include?(k)
-    end
-
-    link_to title, h, {:class => css_class}
-  end
+  
   
 end
