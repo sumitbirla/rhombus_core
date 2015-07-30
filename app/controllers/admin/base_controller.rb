@@ -54,6 +54,4 @@ class Admin::BaseController < ActionController::Base
     time.in_time_zone(sys_time_zone).strftime("%m/%d/%Y").html_safe
   end
 
-  
-  
 end
