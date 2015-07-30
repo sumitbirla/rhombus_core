@@ -11,6 +11,7 @@ class SessionsController < ApplicationController
   end
   
   def create
+    reset_session  # clear out any previous session data
     user = User.find_by(domain_id: Rails.configuration.domain_id, email: params[:email], status: "active")
 
     if user && (user.password_digest.nil? || user.password_digest.length < 20)
@@ -31,6 +32,7 @@ class SessionsController < ApplicationController
   end
 
   def create_omniauth
+    reset_session  # clear out any previous session data
     auth = request.env['omniauth.auth']
 
     # check if user exists
