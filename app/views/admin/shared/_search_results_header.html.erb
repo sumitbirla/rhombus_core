@@ -3,6 +3,6 @@
     <%= link_to request.url.split('?').first, class: "pull-right btn btn-xs btn-default" do %>
       <i class="fa fa-times"></i> clear filter
     <% end %>
-    Found <%= object.total_entries %> records matching '<%= params[:q] %>'
+    Found <%= pluralize(object.total_entries, "record") %> matching '<%= params[:q] %>'
   </div>
 <% end %>
