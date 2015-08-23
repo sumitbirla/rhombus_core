@@ -23,7 +23,7 @@ class Account::ProfileController < Account::BaseController
         end
 
         if user_params[:password] != user_params[:password_confirmation]
-          @user.errors.add(:base, "Passwords don't match.  Please re-enter the new password.")
+          @user.errors.add(:base, "New passwords don't match.  Please re-enter the new password.")
           return render 'edit'
         end
 
@@ -32,7 +32,7 @@ class Account::ProfileController < Account::BaseController
 
       return redirect_to action: 'show' if @user.save
     else
-      flash[:error] = "The password entered is not correct."
+      @user.errors.add(:current_password,  "The current password entered is not correct.")
     end
 
     render 'edit'
@@ -41,7 +41,7 @@ class Account::ProfileController < Account::BaseController
   private
 
   def user_params
-    params.require(:user).permit(:email, :name, :current_password, :password, :password_confirmation)
+    params.require(:user).permit(:email, :name, :phone, :replenishment_amount, :time_zone, :current_password, :password, :password_confirmation)
   end
 
 end
