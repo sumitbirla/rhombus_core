@@ -1,7 +1,7 @@
 require 'pp'
 
 class SessionsController < ApplicationController
-  
+  force_ssl  if Rails.env.production?, only: :new
   layout 'single_column'
   
   def new
