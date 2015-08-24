@@ -10,10 +10,9 @@ class Account::ProfileController < Account::BaseController
 
   def update
     @user = User.find(session[:user_id])
+    @user.assign_attributes(user_params)
 
     if @user && @user.authenticate(user_params[:current_password])
-      @user.email = user_params[:email]
-      @user.name = user_params[:name]
 
       unless user_params[:password].blank?
 
