@@ -26,4 +26,12 @@ class Setting < ActiveRecord::Base
   def cache_key
     "setting:#{domain_id}:#{section}:#{key}"
   end
+  
+  def self.get(section, key)
+    s = Setting.find_by(section: section, key: key)
+    
+    return nil if s.nil?
+    return s.value.to_i if s.value_type == "number"
+    s.value
+  end
 end
