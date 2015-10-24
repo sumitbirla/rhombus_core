@@ -278,7 +278,10 @@
   
 <% elsif params[:q] == "dids" %>
 
-  <% dids = PbxDid.where(user_id: params[:id]).paginate(page: params[:page], per_page: 10) %>
+  <%
+    domain = PbxDomain.find_by(user_id: params[:id])
+    dids = PbxDid.where(pbx_domain_id: domain.id).paginate(page: params[:page], per_page: 10) 
+  %>
 
   <%= will_paginate dids %>
   <table class="table table-striped table-condensed">
@@ -345,7 +348,9 @@
   
 <% elsif params[:q] == "cdr" %>
 
-  <% cdr_list = PbxCdr.where("variables.x_user_id" => params[:id]).desc("variables.start_epoch").paginate(page: params[:page], per_page: 20) %>
+  <%
+     domain = PbxDomain.find_by(user_id: params[:id])
+      cdr_list = PbxCdr.where("variables.x_domain_id" => domain.id).desc("variables.start_epoch").paginate(page: params[:page], per_page: 20) %>
 
   <%= will_paginate cdr_list %>
   <table class="table table-condensed">
@@ -356,9 +361,9 @@
       <th>dnis</th>
       <th>duration</th>
   	<% if Rails.configuration.modules.include?(:callcenter)%>
-      <th>app</th>
-  	<% end %>
       <th>agent</th>
+  	<% end %>
+      <th>app</th>
       <th>hangup</th>
       <th class="actions"></th>
     </tr>
