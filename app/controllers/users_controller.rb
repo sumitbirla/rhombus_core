@@ -106,7 +106,7 @@ class UsersController < ApplicationController
       return render 'new_password'
     end
 
-    @token.user.update_attribute(:password_digest, BCrypt::Password.create(@user.password))
+    @token.user.update(password_digest: BCrypt::Password.create(@user.password), status: :active)
     @token.destroy
 
     flash.now[:notice] = 'Your password has been reset. You may now log in with your new password.'
