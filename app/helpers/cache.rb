@@ -55,7 +55,7 @@ module Cache
   
   def self.category(slug, entity_type) 
     Rails.cache.fetch("category:#{slug}:#{entity_type}") do 
-      Category.includes(:children).where(slug: slug, entity_type: entity_type).first
+      Category.includes(:children).where(slug: slug, entity_type: entity_type).first 
     end
   end
   
