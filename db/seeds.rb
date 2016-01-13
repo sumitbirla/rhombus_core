@@ -47,3 +47,5 @@ Permission.create(section: 'system', resource: 'affiliate', action: 'update')
 Permission.create(section: 'system', resource: 'affiliate', action: 'destroy')
 
 Permission.create(section: 'system', resource: 'login', action: 'read')
+
+Domain.create(name: "Default Domain", url: "http://localhost", default: true)

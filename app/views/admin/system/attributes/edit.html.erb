@@ -1,0 +1,25 @@
+<h2><%= @attribute.name %></h2>
+<hr/>
+
+<%= simple_form_for([:admin, :system, @attribute], html: { class: 'form-inline' }) do |f| %>
+
+  <%= render 'admin/shared/error_messages', object: f.object %>
+  
+  <%= f.hidden_field :entity_type, value: @attribute.entity_type  %>
+  <%= f.input :name, input_html: { class: 'span6' } %>
+  <%= f.input :data_type, as: :select, collection: [:text, :numeric, :selection, :boolean ] %>
+  <%= f.input :metadata, as: :text, input_html: { class: 'span6', rows: 3 } %>
+  <%= f.input :notes, as: :text, input_html: { class: 'span6', rows: 3 } %>
+  <%= f.input :sort %>
+  <%= f.input :hidden %>
+  
+  <%= f.button :submit %>
+
+<% end %>
+
+
+<% content_for :breadcrumbs do %>
+	<li><a href="#">Web Content</a></li>
+	<li><%= link_to @attribute.entity_type.titlecase + ' Attributes', admin_system_attributes_path(type: @attribute.entity_type) %></li>
+	<li class="active"><%= @attribute.name %></li>
+<% end %>

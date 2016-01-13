@@ -59,6 +59,7 @@ Rails.application.routes.draw do
       resources :notifications
       resources :categories
       resources :search_paths
+      resources :attributes
       resources :domains do 
         member do 
           get 'set_current'
