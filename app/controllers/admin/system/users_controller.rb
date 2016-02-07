@@ -4,6 +4,7 @@ class Admin::System::UsersController < Admin::BaseController
   def index
     @users = User.where(domain_id: cookies[:domain_id]).includes(:role).page(params[:page]).order('created_at DESC')
     @users = @users.where("name LIKE '%#{params[:q]}%' OR email LIKE '%#{params[:q]}%'") unless params[:q].nil?
+    @users = @users.where(status: params[:status]) unless params[:status].blank?
     
     respond_to do |format|
       format.html

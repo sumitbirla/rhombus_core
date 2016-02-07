@@ -1,4 +1,6 @@
-<%= link_to "New User", new_admin_system_user_path, class: 'btn btn-sm btn-default pull-right' %>
+<div class="pull-right">
+  <%= link_to "New User", new_admin_system_user_path, class: 'btn btn-sm btn-default' %>
+</div>
 <h2><i class="icon-user"></i> <%= current_domain %> Users</h2>
 
 
@@ -11,6 +13,7 @@
 		<th>Email</th>
 		<th>Role</th>
 		<th>Created</th>
+    <th>Status</th>
 		<th class="actions">&nbsp;</th>
 	</tr>
 	<% @users.each do |user| %>
@@ -19,6 +22,7 @@
 		<td><%= user.email %>
 		<td><%= user.role.name %></td>
 		<td><%= systime user.created_at %></td>
+    <td><%= user.status %></td>
 		<td class="actions">
 			<%= link_to "edit", edit_admin_system_user_path(user) %> &nbsp;
 			<%= link_to "delete", 
