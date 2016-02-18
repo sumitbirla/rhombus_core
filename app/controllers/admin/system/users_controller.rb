@@ -119,6 +119,7 @@ class Admin::System::UsersController < Admin::BaseController
   end
 
   def login
+    reset_session
     session[:user_id] = params[:id]
     redirect_to root_path
   end
