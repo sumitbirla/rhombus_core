@@ -16,14 +16,13 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
-  s.add_dependency "rails4-autocomplete"
   s.add_dependency "bcrypt"
-  s.add_dependency "simple_form", "~> 3.1.0"
+  s.add_dependency "simple_form"
   s.add_dependency "omniauth-facebook"
   s.add_dependency "useragent"
   s.add_dependency "country_select"
   s.add_dependency "countries"
   s.add_dependency "cancan"
-  s.add_dependency "will_paginate", "~> 3.0"
+  s.add_dependency "will_paginate"
   s.add_dependency "bootstrap-will_paginate"
 end
