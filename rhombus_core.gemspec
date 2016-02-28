@@ -16,7 +16,6 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
-  s.add_dependency "rails", "~>4.2.0"
   s.add_dependency "rails4-autocomplete"
   s.add_dependency "bcrypt"
   s.add_dependency "simple_form", "~> 3.1.0"
