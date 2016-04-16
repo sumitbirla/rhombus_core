@@ -24,7 +24,7 @@ Add the following to `config/application.rb`
 2. Create a user and give permission to above database
 3. Modify config/database.yml accordingly
 4. run `rake db:migrate`
-5. Add the following to db/seeds.rb (add lines corresponding to the gems)
+5. Add the following to db/seeds.rb (add lines corresponding to the gems) <br>
 > RhombusCore::Engine.load_seed <br>
 > RhombusCms::Engine.load_seed  <br>
 > RhombusBilling::Engine.load_seed  <br>
