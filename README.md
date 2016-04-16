@@ -14,7 +14,7 @@
 > gem 'rhombus_pbx', git: 'https://github.com/sumitbirla/rhombus_pbx'
 
 ### Configure rails app
-Add the following to config/application.rb
+Add the following to `config/application.rb`
 > config.domain_id = 1 <br>
 > config.modules = [:billing, :cms, :pbx, :store, :ticketing, :marketing]
 
@@ -23,7 +23,7 @@ Add the following to config/application.rb
 1. Create database
 2. Create a user and give permission to above database
 3. Modify config/database.yml accordingly
-4. run 'rake db:migrate'
+4. run `rake db:migrate`
 5. Add the following to db/seeds.rb (add lines corresponding to the gems)
 > RhombusCore::Engine.load_seed <br>
 > RhombusCms::Engine.load_seed  <br>
