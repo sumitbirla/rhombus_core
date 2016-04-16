@@ -1,7 +1,7 @@
 ## Getting Started with Rhombus
 
 ### Create a new Rails app
-  rails new `app_name` -T --skip-sprockets
+  `rails new app_name -T --skip-sprockets`
 
 ### Modify Gemfile to include rhombus engines as needed
 
