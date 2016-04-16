@@ -36,8 +36,8 @@ Add the following to `config/application.rb`
 
 ### Run it
 
-> rails s
-> Open http://localhost:3000/admin 
-> Log in as admin@example.com / password
+> rails s <br>
+> Open http://localhost:3000/admin <br> 
+> Log in as admin@example.com / password <br>
 
 
