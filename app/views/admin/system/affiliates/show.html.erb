@@ -117,7 +117,7 @@
     
     <% mods = Rails.configuration.modules %>
     
-    <ul class="nav nav-tabs" role="tablist">
+    <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 12px;">
       <% if mods.include? :marketing %>
         <li role="presentation" class="<%= "active" if ["campaigns", "", nil].include? params[:q] %>"><a href="<%= admin_system_affiliate_path(@affiliate, q: "campaigns")%>" role="tab">Marketing Campaigns</a></li>
       <% end %>
@@ -152,7 +152,9 @@
           <th></th>
       		<th>Status</th>
       	</tr>
-      	<%= render orders %>
+        <% for o in orders %>
+      	 <%= render 'admin/store/orders/order', order: o %>
+        <% end %>
       </table>
       
       <div class="table-summary">
