@@ -1,7 +1,7 @@
 <h2><%= @attribute.name %></h2>
 <hr/>
 
-<%= simple_form_for([:admin, :system, @attribute], html: { class: 'form-inline' }) do |f| %>
+<%= simple_form_for([:admin, :system, @attribute]) do |f| %>
 
   <%= render 'admin/shared/error_messages', object: f.object %>
   

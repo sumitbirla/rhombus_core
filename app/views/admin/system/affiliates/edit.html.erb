@@ -9,6 +9,8 @@
 
 <%= simple_form_for [:admin, :system, @affiliate] do |f| %>
 
+  <input type="hidden" name="c" value="<%= params[:c] %>">
+
   <%= render 'admin/shared/error_messages', object: f.object %>
   
   <div class="row">

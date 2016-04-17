@@ -62,6 +62,18 @@ class CreateTables < ActiveRecord::Migration
       t.datetime "created_at"
       t.datetime "updated_at"
     end
+    
+    create_table "core_attributes", force: :cascade do |t|
+      t.string   "name",        limit: 255,                 null: false
+      t.string   "entity_type", limit: 255, default: "",    null: false
+      t.string   "notes",       limit: 255
+      t.boolean  "hidden",                  default: false, null: false
+      t.string   "metadata",    limit: 255
+      t.string   "data_type",   limit: 255,                 null: false
+      t.integer  "sort",        limit: 4,                   null: false
+      t.datetime "created_at"
+      t.datetime "updated_at"
+    end
 
     create_table "core_domains", force: :cascade do |t|
       t.string   "name",       limit: 255,                 null: false

@@ -2,7 +2,11 @@ class Admin::System::AffiliatesController < Admin::BaseController
   def index
     @affiliates = Affiliate.order('created_at DESC')
     @affiliates = @affiliates.where("name LIKE '%#{params[:q]}%' OR code = '#{params[:q]}'") unless params[:q].blank?
-    @affiliates = @affiliates.joins(:affiliate_categories).where("core_affiliate_categories.category_id = #{params[:category_id]}") unless params[:category_id].blank?
+    
+    unless params[:c].blank?
+      @category = Category.find_by(slug: params[:c], entity_type: :affiliate)
+      @affiliates = @affiliates.joins(:affiliate_categories).where("core_affiliate_categories.category_id = #{@category.id}") 
+    end
     
     respond_to do |format|
       format.html { @affiliates = @affiliates.page(params[:page]) }
@@ -18,6 +22,10 @@ class Admin::System::AffiliatesController < Admin::BaseController
   def create
     @affiliate = Affiliate.new(affiliate_params)
     if @affiliate.save
+      unless params[:c].blank?
+        c = Category.find_by(entity_type: :affiliate, slug: params[:c])
+        AffiliateCategory.create(affiliate_id: @affiliate.id, category_id: c.id) unless c.nil?
+      end
       redirect_to action: 'show', id: @affiliate.id, notice: 'Affiliate was successfully created.'
     else
       render 'edit'

@@ -1,12 +1,12 @@
 <div class="pull-right">
 	<form style="display: inline-block; margin-right: 20px;" action="" method="get" id="category-form">
-		  <%= select_tag("category_id", options_from_collection_for_select(Category.where(entity_type: "affiliate"), :id, :name, params[:category_id]), include_blank: '- all affiliates -') %>
+		  <%= select_tag("c", options_from_collection_for_select(Category.where(entity_type: "affiliate"), :slug, :name, params[:c]), include_blank: '- all affiliates -') %>
 	</form>
-  <%= link_to "new affiliate", new_admin_system_affiliate_path, class: 'btn btn-sm btn-default' %>
+  <%= link_to "new affiliate", new_admin_system_affiliate_path(c: params[:c]), class: 'btn btn-sm btn-default' %>
   <%= link_to "setup categories", admin_system_categories_path(type: :affiliate), class: 'btn btn-sm btn-default' %>
 </div>
 
-<h2>Affiliates</h2>
+<h2><%= @category.nil? ? "Affiliates" : @category.name %></h2>
 
 <%= render "admin/shared/search_results_header", object: @affiliates %>
 
