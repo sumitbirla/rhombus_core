@@ -1,4 +1,4 @@
-<h2><%= @setting.section %>: <%= @setting.key%></h2>
+<h2><i class="fa fa-check-square-o"></i> <%= @setting.section %>: <%= @setting.key%></h2>
 <hr/>
 
 <%= simple_form_for [:admin, :system, @setting ]  do |f| %>

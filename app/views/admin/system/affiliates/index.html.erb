@@ -6,7 +6,7 @@
   <%= link_to "setup categories", admin_system_categories_path(type: :affiliate), class: 'btn btn-sm btn-default' %>
 </div>
 
-<h2><%= @category.nil? ? "Affiliates" : @category.name %></h2>
+<h2><i class="fa fa-rocket"></i> <%= @category.nil? ? "Affiliates" : @category.name %></h2>
 
 <%= render "admin/shared/search_results_header", object: @affiliates %>
 

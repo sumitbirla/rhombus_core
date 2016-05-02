@@ -6,9 +6,9 @@
 #  name        :string(255)      not null
 #  entity_type :string(255)      default(""), not null
 #  parent_id   :integer
-#  hidden      :boolean          default(FALSE), not null
+#  hidden      :boolean          default("0"), not null
 #  slug        :string(255)      not null
-#  sort        :integer          default(0), not null
+#  sort        :integer          default("0"), not null
 #  desc1       :text(65535)
 #  desc2       :text(65535)
 #  desc3       :text(65535)

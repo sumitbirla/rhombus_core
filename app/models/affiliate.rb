@@ -6,8 +6,8 @@
 #  name           :string(255)      not null
 #  code           :string(255)
 #  slug           :string(255)      default(""), not null
-#  featured       :boolean          default(FALSE), not null
-#  active         :boolean          default(FALSE), not null
+#  featured       :boolean          default("0"), not null
+#  active         :boolean          default("0"), not null
 #  tax_id         :string(255)
 #  contact_person :string(255)
 #  street1        :string(255)
@@ -27,6 +27,7 @@
 #  summary        :text(65535)
 #  created_at     :datetime
 #  updated_at     :datetime
+#  price_formula  :string(255)
 #
 
 class Affiliate < ActiveRecord::Base

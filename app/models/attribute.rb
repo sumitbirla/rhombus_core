@@ -6,7 +6,7 @@
 #  name        :string(255)      not null
 #  entity_type :string(255)      default(""), not null
 #  notes       :string(255)
-#  hidden      :boolean          default(FALSE), not null
+#  hidden      :boolean          default("0"), not null
 #  metadata    :string(255)
 #  data_type   :string(255)      not null
 #  sort        :integer          not null
