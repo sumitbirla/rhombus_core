@@ -35,6 +35,7 @@ class Affiliate < ActiveRecord::Base
   
   has_many :affiliate_categories
   has_many :categories, through: :affiliate_categories
+  has_many :extra_properties, -> { order "sort, name" }, as: :extra_property
   validates_presence_of :name, :street1, :city, :state, :zip, :country, :contact_person, :email
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
   validates_uniqueness_of :name

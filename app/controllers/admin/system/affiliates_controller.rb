@@ -55,6 +55,11 @@ class Admin::System::AffiliatesController < Admin::BaseController
     redirect_to action: 'index', notice: 'Affiliate has been deleted.'
   end
   
+  def extra_properties
+    @affiliate = Affiliate.find(params[:id])
+    5.times { @affiliate.extra_properties.build }
+  end
+  
   def categories
     @affiliate = Affiliate.find(params[:id])
   end

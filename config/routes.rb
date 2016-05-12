@@ -48,7 +48,8 @@ Rails.application.routes.draw do
       end
       resources :affiliates do
         member do
-          get 'categories' => 'affiliates#categories'
+          get 'extra_properties'
+          get 'categories'
           post 'categories' => 'affiliates#create_categories'
         end
       end
@@ -60,6 +61,7 @@ Rails.application.routes.draw do
       resources :categories
       resources :search_paths
       resources :attributes
+      resources :extra_properties
       resources :domains do 
         member do 
           get 'set_current'

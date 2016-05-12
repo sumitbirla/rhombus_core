@@ -1,0 +1,21 @@
+<%= form_tag('/admin/system/extra_properties') do %>
+
+  <input type="hidden" name="redirect", value="<%= redirect %>">
+  <button class="btn btn-primary">Submit Changes</button>
+  
+  <div class="row">
+    <% for ep in object.extra_properties%>
+      <div class="col-md-6 col-sm-12" style="padding: 12px;">
+        <input type="hidden" name="extra_properties[][id]" value="<%= ep.id %>">
+        <input type="hidden" name="extra_properties[][extra_property_id]" value="<%= ep.extra_property_id %>">
+        <input type="hidden" name="extra_properties[][extra_property_type]" value="<%= ep.extra_property_type %>">
+        <input type="text" name="extra_properties[][name]" value="<%= ep.name %>" class="form-control" style="font-weight: bold; background-color: #eee">
+        <textarea name="extra_properties[][value]" class="form-control" rows="6"><%= ep.value %></textarea>
+        <input type="number" name="extra_properties[][sort]" value="<%= ep.sort %>"class="form-control numeric" >
+      </div>
+    <% end %>
+  </div>
+
+  <button class="btn btn-primary">Submit Changes</button>
+
+<% end %>

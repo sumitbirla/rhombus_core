@@ -1,0 +1,24 @@
+<h2><i class="fa fa-rocket"></i> <%= @affiliate.name %></h2>
+
+
+<ul class="nav nav-tabs">
+  <li><%= link_to "Summary", edit_admin_system_affiliate_path(@affiliate) %></li> 
+  <li><%= link_to "Categories", categories_admin_system_affiliate_path(@affiliate) %></li>
+  <li class="active"><%= link_to "Extra Properties", '#' %></li>
+</ul>
+
+<%= render 'admin/shared/extra_properties_list', object: @affiliate, redirect: admin_system_affiliate_path(@affiliate) %>
+
+
+
+<%= content_for :title do %>
+	Affiliates: <%= @affiliate.name %>
+<% end %>
+
+
+<% content_for :breadcrumbs do %>
+	<li><a href="#">System</a></li>
+	<li><%= link_to "Affiliates", admin_system_affiliates_path %></li>
+	<li><%= link_to @affiliate.name, admin_system_affiliate_path(@affiliate) %></li>
+	<li class="active">edit</li>
+<% end %>
