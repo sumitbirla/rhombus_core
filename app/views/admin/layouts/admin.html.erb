@@ -23,50 +23,8 @@
 	  <script src="//cdn5.io/js/rails.js"></script>
 
 	  <%= csrf_meta_tags %>
-	  
-	  <style>
-      body { font-size: 10pt; }
-      #page-wrapper { padding-bottom: 20px; }
-        .light { color: #ccc; }
-        a.dropdown-toggle { color: #ccc; }
-        ul { list-style-type: none; }
-        table td { font-size: 10pt; }
-        .form-horizontal .control-label { width: 120px; }
-        .boolean div label { display: inline;}
-        
-        .numeric { width: 100px; }
-		    .short { width: 10%; }
-        form.categories ul { list-style-type: none;}
-        form.categories li { margin: 5px; }
-        .table-condensed { margin-top: 10px; }
-        .navbar-static-top .navbar-brand { color: #ccc; }
-        .navbar-static-top .navbar-top-links { color: #ccc; }
-        .navbar-static-top {  background-color: #333; }
-        .nav>li>a { padding-top: 4px; padding-bottom: 6px; }
-        .pagination { margin-bottom: 10px; }
-		    .breadcrumb { margin-top: 12px; padding: 0 0 4px 0; background-color: transparent; border-bottom: solid 1px #eee; }
-        .ralign { text-align: right; }
-        .calign { text-align: center; }
-        table.items td.dark-border { border-top: solid 1px #333; }
-        table.summary>tbody>tr>td:nth-child(1) { font-weight: bold; font-size: 0.85em; text-align: right; padding-right: 12px; background-color: #f9f9f9; }
-		    .pagination { margin: 0;}
-		    .table-summary { color: #999; }
-        #waveform { border: solid 1px #ccc; margin-bottom: 8px; height: 128px; }
-        .date-field { background: url(/rhombus_core/datepicker/img/calendar.png) no-repeat 95% center; width: 160px;  }
-        .datetime-field { background: url(/rhombus_core/datepicker/img/calendar.png) no-repeat 95% center; width: 220px;  }
-        
-        /* Sortable columns */
-        th .current { padding-right: 12px; background-repeat: no-repeat; background-position: right center; }
-        th .asc { background-image: url(/rhombus_core/img/up-arrow.gif); }
-        th .desc { background-image: url(/rhombus_core/img/down-arrow.gif); }
-        
-        @media print {
-         .sidebar, .breadcrumb, table .actions, nav { display: none;} 
-         #page-wrapper { margin: 0; padding: 0;}
-       }
-      </style>
-      
-      <script>
+
+    <script>
   
       /*var wavesurfer = Object.create(WaveSurfer);
     	var wavesurfer_initialized = false;*/
