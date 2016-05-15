@@ -1,3 +1,7 @@
+<style>
+input.boolean { margin: 0; }
+</style>
+
 <h2><i class="fa fa-rocket"></i> <%= @affiliate.name %></h2>
 
 <% unless @affiliate.id.nil? %>
@@ -44,10 +48,11 @@
   	  <%= f.input :fax %>
   	  <%= f.input :email %>
   	  <%= f.input :website %>
-      <%= f.input :facebook_page %>
       <%= f.input :payment_terms %>
       <%= f.input :price_formula %>
       <%= f.input :tax_id, label: "Tax ID" %>
+      <%= f.input :ftp_username, label: "FTP Login" %>
+      <%= f.input :ftp_password, as: :string, label: "FTP Passwd" %>
     </div>
 
     <div class="col-md-12">
@@ -89,6 +94,13 @@ end %>
 <% content_for :head do %>
 	<script type="text/javascript" src="/ckfinder/ckfinder.js"></script>
 	<script>
+
+<% unless @affiliate.persisted? %>
+    $(document).ready(function() {
+      $("#affiliate_name").select();
+    });
+<% end %>
+
 	function BrowseServer()
 	{
 		// You can use the "CKFinder" class to render CKFinder in a page:
@@ -105,3 +117,4 @@ end %>
 	}
 	</script>
 <% end %>
+

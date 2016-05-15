@@ -114,13 +114,16 @@
 
 
     <ul class="nav navbar-top-links navbar-right">
+    <% domains = Cache.domains %>
+    <% if domains.length > 1 %>
     <li>
       <select name="domain_id" id="domain-selector">
-      <% Cache.domains.each do |domain| %>
-        <option value="<%= domain.id %>" <%= "selected" if cookies["domain_id"] == domain.id.to_s %>><%= domain.name %></option>
+      <% domains.each do |d| %>
+        <option value="<%= d.id %>" <%= "selected" if cookies["domain_id"] == d.id.to_s %>><%= d.name %></option>
       <% end %>
       </select>
     </li>
+    <% end %>
     <!-- /.dropdown -->
     <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">

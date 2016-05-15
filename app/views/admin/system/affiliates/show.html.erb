@@ -53,12 +53,6 @@
 		    <td><%= link_to @affiliate.website, @affiliate.website %> </td>
 		  </tr>
 		  <% end %>
-		  <% unless @affiliate.facebook_page.blank? %>
-		  <tr>
-		  	<td>Facebook</td>
-		    <td><%= link_to @affiliate.facebook_page, @affiliate.facebook_page %> </td>
-		  </tr>
-		  <% end %>
 		  <% unless @affiliate.payment_terms.blank? %>
 		  <tr>
 		  	<td>Payment terms</td>
@@ -71,6 +65,12 @@
 		    <td><%= raw @affiliate.description.gsub("\n", "<br>") %> </td>
 		  </tr>
 		  <% end %>
+		  <% unless @affiliate.ftp_username.blank? %>
+		  <tr>
+		  	<td>FTP Credentials</td>
+		    <td><code><%= @affiliate.ftp_username %> : <%= @affiliate.ftp_password %></code></td>
+		  </tr>
+		  <% end %>
 		</table>
     
     <% if @affiliate.extra_properties.length > 0 %>
@@ -78,7 +78,7 @@
     <table class="table table-condensed table-bordered summary">
     	<% @affiliate.extra_properties.each do |ep| %>
     	<tr>
-    		<td><%= ep.name %></td>
+    		<td width="160"><%= ep.name %></td>
     		<td><%= ep.value %></td>
     	</tr>
     	<% end %>

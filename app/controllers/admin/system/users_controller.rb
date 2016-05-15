@@ -13,7 +13,13 @@ class Admin::System::UsersController < Admin::BaseController
   end
 
   def new
-    @user = User.new name: 'New user', role_id: Role.find_by(default: true).id, referral_key: SecureRandom.hex(5)
+    @user = User.new(
+                  name: 'New user', 
+                  domain_id: Rails.configuration.domain_id,
+                  time_zone: Cache.setting(Rails.configuration.domain_id, :system, 'Time Zone'),
+                  role_id: Role.find_by(default: true).id, 
+                  referral_key: SecureRandom.hex(5), 
+                  status: :active )
     render 'edit'
   end
 
@@ -62,6 +68,11 @@ class Admin::System::UsersController < Admin::BaseController
     @user = User.find(params[:id])
     @user.destroy
     redirect_to action: 'index', notice: 'User has been deleted.'
+  end
+  
+  def extra_properties
+    @user = User.find(params[:id])
+    5.times { @user.extra_properties.build }
   end
   
   def orders

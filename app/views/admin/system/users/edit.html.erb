@@ -1,7 +1,13 @@
 <h2><i class="fa fa-user"></i> &nbsp;<%= @user.name %></h2>
-<hr/>
 
 <%= render 'admin/shared/error_messages', object: @user %>
+
+<% if @user.persisted? %>
+<ul class="nav nav-tabs" style="margin-bottom: 20px;">
+  <li class="active"><a href="#">Edit</a></li>
+  <li><%= link_to "Extra Properties", extra_properties_admin_system_user_path(@user) %></li>
+</ul>
+<% end %>
 
 <%= simple_form_for [:admin, :system,  @user] do |f| %>
 
@@ -27,8 +33,6 @@
     <%= f.input :locale %>
     <%= f.input :location %>
     <%= f.input :time_zone %>
-    <%= f.input :data1 %>
-    <%= f.input :data2 %>
   
     <div class="form-group string optional password">
       <label class="string optional col-sm-3 control-label" for="password">Password</label>
@@ -65,4 +69,15 @@ end %>
 	    <li><%= link_to @user.name, admin_system_user_path(@user) %></li>
 	    <li class="active">edit</li>
     <% end %>
+<% end %>
+
+
+<% content_for :head do %>
+  <% unless @user.persisted? %>
+    <script>
+      $(document).ready(function() {
+        $("#user_name").select();
+      });
+    </script>
+  <% end %>
 <% end %>

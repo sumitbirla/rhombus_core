@@ -34,6 +34,7 @@ require 'bcrypt'
 
 class User < ActiveRecord::Base
   self.table_name = 'core_users'
+  has_many :extra_properties, -> { order "sort, name" }, as: :extra_property
   
   attr_accessor :password, :password_confirmation, :current_password
 

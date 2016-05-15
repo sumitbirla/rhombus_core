@@ -1,3 +1,5 @@
+require 'phone'
+
 module HtmlHelper
   
   def tick(obj)
@@ -23,6 +25,11 @@ module HtmlHelper
     css_class = column == sort_column ? "current #{sort_direction}" : nil
     direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
     link_to title, params.merge(:sort => column, :direction => direction, :page => nil), {:class => css_class}
+  end
+  
+  def formatted_phone(number)
+    pn = Phoner::Phone.parse("+" + number.sub("+", ""))
+    pn.nil? ? number : pn.format("+%c (%a) %n")
   end
   
 end

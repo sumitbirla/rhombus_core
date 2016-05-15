@@ -33,6 +33,8 @@
 class Affiliate < ActiveRecord::Base
   self.table_name = 'core_affiliates'
   
+  before_save :normalize_ftp_username
+  
   has_many :affiliate_categories
   has_many :categories, through: :affiliate_categories
   has_many :extra_properties, -> { order "sort, name" }, as: :extra_property
@@ -45,6 +47,10 @@ class Affiliate < ActiveRecord::Base
   
   def to_s
     name
+  end
+  
+  def normalize_ftp_username
+    self.ftp_username = ftp_username.downcase.gsub(" ", "")
   end
   
   def self.to_csv

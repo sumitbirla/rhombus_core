@@ -1,0 +1,22 @@
+<h2><i class="fa fa-user"></i> <%= @user.name %></h2>
+
+<ul class="nav nav-tabs">
+  <li><%= link_to "Edit", edit_admin_system_user_path(@user) %></li>
+  <li class="active"><%= link_to "Extra Properties", '#' %></li>
+</ul>
+
+<%= render 'admin/shared/extra_properties_list', object: @user, redirect: admin_system_user_path(@user) %>
+
+
+
+<% content_for :title do %>
+	Users: <%= @user.name %>
+<% end %>
+
+
+<% content_for :breadcrumbs do %>
+	<li><a href="#">System</a></li>
+	<li><%= link_to "Users", admin_system_users_path %></li>
+	<li><%= link_to @user.name, admin_system_user_path(@user) %></li>
+	<li class="active">edit</li>
+<% end %>

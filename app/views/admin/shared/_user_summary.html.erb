@@ -39,7 +39,7 @@
 		  <% unless user.phone.blank? %>
 		  <tr>
 		  	<td>Phone Number</td>
-		    <td><a href="tel:<%= user.phone %>"><%= user.phone %></a></td>
+		    <td><a href="tel:<%= user.phone %>"><%= formatted_phone(user.phone) %></a></td>
 		  </tr>
 		  <% end %>
 		  <% unless user.birth_date.nil? %>
@@ -114,3 +114,16 @@
 		</table>
 	</div>
 </div>
+
+<% if user.extra_properties.length > 0 %>
+<h4>Extra Properties</h4>
+<table class="table table-condensed table-bordered summary">
+	<% user.extra_properties.each do |ep| %>
+	<tr>
+		<td width="160"><%= ep.name %></td>
+		<td><%= ep.value %></td>
+	</tr>
+	<% end %>
+</table>
+<hr/>
+<% end %>

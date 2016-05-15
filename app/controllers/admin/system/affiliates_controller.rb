@@ -15,7 +15,7 @@ class Admin::System::AffiliatesController < Admin::BaseController
   end
 
   def new
-    @affiliate = Affiliate.new name: 'New affiliate'
+    @affiliate = Affiliate.new(name: 'New affiliate', active: true, country: Cache.setting(:system, "Default Country"))
     render 'edit'
   end
 

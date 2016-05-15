@@ -15,6 +15,7 @@
   <tr>
 	<th>Name</th>
 	<th>Contact person</th>
+  <th>Phone</th>
 	<th>Location</th>
 	<th class="actions">&nbsp;</th>
   </tr>
@@ -22,6 +23,7 @@
     <tr>
 	  <td><%= link_to affiliate.name, admin_system_affiliate_path(affiliate) %></td>
 	  <td><%= affiliate.contact_person %></td>
+    <td><%= affiliate.phone %></td>
 	  <td><%= affiliate.city %>, <%= affiliate.state %></td>
 	  <td class="actions">
 	  	<%= link_to "edit", edit_admin_system_affiliate_path(affiliate) %> &nbsp; 
