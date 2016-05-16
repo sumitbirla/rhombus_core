@@ -7,7 +7,11 @@ module ImageHelper
       path = pic.file_path
     end
 
-    Cache.setting(Rails.configuration.domain_id, :system, 'Static Files Url') + "/cache/#{width}x#{height}-#{mode}" + path
+    if path.starts_with?("http")
+      return path
+    else
+      return Cache.setting(Rails.configuration.domain_id, :system, 'Static Files Url') + "/cache/#{width}x#{height}-#{mode}" + path
+    end
   end
   
 end
