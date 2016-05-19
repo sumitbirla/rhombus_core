@@ -79,5 +79,23 @@ class User < ActiveRecord::Base
 	def normalize_phone
 	  self.phone.gsub!(/\D/, '') unless self.phone.nil?
 	end
+  
+  def get_property(name)
+    a = extra_properties.find { |x| x.name == name }
+    a.nil? ? "" : a.value
+  end
+  
+  def set_property(name, value)
+    a = extra_properties.find { |x| x.name == name }
+    if a.nil?
+      self.extra_properties.build(name: name, value: value) unless value.blank?
+    else
+      if value.blank?
+        a.destroy
+      else
+        a.value = value
+      end
+    end
+  end
 
 end
