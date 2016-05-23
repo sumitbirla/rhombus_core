@@ -33,8 +33,8 @@ module HtmlHelper
   end
   
   def formatted_phone(number)
-    pn = Phoner::Phone.parse("+" + number.sub("+", ""))
-    pn.nil? ? number : pn.format("+%c (%a) %n")
+    pn = Phoner::Phone.parse("+1" + number.sub("+", ""))
+    pn.nil? ? number : pn.format(:us)
   end
   
 end

@@ -87,6 +87,7 @@
   	</tr>
   	<% end %>
   </table>
+  <%= link_to "new autoship item", new_admin_store_auto_ship_item_path(user_id: params[:id]), class: "btn btn-default btn-sm" %>
 
 <% elsif params[:q] == "tickets" %>
 
