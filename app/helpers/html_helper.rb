@@ -3,7 +3,12 @@ require 'phone'
 module HtmlHelper
   
   def tick(obj)
-    "&#10004;".html_safe if obj
+    if obj
+      str = "&#10004;"
+    else
+      str = "<span class='light'> - </span>"
+    end
+    str.html_safe
   end
   
   def duration(h, val)

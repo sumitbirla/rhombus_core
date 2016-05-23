@@ -38,8 +38,8 @@ class Affiliate < ActiveRecord::Base
   has_many :affiliate_categories
   has_many :categories, through: :affiliate_categories
   has_many :extra_properties, -> { order "sort, name" }, as: :extra_property
-  validates_presence_of :name, :street1, :city, :state, :zip, :country, :contact_person, :email
-  validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+  validates_presence_of :name
+  validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, unless: Proc.new { |a| a.email.blank? }
   validates_uniqueness_of :name
   
   # following used only during signup (not stored in database)
@@ -50,7 +50,7 @@ class Affiliate < ActiveRecord::Base
   end
   
   def normalize_ftp_username
-    self.ftp_username = ftp_username.downcase.gsub(" ", "")
+    self.ftp_username = ftp_username.downcase.gsub(" ", "") unless ftp_username.blank?
   end
   
   def self.to_csv
