@@ -196,6 +196,7 @@
     		<%= render "admin/shared/marketing_menu" if Rails.configuration.modules.include?(:marketing) %>
     		<%= render "admin/shared/pbx_menu" if Rails.configuration.modules.include?(:pbx) %>
     		<%= render "admin/shared/ticketing_menu" if Rails.configuration.modules.include?(:ticketing) %>
+        <%= render "admin/shared/edi_menu" if Rails.configuration.modules.include?(:edi) %>
         <%= render "admin/shared/system_menu" %>
       </ul>
 
