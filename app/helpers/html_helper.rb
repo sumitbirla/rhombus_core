@@ -37,4 +37,9 @@ module HtmlHelper
     pn.nil? ? number : pn.format(:us)
   end
   
+  def tab_count(name, count)
+    return name if count == 0
+    "#{name} (#{number_with_delimiter count})"
+  end
+  
 end
