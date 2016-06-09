@@ -39,7 +39,7 @@
 		  <% unless user.phone.blank? %>
 		  <tr>
 		  	<td>Phone Number</td>
-		    <td><a href="tel:<%= user.phone %>"><%= formatted_phone(user.phone) %></a></td>
+		    <td><a href="tel:<%= user.phone %>"><%= user.phone %></a></td>
 		  </tr>
 		  <% end %>
 		  <% unless user.birth_date.nil? %>
