@@ -12,6 +12,7 @@ class Admin::BaseController < ActionController::Base
   helper_method :current_user
   helper_method :systime
   helper_method :sysdate
+  helper_method :sort_column, :sort_direction
 
   private
   
