@@ -2,8 +2,13 @@ class Admin::System::UsersController < Admin::BaseController
   skip_before_filter :require_login, only: :password_reset
 
   def index
-    @users = User.where(domain_id: cookies[:domain_id]).includes(:role).page(params[:page]).order('created_at DESC')
-    @users = @users.where("name LIKE '%#{params[:q]}%' OR email LIKE '%#{params[:q]}%'") unless params[:q].nil?
+    @users = User.where(domain_id: cookies[:domain_id])
+                 .includes(:role)
+                 .joins(:role)
+                 .order(sort_column + " " + sort_direction)
+                 .page(params[:page])
+                 
+    @users = @users.where("core_users.name LIKE '%#{params[:q]}%' OR email LIKE '%#{params[:q]}%'") unless params[:q].nil?
     @users = @users.where(status: params[:status]) unless params[:status].blank?
     
     respond_to do |format|
@@ -182,6 +187,14 @@ class Admin::System::UsersController < Admin::BaseController
   
     def user_params
       params.require(:user).permit!
+    end
+    
+    def sort_column
+      params[:sort] || "core_users.created_at"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
     end
   
 end

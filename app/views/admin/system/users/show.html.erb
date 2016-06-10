@@ -1,35 +1,85 @@
-<%=  render partial: 'admin/shared/user_summary', locals: { user: @user } %>
+<div class="pull-right">
+  <%= link_to welcome_email_admin_system_user_path(@user), class: "btn btn-default btn-sm" do %>
+    <i class="fa fa-envelope"></i> welcome email
+  <% end %> &nbsp;
+  <%= link_to login_admin_system_user_path(@user), class: "btn btn-default btn-sm" do %> 
+    <i class="fa fa-user"></i> login as
+  <% end %> &nbsp;
+  <%= link_to "edit", edit_admin_system_user_path(@user), class: "btn btn-default btn-sm" %>
+</div>
 
-<% mods = Rails.configuration.modules %>
+<h2>
+  <% if @user.avatar_url.blank? %>
+      <i class="fa fa-user"></i>
+  <% else %>
+      <%= image_tag @user.avatar_url, size: "50x50" %>
+  <% end %>
+  <%= @user.name %>
+</h2>
+
+<hr>
+
+
+<% 
+  mods = Rails.configuration.modules 
+  login_count = Login.where(user_id: @user.id).count
+%>
 
 <ul class="nav nav-tabs" role="tablist">
-  <li class="<%= "active" if ["logins", "", nil].include? params[:q] %>"><a href="<%= admin_system_user_path(@user, q: "logins")%>" role="tab">Logins</a></li>
+  <li class="<%= "active" if params[:q].blank? %>"><a href="<%= admin_system_user_path(@user)%>" role="tab">Summary</a></li>
   <% if mods.include? :store %>
-  <li class="<%= "active" if params[:q] == "orders" %>"><a href="<%= admin_system_user_path(@user, q: "orders")%>" role="tab">Orders</a></li>
-  <li class="<%= "active" if params[:q] == "autoship" %>"><a href="<%= admin_system_user_path(@user, q: "autoship")%>" role="tab">Auto Ship</a></li>
+  <% 
+    order_count = Order.where(user_id: @user.id).count
+    asi_count = AutoShipItem.where(user_id: @user.id).count
+  %>
+  <li class="<%= "active" if params[:q] == "orders" %>"><a href="<%= admin_system_user_path(@user, q: "orders")%>" role="tab"><%= tab_count "Orders", order_count %></a></li>
+  <li class="<%= "active" if params[:q] == "autoship" %>"><a href="<%= admin_system_user_path(@user, q: "autoship")%>" role="tab"><%= tab_count "Auto Ship", asi_count %></a></li>
   <% end %>
   
   <% if mods.include? :ticketing %>
-  <li class="<%= "active" if params[:q] == "tickets" %>"><a href="<%= admin_system_user_path(@user, q: "tickets")%>" role="tab">Tickets</a></li>
+  <% ticket_count = Case.where(user_id: @user.id).count %>
+  <li class="<%= "active" if params[:q] == "tickets" %>"><a href="<%= admin_system_user_path(@user, q: "tickets")%>" role="tab"><%= tab_count "Tickets", ticket_count %></a></li>
   <% end %>
   
   <% if mods.include?  :cms%>
-  <li class="<%= "active" if params[:q] == "pictures" %>"><a href="<%= admin_system_user_path(@user, q: "pictures")%>" role="tab">Photos</a></li>
-  <li class="<%= "active" if params[:q] == "locations" %>"><a href="<%= admin_system_user_path(@user, q: "locations")%>" role="tab">Locations</a></li>
+  <% 
+    pic_count = Picture.where(user_id: @user.id).count
+    loc_count = Location.where(user_id: @user.id).count
+  %>
+  <li class="<%= "active" if params[:q] == "pictures" %>"><a href="<%= admin_system_user_path(@user, q: "pictures")%>" role="tab"><%= tab_count "Photos", pic_count %></a></li>
+  <li class="<%= "active" if params[:q] == "locations" %>"><a href="<%= admin_system_user_path(@user, q: "locations")%>" role="tab"><%= tab_count "Locations", loc_count %></a></li>
   <% end %>
   
   <% if mods.include? :billing %>
-  <li class="<%= "active" if params[:q] == "cc" %>"><a href="<%= admin_system_user_path(@user, q: "cc")%>" role="tab">CC</a></li>
-  <li class="<%= "active" if params[:q] == "payments" %>"><a href="<%= admin_system_user_path(@user, q: "payments")%>" role="tab">Payments</a></li>
-  <li class="<%= "active" if params[:q] == "subs" %>"><a href="<%= admin_system_user_path(@user, q: "subs")%>" role="tab">Subscriptions</a></li>
+  <% 
+    cc_count = PaymentMethod.where(user_id: @user.id).count
+    pmt_count = Payment.where(user_id: @user.id).count
+    sub_count = UserPackage.where(user_id: @user.id).count
+  %>
+  <li class="<%= "active" if params[:q] == "cc" %>"><a href="<%= admin_system_user_path(@user, q: "cc")%>" role="tab"><%= tab_count "CC", cc_count %></a></li>
+  <li class="<%= "active" if params[:q] == "payments" %>"><a href="<%= admin_system_user_path(@user, q: "payments")%>" role="tab"><%= tab_count "Payments", pmt_count %></a></li>
+  <li class="<%= "active" if params[:q] == "subs" %>"><a href="<%= admin_system_user_path(@user, q: "subs")%>" role="tab"><%= tab_count "Subscriptions", sub_count %></a></li>
   <% end %>
   
   <% if mods.include? :pbx %>
+  <% 
+    pbx_domain = PbxDomain.find(user_id: @user.id)
+    if pbx_domain
+      did_count = PbxDid.where(pbx_domain_id: pbx_domain.id).count
+      vm_count = VmMessage.where(pbx_domain_id: pbx_domain.id).count
+      cdr_count = PbxCdr.where(pbx_domain_id: pbx_domain.id).count
+  %>
   <li class="<%= "active" if params[:q] == "dids" %>"><a href="<%= admin_system_user_path(@user, q: "dids")%>" role="tab">DID's</a></li>
   <li class="<%= "active" if params[:q] == "vm" %>"><a href="<%= admin_system_user_path(@user, q: "vm")%>" role="tab">Voicemail</a></li>
   <li class="<%= "active" if params[:q] == "cdr" %>"><a href="<%= admin_system_user_path(@user, q: "cdr")%>" role="tab">CDR</a></li>
   <% end %>
+  <% end %>
+  <li class="<%= "active" if params[:q] == "logins" %>"><a href="<%= admin_system_user_path(@user, q: "logins")%>" role="tab"><%= tab_count "Logins", login_count %></a></li>
 </ul>
+
+<% if params[:q].blank? %>
+  <%=  render partial: 'admin/shared/user_summary', locals: { user: @user } %>
+<% end %>
 
 <% if params[:q] == "orders" 
   orders = Order.where(user_id: params[:id]).where.not(status: "in cart").order(submitted: :desc).paginate(page: params[:page], per_page: 10) %>
@@ -400,7 +450,7 @@
     <% end %>
   </table>
 
-<% else %>
+<% elsif params[:q] == "logins" %>
 
   <% logins = Login.where(user_id: @user.id).paginate(page: params[:page], per_page: 10).order(timestamp: :desc) %>
   

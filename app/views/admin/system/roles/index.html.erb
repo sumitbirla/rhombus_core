@@ -3,6 +3,7 @@
 
 <table class="table table-striped table-condensed">
 	<tr>
+    <th>ID</th>
 		<th>Name</th>
 		<th>Is default</th>
 		<th>Is super user</th>
@@ -11,6 +12,7 @@
 	</tr>
 	<% @roles.each do | role | %>
 	<tr>
+    <td><%= role.id %></td>
 		<td><%= link_to role.name, edit_admin_system_role_path(role) %></td>
 		<td><%= raw tick role.default %></td>
 		<td><%= raw tick role.super_user %></td>

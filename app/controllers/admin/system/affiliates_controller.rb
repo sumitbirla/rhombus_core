@@ -1,6 +1,6 @@
 class Admin::System::AffiliatesController < Admin::BaseController
   def index
-    @affiliates = Affiliate.order('created_at DESC')
+    @affiliates = Affiliate.order(sort_column + " " + sort_direction)
     @affiliates = @affiliates.where("name LIKE '%#{params[:q]}%' OR code = '#{params[:q]}'") unless params[:q].blank?
     
     unless params[:c].blank?
@@ -94,7 +94,15 @@ class Admin::System::AffiliatesController < Admin::BaseController
 
   private
   
-  def affiliate_params
-    params.require(:affiliate).permit!
-  end
+    def affiliate_params
+      params.require(:affiliate).permit!
+    end
+  
+    def sort_column
+      params[:sort] || "name"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
 end

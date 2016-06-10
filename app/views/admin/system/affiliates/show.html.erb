@@ -34,7 +34,11 @@
 	<div class="col-md-8">
 		<table class="table table-bordered table-condensed summary">
 		  <tr>
-		    <td width="160">Name</td>
+		    <td width="160">ID</td>
+		    <td><%= @affiliate.id %> </td>
+		  </tr>
+		  <tr>
+		    <td>Name</td>
 		    <td><%= @affiliate.name %> </td>
 		  </tr>
 		  <% unless @affiliate.slug.blank? %>
