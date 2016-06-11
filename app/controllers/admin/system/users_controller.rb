@@ -10,6 +10,7 @@ class Admin::System::UsersController < Admin::BaseController
                  
     @users = @users.where("core_users.name LIKE '%#{params[:q]}%' OR email LIKE '%#{params[:q]}%'") unless params[:q].nil?
     @users = @users.where(status: params[:status]) unless params[:status].blank?
+    @users = @users.where(role_id: params[:role_id]) unless params[:role_id].blank?
     
     respond_to do |format|
       format.html
@@ -190,7 +191,7 @@ class Admin::System::UsersController < Admin::BaseController
     end
     
     def sort_column
-      params[:sort] || "core_users.created_at"
+      params[:sort] || "core_users.id"
     end
 
     def sort_direction

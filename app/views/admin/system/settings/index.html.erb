@@ -1,4 +1,6 @@
-<%= link_to "new setting", new_admin_system_setting_path, class: 'btn btn-sm btn-default pull-right' %>
+<%= link_to new_admin_system_setting_path, class: 'btn btn-sm btn-default pull-right' do %>
+  <i class="fa fa-plus"></i> New setting
+<% end %>
 <h2><i class="fa fa-check-square-o"></i> <%= current_domain %> Settings</h2>
 
 
