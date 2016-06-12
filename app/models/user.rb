@@ -33,6 +33,8 @@
 require 'bcrypt'
 
 class User < ActiveRecord::Base
+  include Exportable
+  
   self.table_name = 'core_users'
   has_many :extra_properties, -> { order "sort, name" }, as: :extra_property
   
@@ -46,15 +48,6 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email, scope: :domain_id
   before_validation :normalize_phone
   
-  def self.to_csv
-    CSV.generate do |csv|
-      csv << column_names
-      all.each do |user|
-        csv << user.attributes.values_at(*column_names)
-      end
-    end
-  end
-
   def authenticate(pwd)
     BCrypt::Password.new(password_digest) == pwd
   end

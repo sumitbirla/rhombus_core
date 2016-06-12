@@ -16,6 +16,8 @@
 #
 
 class Notification < ActiveRecord::Base
+  include Exportable
+  
   self.table_name = 'core_notifications'
   
   belongs_to :user

@@ -1,5 +1,6 @@
 <div class="pull-right">
   <%= select_tag :role_id, options_from_collection_for_select(Role.all, :id, :name, params[:role_id]), prompt: 'All roles'%> &nbsp; 
+  <%= select_tag :status, options_for_select(User.uniq(:status).pluck(:status), params[:status]), prompt: 'Any status'%> &nbsp; 
   <%= link_to new_admin_system_user_path, class: 'btn btn-sm btn-default' do %>
     <i class="fa fa-plus"></i> New user
   <% end %>
@@ -41,9 +42,7 @@
 	<% end %>
 </table>
 
-<div class="table-summary">
-	<%= number_with_delimiter(@users.total_entries) %> records | <%= link_to 'CSV', admin_system_users_path(format: :csv) %>
-</div>
+<%= render 'admin/shared/table_summary', data: @users %>
 
 
 
@@ -54,8 +53,8 @@
 <% content_for :head do %>
   <script>
     $(document).ready(function() {
-      $("#role_id").change(function() {
-        window.location = "/admin/system/users?role_id=" + $(this).val();
+      $("#role_id, #status").change(function() {
+        window.location = "/admin/system/users?role_id=" + $("#role_id").val() + "&status=" + $("#status").val();
       });
     });
   </script>

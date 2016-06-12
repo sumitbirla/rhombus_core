@@ -6,15 +6,14 @@ class Admin::System::UsersController < Admin::BaseController
                  .includes(:role)
                  .joins(:role)
                  .order(sort_column + " " + sort_direction)
-                 .page(params[:page])
                  
     @users = @users.where("core_users.name LIKE '%#{params[:q]}%' OR email LIKE '%#{params[:q]}%'") unless params[:q].nil?
     @users = @users.where(status: params[:status]) unless params[:status].blank?
     @users = @users.where(role_id: params[:role_id]) unless params[:role_id].blank?
     
     respond_to do |format|
-      format.html
-      format.csv { send_data User.to_csv }
+      format.html  { @users = @users.page(params[:page]) }
+      format.csv { send_data User.to_csv(@users, skip_cols: ["password_digest"]) }
     end
   end
 

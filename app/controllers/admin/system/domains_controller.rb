@@ -1,6 +1,12 @@
 class Admin::System::DomainsController < Admin::BaseController
+  
   def index
-    @domains = Domain.page(params[:page]).order('name')
+    @domains = Domain.order(:name)
+    
+    respond_to do |format|
+      format.html { @domains = @domains.page(params[:page]) }
+      format.csv { send_data Domain.to_csv(@domains) }
+    end
   end
 
   def new

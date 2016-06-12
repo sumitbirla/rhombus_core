@@ -31,6 +31,8 @@
 #
 
 class Affiliate < ActiveRecord::Base
+  include Exportable
+  
   self.table_name = 'core_affiliates'
   
   before_save :normalize_ftp_username
@@ -53,17 +55,8 @@ class Affiliate < ActiveRecord::Base
     self.ftp_username = ftp_username.downcase.gsub(" ", "") unless ftp_username.blank?
   end
   
-  def self.to_csv
-    CSV.generate do |csv|
-      csv << column_names
-      all.each do |aff|
-        csv << aff.attributes.values_at(*column_names)
-      end
-    end
-  end
   
   def address_as_text(opts = {})
-    
     delim = opts[:delimiter] || "\n"
     
     address = street1

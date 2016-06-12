@@ -11,6 +11,7 @@
 #
 
 class Role < ActiveRecord::Base
+  include Exportable
   self.table_name = 'core_roles'
   
   has_many :role_permissions

@@ -1,7 +1,12 @@
 class Admin::System::RolesController < Admin::BaseController
   
   def index
-    @roles = Role.all
+    @roles = Role.order(:name)
+    
+    respond_to do |format|
+      format.html { @roles = @roles.page(params[:page]) }
+      format.csv { send_data Role.to_csv(@roles) }
+    end
   end
 
   def new
