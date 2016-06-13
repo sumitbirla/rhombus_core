@@ -67,7 +67,7 @@
     pbx_domain = PbxDomain.find_by(user_id: @user.id)
     if pbx_domain
       did_count = PbxDid.where(pbx_domain_id: pbx_domain.id).count
-      vm_count = PbxVmMessage.where(pbx_domain_id: pbx_domain.id).count
+      vm_count = PbxVmMessage.where(domain: pbx_domain.name).count
       cdr_count = PbxCdr.where(pbx_domain_id: pbx_domain.id).count
   %>
   <li class="<%= "active" if q == "dids" %>"><a href="<%= admin_system_user_path(@user, q: "dids")%>" role="tab">DID's</a></li>
