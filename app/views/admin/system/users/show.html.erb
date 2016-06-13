@@ -64,7 +64,7 @@
   
   <% if mods.include? :pbx %>
   <% 
-    pbx_domain = PbxDomain.find(user_id: @user.id)
+    pbx_domain = PbxDomain.find_by(user_id: @user.id)
     if pbx_domain
       did_count = PbxDid.where(pbx_domain_id: pbx_domain.id).count
       vm_count = VmMessage.where(pbx_domain_id: pbx_domain.id).count
