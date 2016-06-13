@@ -34,9 +34,9 @@ class Affiliate < ActiveRecord::Base
   include Exportable
   
   self.table_name = 'core_affiliates'
-  
   before_save :normalize_ftp_username
   
+  default_scope { order(:name) }
   has_many :affiliate_categories
   has_many :categories, through: :affiliate_categories
   has_many :extra_properties, -> { order "sort, name" }, as: :extra_property

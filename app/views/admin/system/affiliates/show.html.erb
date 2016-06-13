@@ -1,4 +1,6 @@
-<%= link_to "edit", edit_admin_system_affiliate_path(@affiliate), class: "btn btn-sm btn-default pull-right" %>
+<%= link_to edit_admin_system_affiliate_path(@affiliate), class: "btn btn-sm btn-default pull-right" do %>
+  <i class="fa fa-edit"></i> Edit
+<% end %>
 <h2><i class="fa fa-rocket"></i> <%= @affiliate.name %></h2>
 
 
@@ -21,6 +23,9 @@
     <li role="presentation" class="<%= "active" if params[:q] == "products" %>"><a href="<%= admin_system_affiliate_path(@affiliate, q: "products")%>" role="tab"><%= tab_count('Products', ap_count) %></a></li>
     <li role="presentation" class="<%= "active" if params[:q] == "orders" %>"><a href="<%= admin_system_affiliate_path(@affiliate, q: "orders")%>" role="tab"><%= tab_count('Orders', order_count) %></a></li>
     <li role="presentation" class="<%= "active" if params[:q] == "po" %>"><a href="<%= admin_system_affiliate_path(@affiliate, q: "po")%>" role="tab"><%= tab_count("PO's", po_count) %></a></li>
+  <% end %>
+  <% if mods.include? :edi %>
+    <li role="presentation" class="<%= "active" if params[:q] == "edi" %>"><a href="<%= admin_system_affiliate_path(@affiliate, q: "edi")%>" role="tab">EDI Tasks</a></li>
   <% end %>
   <% if mods.include? :billing %>
     <li role="presentation" class="<%= "active" if params[:q] == "payments" %>"><a href="<%= admin_system_affiliate_path(@affiliate, q: "payments")%>" role="tab">Payments</a></li>
@@ -306,6 +311,26 @@
     			</tr>
     			<% end %>
     		</table>
+        
+    <% elsif params[:q] == "edi" %>
+    
+      <table class="table table-striped table-condensed">
+      	<tr>
+      		<th></th>
+          <th>FTP Server</th>
+      		<th>Affiliate</th>
+      		<th>Document Type</th>
+          <th>Email</th>
+          <th>Printer</th>
+          <th>Active</th>
+          <th class="actions">&nbsp;</th>
+        </tr>
+        <%= render partial: 'admin/edi_tasks/edi_task', collection: EdiTask.where(affiliate_id: @affiliate.id)  %>
+      </table>
+    
+      <%= link_to new_admin_edi_task_path, class: 'btn btn-sm btn-default' do %>
+        <i class="fa fa-plus"></i> New task
+      <% end %>
     
     <% end %>
   </div>
