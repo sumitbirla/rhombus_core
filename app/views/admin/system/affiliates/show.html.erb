@@ -177,23 +177,10 @@
           <th class="text-center">Lead time</th>
       		<th></th>
       	</tr>
-        <% for ap in ap_list %>
-      	<tr>
-          <td><input type="checkbox" name="affiliate_product_id[]" value="<%= ap.id %>"></td>
-          <td><%= link_to ap.product.sku, admin_store_product_path(ap.product)%></td>
-          <td><%= ap.product.title %></td>
-          <td><%= ap.sku %></td>
-          <td><%= number_to_currency ap.price %></td>
-          <td class="text-center"><%= ap.minimum_order_quantity %></td>
-          <td class="text-center"><%= pluralize(ap.ship_lead_time, "day") %></td>
-          <td class="actions ralign"><%= link_to "edit", edit_admin_store_affiliate_product_path(ap) %></td>
-        </tr>
-        <% end %>
+        <%= render partial: 'admin/store/affiliate_products/affiliate_product', collection: ap_list %>
       </table>
       
-      <div class="table-summary">
-      	<%= number_with_delimiter(ap_list.total_entries) %> records
-      </div>
+      <%= render 'admin/shared/table_summary', data: ap_list %>
 		
     
     <% elsif params[:q] == "orders" %>
@@ -222,10 +209,10 @@
           <th></th>
       		<th>Status</th>
       	</tr>
-        <% for o in orders %>
-      	 <%= render 'admin/store/orders/order', order: o %>
-        <% end %>
+      	 <%= render partial: 'admin/store/orders/order', collection: orders %>
       </table>
+      
+      <%= render 'admin/shared/table_summary', data: orders %>
 
        <%= link_to "New Order", new_admin_store_order_path(affiliate_id: @affiliate.id), class: 'btn btn-default' %>
 
@@ -250,13 +237,11 @@
     <% end %>
     </table>
     
-    <div class="table-summary">
-    	<%= number_with_delimiter(purchase_orders.total_entries) %> records
-    </div>
+    <%= render 'admin/shared/table_summary', data: purchase_orders %>
 
     <% elsif params[:q] == "payments" %>
     
-      <% payments = Payment.where(payable_type: "affiliate", payable_id: @affiliate.id).where("amount < 0.0").order(created_at: :desc).paginate(page: params[:page], per_page: 10) %>
+      <% payments = Payment.where(payable_type: "affiliate", payable_id: @affiliate.id).order(created_at: :desc).paginate(page: params[:page], per_page: 10) %>
 
       <%= will_paginate payments %>
       <table class="table table-striped table-condensed">
@@ -275,6 +260,8 @@
         </tr>
         <% end %>
       </table>
+      
+      <%= render 'admin/shared/table_summary', data: payments %>
 
     <% elsif params[:q] == "campaigns" %>
         <% campaigns = AffiliateCampaign.where(affiliate_id: @affiliate.id).order(created_at: :desc)%>
