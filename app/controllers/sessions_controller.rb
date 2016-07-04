@@ -12,13 +12,20 @@ class SessionsController < ApplicationController
   
   def create
     reset_session  # clear out any previous session data
-    user = User.find_by(domain_id: Rails.configuration.domain_id, email: params[:email], status: "active")
+    user = User.find_by(domain_id: Rails.configuration.domain_id, email: params[:email])
 
     if user && (user.password_digest.nil? || user.password_digest.length < 20)
       flash[:error] = "Invalid login. Did you log in using Facebook?"
       redirect_to login_path
 
     elsif user && user.authenticate(params[:password])
+      
+      # check if user is in active state
+      if user.status != 'active'
+        flash[:error] = "Your account is not in active status.  Please contact customer service."
+        return redirect_to login_path
+      end
+      
       session[:user_id] = user.id
       user.record_login(request, 'web')
 
