@@ -12,27 +12,34 @@
 <% unless flash[:notice].nil? %>
     <div class="bs-callout bs-callout-warning">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <%= flash[:notice] %>
+      <i class="fa fa-2x fa-info-circle pull-left"></i> <%= flash[:notice] %>
     </div>
 <% end %>
 
 <% unless flash[:info].nil? %>
     <div class="bs-callout bs-callout-info">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <%= flash[:info] %>
+      <i class="fa fa-2x fa-info-circle pull-left"></i> <%= flash[:info] %>
+    </div>
+<% end %>
+
+<% unless flash[:warning].nil? %>
+    <div class="bs-callout bs-callout-info">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <i class="fa fa-2x fa-info-circle pull-left"></i> <%= flash[:warning] %>
     </div>
 <% end %>
 
 <% unless flash[:error].nil? %>
     <div class="bs-callout bs-callout-danger">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <%= flash[:error] %>
+      <i class="fa fa-2x fa-exclamation pull-left"></i> <%= flash[:error] %>
     </div>
 <% end %>
 
 <% unless flash[:success].nil? %>
     <div class="bs-callout bs-callout-warning">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <%= flash[:success] %>
+      <i class="fa fa-2x fa-check pull-left"></i> <%= flash[:success] %>
     </div>
 <% end %>
