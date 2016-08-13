@@ -1,5 +1,3 @@
-require 'phone'
-
 module HtmlHelper
   
   def tick(obj)
@@ -33,8 +31,7 @@ module HtmlHelper
   end
   
   def formatted_phone(number)
-    pn = Phoner::Phone.parse("+1" + number.sub("+", ""))
-    pn.nil? ? number : pn.format(:us)
+    number_to_phone(number)
   end
   
   def tab_count(name, count)

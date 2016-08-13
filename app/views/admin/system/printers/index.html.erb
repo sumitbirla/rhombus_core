@@ -1,0 +1,45 @@
+<%= link_to new_admin_system_printer_path, class: 'pull-right btn btn-sm btn-default' do %>
+  <i class="fa fa-plus"></i> New printer
+<% end %>
+<h2><i class="fa fa-print"></i> Printers</h2>
+
+<table class="table table-striped table-condensed">
+	<tr>
+		<th>Name</th>
+		<th>URL</th>
+    <th>Model</th>
+		<th>Location</th>
+    <th class="text-center">Print Count</th>
+		<th class="actions">&nbsp;</th>
+	</tr>
+	<% @printers.each do | p | %>
+	<tr>
+		<td><%= p.name %></td>
+		<td><code><%= p.url %></code></td>
+    <td><%= p.model %></td>
+		<td><%= p.location %></td>
+    <td class="text-center"><%= number_with_delimiter(p.print_count) %></td>
+		<td class="actions">
+			<%= link_to "edit", edit_admin_system_printer_path(p) %> &nbsp; 
+			<%= link_to "delete", 
+						  { action: "destroy", id: p.id }, 
+						  method: :delete, 
+						  data: { confirm: "Are you sure?" } %>
+		</td>
+	</tr>
+	<% end %>
+</table>
+
+<%= render 'admin/shared/table_summary', data: @printers %>
+
+
+<% content_for :title do %>
+	Printers
+<% end %>
+
+
+<% content_for :breadcrumbs do %>
+	<li><a href="#">System</a></li>
+	<li class="active">Printers</li>
+<% end %>
+

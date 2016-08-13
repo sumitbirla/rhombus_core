@@ -1,0 +1,39 @@
+<h2><i class="fa fa-print"></i> <%= @printer.name %></h2>
+<hr/>
+
+<div class="bs-callout bs-callout-info">
+  Printer URL's examples:<br><br>
+  <i>
+    ipp://hostname:631/printers/my_printer<br>
+    lpd://hostname:515/LPT1<br>
+    socket://hostname:9100<br>
+  </i>
+</div>
+
+<%= simple_form_for [:admin, :system, @printer] do |f| %>
+  
+  <%= render 'admin/shared/error_messages', object: f.object %>
+  <%= f.input :name %>
+  <%= f.input :url %>
+  <%= f.input :location %>
+  <%= f.input :print_count %>
+  <%= f.button :submit %>
+
+<% end %>
+
+
+
+
+
+
+<% content_for :title do %>
+	Printers: <%= @printer.name %>
+<% end %>
+
+
+
+<% content_for :breadcrumbs do %>
+  <li><a href="#">System</a></li>
+	<li><%= link_to "Printers", admin_system_printers_path %></li>
+	<li class="active"><%= @printer.name %></li>
+<% end %>

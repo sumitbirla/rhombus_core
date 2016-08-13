@@ -63,6 +63,7 @@ Rails.application.routes.draw do
       resources :search_paths
       resources :attributes
       resources :extra_properties
+      resources :printers
       resources :domains do 
         member do 
           get 'set_current'
