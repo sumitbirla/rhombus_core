@@ -164,12 +164,6 @@
                                    .includes(:product)
                                    .order("store_products.title")
                                    .where(affiliate_id: @affiliate.id).paginate(page: params[:page]) %>
-       
-      <div class="pull-right" style="margin-bottom: 8px;">                            
-      <%= link_to new_admin_store_affiliate_product_path(affiliate_id: @affiliate.id), class: "btn btn-sm btn-default" do %>
-        <i class="fa fa-plus"></i> Add new product
-      <% end %>
-      </div>
       
       <%= will_paginate ap_list %>
       <table class="table table-striped table-condensed">
@@ -186,8 +180,12 @@
         <%= render partial: 'admin/store/affiliate_products/affiliate_product', collection: ap_list %>
       </table>
       
+      <%= link_to new_admin_store_affiliate_product_path(affiliate_id: @affiliate.id), class: "btn btn-sm btn-default pull-right" do %>
+        <i class="fa fa-plus"></i> Add new product
+      <% end %>
+      
       <%= render 'admin/shared/table_summary', data: ap_list %>
-		
+
     
     <% elsif params[:q] == "orders" %>
     
@@ -221,7 +219,7 @@
       
       <%= render 'admin/shared/table_summary', data: orders %>
 
-       <%= link_to "New Order", new_admin_store_order_path(affiliate_id: @affiliate.id), class: 'btn btn-default' %>
+      <%= link_to "New Order", new_admin_store_order_path(affiliate_id: @affiliate.id), class: 'btn btn-default' %>
 
     <% elsif params[:q] == "po" %>
     

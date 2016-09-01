@@ -62,7 +62,7 @@ class Admin::System::PrintersController < Admin::BaseController
       if uri.scheme == 'ipp'
         printer_name = uri.path.split("/").last
         begin
-          p = CupsPrinter.new(printer_name, host: uri.host)
+          p = CupsPrinter.new(printer_name, hostname: uri.host)
           a = p.attributes
           printer.location = a["printer-location"] if printer.location.blank?
           printer.model = a["printer-make-and-model"]
