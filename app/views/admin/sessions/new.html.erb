@@ -16,7 +16,7 @@
         <div class="form-group">
             <%= password_field_tag :password, nil, :placeholder => "Password", :class => "form-control" %>
         </div>
-        <%= submit_tag "Sign in", :class => "btn btn-success btn-block" %>
+        <%= button_tag "Sign in", :class => "btn btn-success btn-block", data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> Logging in ..." } %>
       </fieldset>
     <% end %>
 

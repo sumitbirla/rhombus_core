@@ -17,7 +17,7 @@
   <%= f.input :url %>
   <%= f.input :location %>
   <%= f.input :print_count %>
-  <%= f.button :submit %>
+  <%= button_tag "Save changes", :class => "btn btn-primary", data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait ..." } %>
 
 <% end %>
 

@@ -25,7 +25,7 @@
       <%= f.input :desc2, as: :text, input_html: { style: 'width: 80%', rows: 9 } %>
       <%= f.input :desc3, as: :text, input_html: { style: 'width: 80%', rows: 9 } %>
 
-      <%= f.button :submit %>
+      <%= button_tag "Save changes", :class => "btn btn-primary", data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait ..." } %>
     <% end %>
   </div>
 
