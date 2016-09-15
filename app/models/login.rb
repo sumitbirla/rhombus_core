@@ -3,7 +3,7 @@
 # Table name: core_logins
 #
 #  id         :integer          not null, primary key
-#  timestamp  :datetime         default("CURRENT_TIMESTAMP"), not null
+#  timestamp  :datetime         default(NULL), not null
 #  source     :string(255)
 #  user_id    :integer          not null
 #  ip_address :string(255)      not null

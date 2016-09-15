@@ -19,15 +19,13 @@
 #  pin              :string(255)
 #  referred_by      :integer
 #  referral_key     :string(255)
-#  referral_clicks  :integer          default("0"), not null
-#  referral_signups :integer          default("0"), not null
-#  approved         :boolean          default("0"), not null
-#  vip              :boolean          default("0"), not null
+#  referral_clicks  :integer          default(0), not null
+#  referral_signups :integer          default(0), not null
+#  approved         :boolean          default(FALSE), not null
+#  vip              :boolean          default(FALSE), not null
 #  status           :string(16)
 #  created_at       :datetime
 #  updated_at       :datetime
-#  data1            :string(255)
-#  data2            :string(255)
 #
 
 require 'bcrypt'

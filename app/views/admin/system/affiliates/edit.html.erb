@@ -49,16 +49,13 @@ input.boolean { margin: 0; }
   	  <%= f.input :email %>
   	  <%= f.input :website %>
       <%= f.input :payment_terms %>
-      <%= f.input :price_formula %>
       <%= f.input :tax_id, label: "Tax ID" %>
-      <%= f.input :ftp_username, label: "FTP Login" %>
-      <%= f.input :ftp_password, as: :string, label: "FTP Passwd" %>
+      <%= f.input :purchase_order_email, label: 'PO email' %>
+      <%= f.input :shipment_email %>
+      <%= f.input :invoice_email %>
     </div>
 
     <div class="col-md-12">
-      <h4>Categories</h4>
-    	<%= f.input_field :category_list, class: "form-control text", rows: 5 %>
-      <br>
       <h4>Short Description</h4>
     	<%= f.input_field :summary, class: "form-control text", rows: 3 %>
       <br>

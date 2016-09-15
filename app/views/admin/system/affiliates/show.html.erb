@@ -98,10 +98,22 @@
 		    <td><%= raw @affiliate.description.gsub("\n", "<br>") %> </td>
 		  </tr>
 		  <% end %>
-		  <% unless @affiliate.ftp_username.blank? %>
+		  <% unless @affiliate.purchase_order_email.blank? %>
 		  <tr>
-		  	<td>FTP Credentials</td>
-		    <td><code><%= @affiliate.ftp_username %> : <%= @affiliate.ftp_password %></code></td>
+		  	<td>PO Recipient</td>
+		    <td><%= @affiliate.purchase_order_email %> </td>
+		  </tr>
+		  <% end %>
+		  <% unless @affiliate.shipment_email.blank? %>
+		  <tr>
+		  	<td>Shipment Email</td>
+		    <td><%= @affiliate.shipment_email %> </td>
+		  </tr>
+		  <% end %>
+		  <% unless @affiliate.invoice_email.blank? %>
+		  <tr>
+		  	<td>Invoice Recipient</td>
+		    <td><%= @affiliate.invoice_email %> </td>
 		  </tr>
 		  <% end %>
 		</table>

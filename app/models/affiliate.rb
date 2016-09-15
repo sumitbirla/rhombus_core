@@ -2,39 +2,39 @@
 #
 # Table name: core_affiliates
 #
-#  id             :integer          not null, primary key
-#  name           :string(255)      not null
-#  code           :string(255)
-#  slug           :string(255)      default(""), not null
-#  featured       :boolean          default("0"), not null
-#  active         :boolean          default("0"), not null
-#  tax_id         :string(255)
-#  contact_person :string(255)
-#  street1        :string(255)
-#  street2        :string(255)
-#  city           :string(255)
-#  state          :string(255)
-#  zip            :string(255)
-#  country        :string(255)
-#  phone          :string(255)
-#  fax            :string(255)
-#  email          :string(255)
-#  website        :string(255)
-#  logo           :string(255)
-#  description    :text(65535)
-#  payment_terms  :string(255)
-#  facebook_page  :string(255)
-#  summary        :text(65535)
-#  created_at     :datetime
-#  updated_at     :datetime
-#  price_formula  :string(255)
+#  id                   :integer          not null, primary key
+#  name                 :string(255)      not null
+#  code                 :string(255)
+#  slug                 :string(255)      default(""), not null
+#  featured             :boolean          default(FALSE), not null
+#  active               :boolean          default(FALSE), not null
+#  tax_id               :string(255)
+#  contact_person       :string(255)
+#  street1              :string(255)
+#  street2              :string(255)
+#  city                 :string(255)
+#  state                :string(255)
+#  zip                  :string(255)
+#  country              :string(255)
+#  phone                :string(255)
+#  fax                  :string(255)
+#  email                :string(255)
+#  website              :string(255)
+#  logo                 :string(255)
+#  description          :text(65535)
+#  payment_terms        :string(255)
+#  summary              :text(65535)
+#  purchase_order_email :string(255)
+#  invoice_email        :string(255)
+#  shipment_email       :string(255)
+#  created_at           :datetime
+#  updated_at           :datetime
 #
 
 class Affiliate < ActiveRecord::Base
   include Exportable
   
   self.table_name = 'core_affiliates'
-  before_save :normalize_ftp_username
   
   default_scope { order(:name) }
   has_many :affiliate_categories
@@ -49,10 +49,6 @@ class Affiliate < ActiveRecord::Base
   
   def to_s
     name
-  end
-  
-  def normalize_ftp_username
-    self.ftp_username = ftp_username.downcase.gsub(" ", "") unless ftp_username.blank?
   end
   
   
