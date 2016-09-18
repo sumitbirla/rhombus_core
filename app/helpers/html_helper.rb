@@ -39,13 +39,15 @@ module HtmlHelper
     "#{name} (#{number_with_delimiter count})"
   end
   
+  # print a table row.  opts include :label, :default
   def obj_property(obj, var_name, opts = {})
     val = obj.send(var_name)
-    return "" if val.blank?
+    return "" if val.blank? && opts[:default].nil?
     
     label = opts[:label] || var_name.to_s.titlecase
     val = yield(val) if block_given?
     
+    # handle special data types
     case val.class.name
     when "Time"
       val = systime(val)
@@ -57,10 +59,20 @@ module HtmlHelper
       val = number_to_currency(val)
     end
     
+    # auto link email, web and phone values
+    if var_name == :email
+      val = mail_to(val)
+    elsif var_name == :phone
+      val = link_to("tel:#{val}") { "<i class='fa fa-phone'></i> #{val}".html_safe }
+    elsif var_name == :website
+      val = "http://#{val}" if !val.start_with?('http')
+      val = link_to(val, val)
+    end
+    
 		str = <<-EOF
     <tr>
 			<td class="key">#{label}</td>
-			<td>#{val}</td>
+			<td>#{val || opts[:default]}</td>
 		</tr>  
     EOF
     
