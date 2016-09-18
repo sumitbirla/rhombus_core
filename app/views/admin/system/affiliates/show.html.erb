@@ -38,98 +38,23 @@
 	
 	<div class="col-md-8">
 		<table class="table table-bordered table-condensed summary">
-		  <tr>
-		    <td width="160">ID</td>
-		    <td><%= @affiliate.id %> </td>
-		  </tr>
-		  <tr>
-		    <td>Name</td>
-		    <td><%= @affiliate.name %> </td>
-		  </tr>
-		  <% unless @affiliate.slug.blank? %>
-		  <tr>
-		  	<td>Slug</td>
-		    <td><%= @affiliate.slug %> </td>
-		  </tr>
-		  <% end %>
-		  <% unless @affiliate.code.blank? %>
-		  <tr>
-		  	<td>Code</td>
-		    <td><%= @affiliate.code %> </td>
-		  </tr>
-		  <% end %>
-		  <% unless @affiliate.contact_person.blank? %>
-		  <tr>
-		  	<td>Contact person</td>
-		    <td><%= @affiliate.contact_person %> </td>
-		  </tr>
-		  <% end %>
-		  <tr>
-		  	<td>Address</td>
-		    <td><%= raw @affiliate.address_as_text(delimiter: "<br>") %> </td>
-		  </tr>
-		  <% unless @affiliate.phone.blank? %>
-		  <tr>
-		  	<td>Phone</td>
-		    <td><a href="tel:<%= @affiliate.phone %>"><%= @affiliate.phone %></a></td>
-		  </tr>
-		  <% end %>
-		  <% unless @affiliate.fax.blank? %>
-		  <tr>
-		  	<td>Fax</td>
-		    <td><%= @affiliate.fax %> </td>
-		  </tr>
-		  <% end %>
-		  <% unless @affiliate.website.blank? %>
-		  <tr>
-		  	<td>Website</td>
-		    <td><%= link_to @affiliate.website, @affiliate.website %> </td>
-		  </tr>
-		  <% end %>
-		  <% unless @affiliate.payment_terms.blank? %>
-		  <tr>
-		  	<td>Payment terms</td>
-		    <td><%= @affiliate.payment_terms %> </td>
-		  </tr>
-		  <% end %>
-		  <% unless @affiliate.description.blank? %>
-		  <tr>
-		  	<td>Description</td>
-		    <td><%= raw @affiliate.description.gsub("\n", "<br>") %> </td>
-		  </tr>
-		  <% end %>
-		  <% unless @affiliate.purchase_order_email.blank? %>
-		  <tr>
-		  	<td>PO Recipient</td>
-		    <td><%= @affiliate.purchase_order_email %> </td>
-		  </tr>
-		  <% end %>
-		  <% unless @affiliate.shipment_email.blank? %>
-		  <tr>
-		  	<td>Shipment Email</td>
-		    <td><%= @affiliate.shipment_email %> </td>
-		  </tr>
-		  <% end %>
-		  <% unless @affiliate.invoice_email.blank? %>
-		  <tr>
-		  	<td>Invoice Recipient</td>
-		    <td><%= @affiliate.invoice_email %> </td>
-		  </tr>
-		  <% end %>
+		  <%= obj_property @affiliate, :id, label: "ID" %>
+      <%= obj_property @affiliate, :name %>
+      <%= obj_property @affiliate, :slug %>
+      <%= obj_property @affiliate, :code %>
+		  <%= obj_property @affiliate, :contact_person %>
+      <%= obj_property(@affiliate, :address_as_text, label: 'Address') { |x| x.gsub("\n", "<br>")} %>
+		  <%= obj_property @affiliate, :phone %>
+		  <%= obj_property @affiliate, :fax %>
+		  <%= obj_property @affiliate, :website %>
+		  <%= obj_property @affiliate, :payment_terms %>
+		  <%= obj_property(@affiliate, :description) { |x| x.gsub("\n", "<br>") } %>
+      <%= obj_property @affiliate, :purchase_order_email %>
+		  <%= obj_property @affiliate, :shipment_email %>
+		  <%= obj_property @affiliate, :invoice_email %>
 		</table>
     
-    <% if @affiliate.extra_properties.length > 0 %>
-    <h4>Extra Properties</h4>
-    <table class="table table-condensed table-bordered summary">
-    	<% @affiliate.extra_properties.each do |ep| %>
-    	<tr>
-    		<td width="160"><%= ep.name %></td>
-    		<td><%= ep.value %></td>
-    	</tr>
-    	<% end %>
-    </table>
-    <hr/>
-    <% end %>
+    <%= render partial: 'admin/shared/extra_properties', locals: { object: @affiliate }%>
     
 	</div>
 	

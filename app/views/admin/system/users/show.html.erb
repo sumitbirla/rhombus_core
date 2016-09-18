@@ -18,7 +18,46 @@
 </h2>
 
 
-<%=  render partial: 'admin/shared/user_summary', locals: { user: @user } %>
+<div class="row">
+	<div class="col-md-6">
+		<table class="table table-bordered table-condensed summary">
+		  <%= obj_property @user, :role %>
+      <%= obj_property(@user, :affiliate) { |x| link_to x.name, admin_system_affiliate_path(x.id) }%>
+		  <%= obj_property @user, :email %>
+		  <%= obj_property @user, :phone %>
+		  <%= obj_property @user, :birth_date %>
+		  <%= obj_property @user, :gender %>
+		  <%= obj_property @user, :pin, label: "PIN" %>
+  		<%= obj_property @user, :time_zone %>
+      <%= obj_property @user, :locale %>
+      <%= obj_property @user, :location %>
+		</table>
+	</div>
+	
+	<div class="col-md-6">
+		<table class="table table-bordered table-condensed summary">
+		  <%= obj_property @user, :referral_key %>
+		  <%= obj_property @user, :referral_clicks %>
+		  <%= obj_property @user, :referral_signups %>
+		  <%= obj_property @user, :created_at, label: "Joined" %>
+		  <tr>
+		  	<td>Last Login</td>
+		    <td>
+				<% last_login = Login.order('timestamp DESC').find_by(user_id: @user.id) 
+				unless last_login.nil?
+				%>
+				<%= systime Login.order('timestamp DESC').find_by(user_id: @user.id).timestamp %>
+				<% else %>
+				- never -
+				<% end %>
+			</td>
+		  </tr>
+		</table>
+	</div>
+</div>
+
+<%= render partial: 'admin/shared/extra_properties', locals: { object: @user } %>
+<hr>
 
 
 <% 

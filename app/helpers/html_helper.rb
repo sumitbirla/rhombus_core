@@ -39,4 +39,32 @@ module HtmlHelper
     "#{name} (#{number_with_delimiter count})"
   end
   
+  def obj_property(obj, var_name, opts = {})
+    val = obj.send(var_name)
+    return "" if val.blank?
+    
+    label = opts[:label] || var_name.to_s.titlecase
+    val = yield(val) if block_given?
+    
+    case val.class.name
+    when "Time"
+      val = systime(val)
+    when "Date"
+      val = sysdate(val)
+    when "DateTime"
+      val = systime(val)
+    when "BigDecimal"
+      val = number_to_currency(val)
+    end
+    
+		str = <<-EOF
+    <tr>
+			<td class="key">#{label}</td>
+			<td>#{val}</td>
+		</tr>  
+    EOF
+    
+    str.html_safe
+  end
+  
 end
