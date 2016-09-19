@@ -58,6 +58,7 @@ Rails.application.routes.draw do
       resources :roles
       resources :settings
       resources :logins
+      resources :logs
       resources :notifications
       resources :categories
       resources :search_paths
