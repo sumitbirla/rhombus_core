@@ -5,7 +5,7 @@ class Admin::System::LogsController < Admin::BaseController
     @logs = @logs.where(loggable_type: params[:type]) unless params[:type].blank?
     
     respond_to do |format|
-      format.html { @logs = @logs.page(params[:page]) }
+      format.html { @logs = @logs.paginate(page: params[:page], per_page: @per_page) }
       format.csv { send_data Log.to_csv(@logs) }
     end
   end

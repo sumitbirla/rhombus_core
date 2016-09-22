@@ -9,7 +9,7 @@ class Admin::System::AffiliatesController < Admin::BaseController
     end
     
     respond_to do |format|
-      format.html { @affiliates = @affiliates.page(params[:page]) }
+      format.html { @affiliates = @affiliates.paginate(page: params[:page], per_page: @per_page) }
       format.csv { send_data Affiliate.to_csv(@affiliates) }
     end
   end

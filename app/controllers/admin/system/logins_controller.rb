@@ -4,7 +4,7 @@ class Admin::System::LoginsController < Admin::BaseController
     @logins = Login.includes(:user).order(sort_column + " " + sort_direction)
     
     respond_to do |format|
-      format.html { @logins = @logins.page(params[:page]) }
+      format.html { @logins = @logins.paginate(page: params[:page], per_page: @per_page) }
       format.csv { send_data Login.to_csv(@logins) }
     end
   end

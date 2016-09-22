@@ -4,7 +4,7 @@ class Admin::System::NotificationsController < Admin::BaseController
     @notifications = Notification.order('created_at DESC')
     
     respond_to do |format|
-      format.html { @notifications = @notifications.page(params[:page]) }
+      format.html { @notifications = @notifications.paginate(page: params[:page], per_page: @per_page) }
       format.csv { send_data Notification.to_csv(@notifications) }
     end
   end

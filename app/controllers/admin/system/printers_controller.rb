@@ -3,7 +3,7 @@ require 'cupsffi'
 class Admin::System::PrintersController < Admin::BaseController
   
   def index
-    @printers = Printer.order(:name).page(params[:page])
+    @printers = Printer.order(:name).paginate(page: params[:page], per_page: @per_page)
   end
 
   def new

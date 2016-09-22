@@ -4,7 +4,7 @@ class Admin::System::RolesController < Admin::BaseController
     @roles = Role.order(:name)
     
     respond_to do |format|
-      format.html { @roles = @roles.page(params[:page]) }
+      format.html { @roles = @roles.paginate(page: params[:page], per_page: @per_page) }
       format.csv { send_data Role.to_csv(@roles) }
     end
   end

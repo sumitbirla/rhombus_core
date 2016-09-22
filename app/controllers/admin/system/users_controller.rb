@@ -12,7 +12,7 @@ class Admin::System::UsersController < Admin::BaseController
     @users = @users.where(role_id: params[:role_id]) unless params[:role_id].blank?
     
     respond_to do |format|
-      format.html  { @users = @users.page(params[:page]) }
+      format.html  { @users = @users.paginate(page: params[:page], per_page: @per_page) }
       format.csv { send_data User.to_csv(@users, skip_cols: ["password_digest"]) }
     end
   end

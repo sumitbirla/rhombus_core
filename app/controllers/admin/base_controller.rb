@@ -7,6 +7,7 @@ class Admin::BaseController < ActionController::Base
   protect_from_forgery
   layout 'admin/layouts/admin'
   before_filter :require_login
+  before_filter :set_page_size
   
   helper_method :current_domain
   helper_method :current_user
@@ -53,6 +54,17 @@ class Admin::BaseController < ActionController::Base
   
   def sysdate(time)
     time.in_time_zone(sys_time_zone).strftime("%m/%d/%Y").html_safe
+  end
+  
+  def set_page_size
+    unless params[:per_page].blank?
+      cookies[:per_page] = params[:per_page]
+      @per_page = params[:per_page]
+    else
+      @per_page = cookies[:per_page] || 20
+    end
+    
+    Rails.logger.info ">>>>>>>>>>>>> #{@per_page} #{cookies[:per_page]}"
   end
 
 end

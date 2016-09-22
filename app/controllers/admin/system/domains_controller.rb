@@ -4,7 +4,7 @@ class Admin::System::DomainsController < Admin::BaseController
     @domains = Domain.order(:name)
     
     respond_to do |format|
-      format.html { @domains = @domains.page(params[:page]) }
+      format.html { @domains = @domains.paginate(page: params[:page], per_page: @per_page) }
       format.csv { send_data Domain.to_csv(@domains) }
     end
   end
