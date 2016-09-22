@@ -26,7 +26,13 @@ class Admin::SessionsController < Admin::BaseController
   end
   
   def destroy
-    session[:user_id] = nil
+    Log.create(user_id: session[:user_id], 
+               loggable_type: 'Session', 
+               loggable_id: session.id,
+               event: 'destroyed', 
+               ip_address: request.remote_ip)
+               
+    reset_session
     redirect_to admin_login_path, notice: "You have been logged out."
   end
   

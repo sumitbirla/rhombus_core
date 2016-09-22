@@ -3,7 +3,7 @@ class CreateLogs < ActiveRecord::Migration
     create_table :core_logs do |t|
       t.datetime :timestamp, null: false
       t.string :loggable_type, null: false
-      t.integer :loggable_id, null: false
+      t.string :loggable_id, null: false
       t.integer :user_id
       t.string :ip_address, null: false
       t.string :event, null: false

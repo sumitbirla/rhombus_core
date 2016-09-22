@@ -64,6 +64,25 @@ class User < ActiveRecord::Base
   end
 
   def record_login(request, source)
+    
+    log = Log.new(loggable_type: 'Session', 
+                  loggable_id: request.session.id,
+                  user_id: id, 
+                  ip_address: request.remote_ip, 
+                  event: :created, 
+                  data1: source)
+    
+    user_agent = UserAgent.parse(request.user_agent)
+    unless user_agent.nil?
+      log.assign_attributes(
+            data2: user_agent.platform, 
+            data3: "#{user_agent.browser} #{user_agent.version}")
+    end
+    
+    log.save             
+                 
+               
+               
     Login.create user_id: id, source: source, timestamp: DateTime.now,
                  ip_address: request.remote_ip, user_agent: request.user_agent
   end

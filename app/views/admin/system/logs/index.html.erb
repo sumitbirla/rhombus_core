@@ -4,6 +4,7 @@
 <table class="table table-striped table-condensed">
 	<tr>
 		<th><%= sortable "timestamp" %></th>
+    <td><%= sortable "loggable_type", "Entity" %>
     <th><%= sortable "event" %></th>
 		<th><%= sortable "ip_address" %></th>
     <th><%= sortable "core_users.name", "Name" %></th>
@@ -13,7 +14,8 @@
 	</tr>
 	<% @logs.each do | log | %>
 	<tr>
-		<td><%= systime login.timestamp %></td>
+		<td><%= systime log.timestamp %></td>
+    <td><%= log.loggable_type %></td>
     <td><%= log.event %></td>
     <td><%= log.ip_address %></td>
 		<td>
