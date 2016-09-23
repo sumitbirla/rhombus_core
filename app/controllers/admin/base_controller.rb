@@ -63,8 +63,6 @@ class Admin::BaseController < ActionController::Base
     else
       @per_page = cookies[:per_page] || 20
     end
-    
-    Rails.logger.info ">>>>>>>>>>>>> #{@per_page} #{cookies[:per_page]}"
   end
 
 end
