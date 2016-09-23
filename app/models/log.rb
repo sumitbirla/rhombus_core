@@ -7,6 +7,6 @@ class Log < ActiveRecord::Base
   before_create :set_timestamp
   
   def set_timestamp
-      self.timestamp = Time.now
+    self.timestamp = Time.now if timestamp.nil?
   end
 end
