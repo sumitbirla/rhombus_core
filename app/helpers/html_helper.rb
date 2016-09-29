@@ -39,6 +39,16 @@ module HtmlHelper
     "#{name} (#{number_with_delimiter count})"
   end
   
+  def link_to_user_or_affiliate(obj, q = nil)
+    if obj.user
+      return link_to(obj.user.name, admin_system_user_path(obj.user_id, q: q))
+    elsif obj.affiliate
+      return link_to(obj.affiliate.name, admin_system_affiliate_path(obj.affiliate_id, q: q))
+    else
+      return "<span class='light'>- system -</span>".html_safe
+    end
+  end
+  
   # print a table row.  opts include :label, :default
   def obj_property(obj, var_name, opts = {})
     val = obj.send(var_name)
