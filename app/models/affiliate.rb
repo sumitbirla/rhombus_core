@@ -60,7 +60,10 @@ class Affiliate < ActiveRecord::Base
     address = address + delim + city unless city.blank?
     address = address + ', ' + state unless state.blank?
     address = address + ', ' + zip unless zip.blank?
-    address
+    unless opts[:skip_country]
+      address += delim + Country[country].to_s unless country.blank?
+    end
+    address.html_safe
   end
   
   def valid_password?
