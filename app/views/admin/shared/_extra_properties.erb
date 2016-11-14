@@ -4,7 +4,7 @@
     	<% object.extra_properties.each do |ep| %>
     	<tr>
     		<td class="key"><%= ep.name %></td>
-    		<td><%= ep.value %></td>
+    		<td><%= ep.value.gsub("\n", "<br>").html_safe unless ep.value.nil? %></td>
     	</tr>
     	<% end %>
     </table>
