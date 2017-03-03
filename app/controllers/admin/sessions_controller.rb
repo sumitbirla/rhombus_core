@@ -10,6 +10,8 @@ class Admin::SessionsController < Admin::BaseController
     
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
+      cookies.permanent.signed[:user_id] = user.id if params[:remember_me] == "1"
+      
       user.record_login(request, 'admin')
       cookies[:domain_id] = { :value => Domain.first.id, :expires => 1.year.from_now } if cookies[:domain_id].nil?
 
@@ -33,6 +35,8 @@ class Admin::SessionsController < Admin::BaseController
                ip_address: request.remote_ip)
                
     reset_session
+    cookies.delete :user_id
+    
     redirect_to admin_login_path, notice: "You have been logged out."
   end
   

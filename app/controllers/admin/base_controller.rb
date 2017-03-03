@@ -24,8 +24,13 @@ class Admin::BaseController < ActionController::Base
         return render text: "Invalid Url: #{request.url}", status: 403
       end
     else
-      unless current_user && current_user.role.super_user
-        flash[:error] = "You must be logged in to access this page"
+      # remember me cookie
+      if session[:user_id].nil? && !cookies.signed[:user_id].nil?
+        session[:user_id] = cookies.signed[:user_id]
+      end
+      
+      unless logged_in? && current_user.role.super_user
+        flash[:error] = "You must be logged in as admin to access this page"
         redirect_to admin_login_path(redirect: request.fullpath)
       end
     end
