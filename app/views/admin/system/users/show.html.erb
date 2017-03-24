@@ -210,6 +210,8 @@
   	<% end %>
   </table>
   
+  <%= link_to "new case", new_admin_ticketing_case_path(user_id: params[:id], queue_id: 1), class: "btn btn-default btn-sm" %>
+  
 <% elsif q == "pictures" %>
 
   <% pics = Picture.where(user_id: params[:id]).order(created_at: :desc) %>
