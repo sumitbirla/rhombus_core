@@ -107,7 +107,7 @@
     if pbx_domain
       did_count = PbxDid.where(pbx_domain_id: pbx_domain.id).count
       vm_count = PbxVmMessage.where(domain: pbx_domain.name).count
-      cdr_count = PbxCdr.where(pbx_domain_id: pbx_domain.id).count
+      cdr_count = PbxDbCdr.where(pbx_domain_id: pbx_domain.id).count
   %>
   <li class="<%= "active" if q == "dids" %>"><a href="<%= admin_system_user_path(@user, q: "dids")%>" role="tab">DID's</a></li>
   <li class="<%= "active" if q == "vm" %>"><a href="<%= admin_system_user_path(@user, q: "vm")%>" role="tab">Voicemail</a></li>
@@ -418,44 +418,26 @@
 
   <%
      domain = PbxDomain.find_by(user_id: params[:id])
-      cdr_list = PbxCdr.where("variables.x_domain_id" => domain.id).desc("variables.start_epoch").paginate(page: params[:page], per_page: 20) %>
+     cdr_list = PbxDbCdr.where(pbx_domain_id: domain.id).order(start_time: :desc).paginate(page: params[:page], per_page: 20) %>
 
   <%= will_paginate cdr_list %>
   <table class="table table-condensed">
     <tr>
       <th>start</th>
-  	  <th>direction</th>
       <th>ani</th>
       <th>dnis</th>
       <th>duration</th>
-  	<% if Rails.configuration.modules.include?(:callcenter)%>
-      <th>agent</th>
-  	<% end %>
-      <th>app</th>
       <th>hangup</th>
       <th class="actions"></th>
     </tr>
-    <% cdr_list.each do |cdr| 
-    		vars = cdr[:variables] 
-  		caller = cdr[:callflow].last[:caller_profile] %>
+    <% cdr_list.each do |cdr| %>
     <tr>
-      <td style="color: #666;" nowrap><%= Time.at(vars[:start_epoch]).strftime("%D %l:%M %P") %></td>
-      <td><%= vars[:direction]  %></td>
-  	  <td><%= number_to_phone caller[:ani], area_code: true  %></td>
-      <td><%= number_to_phone caller[:destination_number], area_code: true %></td>
-      <td><%= Time.at(vars[:duration]).utc.strftime("%k:%M:%S") %></td>
-      <td><code><%= vars[:current_application] %> <%= vars[:current_application_data] %></code></td>
-      <% if Rails.configuration.modules.include?(:callcenter)%>
-  	  <td>
-      <% unless vars[:cc_agent].blank? %>
-        <%= URI.decode(vars[:cc_agent]) %>
-      <% else %>
-        -
-      <% end %>
-      </td>
-  	  <% end %>
-      <td style="font-size: 0.85em;"><%= vars[:hangup_cause] %></td>
-  	  <td><%= link_to "view", admin_pbx_cdr_path(cdr._id) %></td>
+      <td style="color: #666;" nowrap><%= cdr.start_time.strftime("%D %l:%M %P") %></td>
+  	  <td><%= number_to_phone cdr.sip_from_user, area_code: true  %></td>
+      <td><%= number_to_phone cdr.sip_req_user, area_code: true %></td>
+      <td><%= Time.at(cdr.duration).utc.strftime("%k:%M:%S") %></td>
+      <td style="font-size: 0.85em;"><%= cdr.hangup_cause %></td>
+  	  <td><%= link_to "view", admin_pbx_cdr_path(cdr) %></td>
     </tr>
     <% end %>
   </table>
