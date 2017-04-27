@@ -29,7 +29,7 @@ class Printer < ActiveRecord::Base
     if uri.scheme == 'ipp'
     
       printer_name = url.split("/").last
-      printer = CupsPrinter.new(printer_name, host: uri.host)
+      printer = CupsPrinter.new(printer_name, hostname: uri.host, port: uri.port || 631)
       job = printer.print_file(file_path)
       return job
       
@@ -49,7 +49,11 @@ class Printer < ActiveRecord::Base
     if uri.scheme == 'ipp'
     
       printer_name = url.split("/").last
-      printer = CupsPrinter.new(printer_name, host: uri.host)
+      
+      puts "=> " + printer_name
+      puts "=> " + uri.host
+      
+      printer = CupsPrinter.new(printer_name, hostname: uri.host, port: uri.port || 631)
       job = printer.print_data(data, mime_type)
       return job
       
