@@ -44,7 +44,7 @@ class Printer < ActiveRecord::Base
   end
   
   def print_data(data, mime_type)
-    uri = URI(p.url)
+    uri = URI(url)
     
     if uri.scheme == 'ipp'
     
