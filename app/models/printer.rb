@@ -11,6 +11,9 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
+require 'cupsffi'
+require 'uri'
+require 'socket'
 
 class Printer < ActiveRecord::Base
   self.table_name = "core_printers"
@@ -19,6 +22,44 @@ class Printer < ActiveRecord::Base
   def to_s
     name
   end
+  
+  def print_file(printer_id, file_path)
+    uri = URI(url)
     
+    if uri.scheme == 'ipp'
+    
+      printer_name = url.split("/").last
+      printer = CupsPrinter.new(printer_name, host: uri.host)
+      job = printer.print_file(file_path)
+      return job
+      
+    elsif uri.scheme == 'socket'
+      
+      data = File.read(file_path)
+      s = TCPSocket.new(uri.host, uri.port)
+      s.send data, 0
+      s.close
+      
+    end
+  end
+  
+  def print_data(printer_id, data, mime_type)
+    uri = URI(p.url)
+    
+    if uri.scheme == 'ipp'
+    
+      printer_name = url.split("/").last
+      printer = CupsPrinter.new(printer_name, host: uri.host)
+      job = printer.print_data(data, mime_type)
+      return job
+      
+    elsif uri.scheme == 'socket'
+      
+      s = TCPSocket.new(uri.host, uri.port)
+      s.send data, 0
+      s.close
+      
+    end
+  end
 end
 

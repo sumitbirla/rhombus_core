@@ -3,7 +3,8 @@ require 'cupsffi'
 class Admin::System::PrintersController < Admin::BaseController
   
   def index
-    @printers = Printer.order(:name).paginate(page: params[:page], per_page: @per_page)
+    @printers = Printer.order(sort_column + " " + sort_direction)
+                       .paginate(page: params[:page], per_page: @per_page)
   end
 
   def new
@@ -54,6 +55,14 @@ class Admin::System::PrintersController < Admin::BaseController
   
     def printer_params
       params.require(:printer).permit!
+    end
+    
+    def sort_column
+      params[:sort] || "name"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
     end
     
     def update_cups_properties(printer)

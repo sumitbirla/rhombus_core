@@ -5,15 +5,17 @@
 
 <table class="table table-striped table-condensed">
 	<tr>
-		<th>Name</th>
-		<th>URL</th>
-    <th>Model</th>
-		<th>Location</th>
-    <th class="text-center">Print Count</th>
+    <th><%= sortable "id" %></th>
+		<th><%= sortable "name" %></th>
+		<th><%= sortable "url" %></th>
+    <th><%= sortable "model" %></th>
+		<th><%= sortable "location" %></th>
+    <th class="text-center"><%= sortable "print_count" %></th>
 		<th class="actions">&nbsp;</th>
 	</tr>
 	<% @printers.each do | p | %>
 	<tr>
+    <td><%= p.id %></td>
 		<td><%= p.name %></td>
 		<td><code><%= p.url %></code></td>
     <td><%= p.model %></td>
