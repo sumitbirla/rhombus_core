@@ -23,7 +23,7 @@ class Printer < ActiveRecord::Base
     name
   end
   
-  def print_file(printer_id, file_path)
+  def print_file(file_path)
     uri = URI(url)
     
     if uri.scheme == 'ipp'
@@ -43,7 +43,7 @@ class Printer < ActiveRecord::Base
     end
   end
   
-  def print_data(printer_id, data, mime_type)
+  def print_data(data, mime_type)
     uri = URI(p.url)
     
     if uri.scheme == 'ipp'
