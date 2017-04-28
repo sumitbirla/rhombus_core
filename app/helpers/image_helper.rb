@@ -14,4 +14,8 @@ module ImageHelper
     end
   end
   
+  def cdn_download_url(path)
+    Cache.setting(Rails.configuration.domain_id, :system, 'Static Files Url') + path
+  end
+  
 end
