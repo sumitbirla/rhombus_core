@@ -1,7 +1,10 @@
 module ImageHelper
   
   def cdn_image_url(pic, width, height, mode)
-    if pic.kind_of? String
+    
+    if pic.nil?
+      path = '/images/no-image.png'
+    elsif pic.kind_of? String
       path = pic
     else
       path = pic.file_path
