@@ -34,9 +34,11 @@ module HtmlHelper
     number_to_phone(number)
   end
   
-  def tab_count(name, count)
+  def tab_count(name, count, alert = false)
     return name if count == 0
-    "#{name} (#{number_with_delimiter count})"
+    str = "#{name} (#{number_with_delimiter count})"
+    str = "<i class='fa fa-exclamation-circle text-danger'></i> " + str if alert
+    str.html_safe
   end
   
   def link_to_user_or_affiliate(obj, q = nil)
