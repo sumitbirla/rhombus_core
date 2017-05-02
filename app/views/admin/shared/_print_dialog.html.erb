@@ -7,9 +7,10 @@
       </div>
       <div class="modal-body">
         <table class="table atable-condensed">
-          <% Printer.order(:name).each do |p| %>
+          <% Printer.order(:name).each do |p| 
+              icon = (p.name.downcase.include?('zebra') ? 'fa-barcode' : 'fa-print') %>
           <tr>
-            <td><a href="#" printer_id="<%= p.id %>"><i class="fa fa-fw fa-print"></i> <%= p.name %></a></td>
+            <td><a href="#" printer_id="<%= p.id %>"><i class="fa fa-fw <%= icon %>"></i> <%= p.name %></a></td>
             <td class="light"><%= p.model %></td>
             <td class="light"><%= p.location%></td>
           </tr>

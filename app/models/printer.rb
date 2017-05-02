@@ -65,5 +65,32 @@ class Printer < ActiveRecord::Base
       
     end
   end
+  
+  def print_urls(urls)
+    output_file = "/tmp/#{SecureRandom.hex(6)}.pdf"
+    ret = system("wkhtmltopdf -q #{urls.join(" ")} #{output_file}")
+    
+    throw "Unable to generate PDF" unless File.exists?(output_file)
+    
+    uri = URI(url)
+    
+    if uri.scheme == 'ipp'
+    
+      printer_name = url.split("/").last
+      printer = CupsPrinter.new(printer_name, hostname: uri.host, port: uri.port || 631)
+      job = printer.print_file(output_file)
+      return job
+      
+    elsif uri.scheme == 'socket'
+      
+      ##  WARNING!!!   Probably should do PJL
+      data = File.read(output_file)
+      s = TCPSocket.new(uri.host, uri.port)
+      s.send data, 0
+      s.close
+      
+    end
+    
+  end
 end
 
