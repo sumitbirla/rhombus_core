@@ -7,6 +7,12 @@ class ApplicationController < ActionController::Base
   helper_method :sysdate
   helper_method :systime
   helper_method :mobile_device?
+  
+  
+  def not_found(msg = 'Not found')
+    return render text: msg, status: 404
+  end
+  
 
   private
   
