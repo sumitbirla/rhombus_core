@@ -9,17 +9,19 @@
 		<th><%= sortable "name" %></th>
 		<th><%= sortable "url" %></th>
     <th><%= sortable "model" %></th>
-		<th><%= sortable "location" %></th>
+    <th class="text-center"><%= sortable "prefered_format", "Format" %></th>
+		<th class="text-center"><%= sortable "location" %></th>
     <th class="text-center"><%= sortable "print_count" %></th>
 		<th class="actions">&nbsp;</th>
 	</tr>
 	<% @printers.each do | p | %>
 	<tr>
     <td><%= p.id %></td>
-		<td><%= p.name %></td>
+		<td><%= p.name %></td>  
 		<td><code><%= p.url %></code></td>
     <td><%= p.model %></td>
-		<td><%= p.location %></td>
+    <td class="text-center"><%= p.preferred_format %></td>
+		<td class="text-center"><%= p.location %></td>
     <td class="text-center"><%= number_with_delimiter(p.print_count) %></td>
 		<td class="actions">
 			<%= link_to "edit", edit_admin_system_printer_path(p) %> &nbsp; 

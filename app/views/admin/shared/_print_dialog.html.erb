@@ -25,13 +25,19 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+
 <script type="text/javascript">
-  $(document).ready(function () {
-    
-    $(".print-link").click(function() {
-        $("#print-dialog").modal();
-        return false;
+    $(document).ready(function () {
+      
+        $("#print-dialog a").click(function() {
+          $("input[name='printer_id']").val($(this).attr("printer_id"));
+          $("#frmBatch").submit();
+        });
+        
+        $(".print-link").click(function() {
+          $("#frmBatch").attr("action", $(this).attr("href"));
+          $("#print-dialog").modal();
+          return false;
+        });
     });
-    
-  });
 </script>
