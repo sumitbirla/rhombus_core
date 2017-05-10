@@ -60,7 +60,7 @@ class UsersController < ApplicationController
 
     user = User.find_by(email: params[:email], domain_id: Rails.configuration.domain_id)
     unless user
-      flash.now[:notice] = 'This email does not exist in our system.'
+      flash[:error] = 'This email does not exist in our system.'
       return redirect_to :back
     end
 
@@ -69,10 +69,10 @@ class UsersController < ApplicationController
     reset_url = Cache.setting(Rails.configuration.domain_id, :system, 'Website URL') + '/resetp/' + token.value
 
     begin
-      UserMailer.reset_password_email(user, reset_url).deliver_now
-      flash.now[:notice] = "Password reset instructions have been emailed to #{user.email}"
+      UserMailer.reset_password_email(user, reset_url).deliver_later
+      flash[:notice] = "Password reset instructions have been emailed to #{user.email}"
     rescue Exception => e
-      flash.now[:error] = e.message
+      flash[:error] = e.message
       return redirect_to :back
     end
 
