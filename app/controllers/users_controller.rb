@@ -109,7 +109,7 @@ class UsersController < ApplicationController
     @token.user.update(password_digest: BCrypt::Password.create(@user.password), status: :active)
     @token.destroy
 
-    flash.now[:notice] = 'Your password has been reset. You may now log in with your new password.'
+    flash[:info] = 'Your password has been reset. You may now log in with your new password.'
     redirect_to login_path
   end
 
