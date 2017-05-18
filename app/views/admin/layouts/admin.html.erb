@@ -55,8 +55,34 @@
         $('.datetime-field').datetimepicker({	formatTime:'g:i A', format: 'Y-m-d h:i A' });
         $('.date-field').datetimepicker({format: 'Y-m-d', timepicker: false, mask: true});
         $('.input-group.date').datepicker({format: 'yyyy-mm-dd', autoclose: true});
-    
+
+        $("#btnAction").click(function () {
+            var selectedOption = $("#selAction option:selected");
         
+            if (selectedOption.attr("print-dialog") == "true") {
+              $("#print-dialog").modal();
+              return;
+            }
+            $("#frmBatch").attr("action", $("#selAction").val());
+            $("#frmBatch").attr("method", selectedOption.attr("method"));
+            $("#frmBatch").submit();
+        });
+      
+        /* capture action in print-dialog */
+        $("#print-dialog a").click(function() {
+          $("input[name='printer_id']").val($(this).attr("printer_id"));
+          $("#frmBatch").attr("action", $("#selAction").val());
+          $("#frmBatch").attr("method", $("#selAction option:selected").attr("method"));
+          $("#frmBatch").submit();
+        });
+
+        $("#chkAll").change(function() {
+          if ($(this).prop("checked"))
+            $(".multiselect").prop("checked", true);
+          else
+            $(".multiselect").prop("checked", false);
+        });
+
       });
     </script>
 	  
@@ -194,47 +220,7 @@
 
     </div>
     
-    <input type="hidden" id="audio-file" value=""/>
-    <div id="audio-popup" class="modal fade">
-    	<div class="modal-dialog">
-    		<div class="modal-content">
-    		  <div class="modal-header">
-    		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    		    <h4>Voicemail</h4>
-    		  </div>
-
-    		  <div class="modal-body">
-  
-    		    <div id="wave-timeline"></div>
-    		    <div id="waveform"></div>
-
-    		    <div class="controls">
-    		      <button class="btn btn-primary back">
-    		        <i class="icon-step-backward"></i> Backward
-    		       </button>
-
-    		       <button class="btn btn-primary play">
-    		        <i class="icon-play"></i>
-    		          Play
-    		          /
-    		          <i class="icon-pause"></i>
-    		          Pause
-    		        </button>
-
-    		        <button class="btn btn-primary forth">
-    		          <i class="icon-step-forward"></i>
-    		          Forward
-    		        </button>
-    		    </div>
-      	  	  </div>
-  
-    		  <div class="modal-footer">
-    		    <a href="#" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</a>
-    		  </div>
-		  
-    		</div>
-    	</div>
-    </div>
+    <%= render 'admin/shared/print_dialog' %>
 
     </body>
 
