@@ -63,6 +63,14 @@
               $("#print-dialog").modal();
               return;
             }
+            
+            if (selectedOption.attr("email-dialog") == "true") {
+              var email = prompt("Please enter email:", "<%= current_user.email %>");
+              if (email == null || email == '')
+                return;
+              $("#frmBatch input[name='email_address']").val(email);
+            }
+            
             $("#frmBatch").attr("action", $("#selAction").val());
             $("#frmBatch").attr("method", selectedOption.attr("method"));
             $("#frmBatch").submit();
