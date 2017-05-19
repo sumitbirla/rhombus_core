@@ -78,10 +78,13 @@
       
         /* capture action in print-dialog */
         $("#print-dialog a").click(function() {
+          
+          $("#print-dialog").modal('hide');
           $("input[name='printer_id']").val($(this).attr("printer_id"));
           $("#frmBatch").attr("action", $("#selAction").val());
           $("#frmBatch").attr("method", $("#selAction option:selected").attr("method"));
           $("#frmBatch").submit();
+          
         });
 
         $("#chkAll").change(function() {
