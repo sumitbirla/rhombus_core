@@ -26,24 +26,7 @@
 
 	  <%= csrf_meta_tags %>
     
-    <style>
-    @media screen and (max-width: 768px) {
-    	table.footable td {
-    		text-align: left;
-    	}
-    }
-    </style>
-
     <script>
-  
-      /*var wavesurfer = Object.create(WaveSurfer);
-    	var wavesurfer_initialized = false;*/
-      
-      function popup(current_time,$input){
-        alert(current_time);
-      }
-      
-
       $(document).ready(function() {
         
         $('.footable').footable();
@@ -55,37 +38,6 @@
         $('.datetime-field').datetimepicker({	formatTime:'g:i A', format: 'Y-m-d h:i A' });
         $('.date-field').datetimepicker({format: 'Y-m-d', timepicker: false, mask: true});
         $('.input-group.date').datepicker({format: 'yyyy-mm-dd', autoclose: true});
-
-        $("#btnAction").click(function () {
-            var selectedOption = $("#selAction option:selected");
-        
-            if (selectedOption.attr("print-dialog") == "true") {
-              $("#print-dialog").modal();
-              return;
-            }
-            
-            if (selectedOption.attr("email-dialog") == "true") {
-              var email = prompt("Please enter email:", "<%= current_user.email %>");
-              if (email == null || email == '')
-                return;
-              $("#frmBatch input[name='email_address']").val(email);
-            }
-            
-            $("#frmBatch").attr("action", $("#selAction").val());
-            $("#frmBatch").attr("method", selectedOption.attr("method"));
-            $("#frmBatch").submit();
-        });
-      
-        /* capture action in print-dialog */
-        $("#print-dialog a").click(function() {
-          
-          $("#print-dialog").modal('hide');
-          $("input[name='printer_id']").val($(this).attr("printer_id"));
-          $("#frmBatch").attr("action", $("#selAction").val());
-          $("#frmBatch").attr("method", $("#selAction option:selected").attr("method"));
-          $("#frmBatch").submit();
-          
-        });
 
         $("#chkAll").change(function() {
           if ($(this).prop("checked"))
@@ -100,12 +52,9 @@
 	  <%= yield :head %>
 	</head>
 
-
-
-    <body>
-
+  <body>
     <div id="wrapper">
-
+      
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0; ">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -131,30 +80,6 @@
       </select>
     </li>
     <% end %>
-    <!-- /.dropdown -->
-    <li class="dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-        <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
-      </a>
-      <ul class="dropdown-menu dropdown-alerts">
-        <li>
-          <a href="#">
-            <div>
-              <i class="fa fa-comment fa-fw"></i> New Comment
-              <span class="pull-right text-muted small">4 minutes ago</span>
-            </div>
-          </a>
-        </li>
-        <li class="divider"></li>
-        <li>
-          <a class="text-center" href="#">
-            <strong>See All Alerts</strong>
-            <i class="fa fa-angle-right"></i>
-          </a>
-        </li>
-      </ul>
-      <!-- /.dropdown-alerts -->
-    </li>
     <!-- /.dropdown -->
     <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">

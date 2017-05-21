@@ -6,16 +6,20 @@
         <h4 class="modal-title">Print Options</h4>
       </div>
       <div class="modal-body">
-        <table class="table atable-condensed">
+        <table class="table">
           <% Printer.order(:name).each do |p| 
               icon = (p.name.downcase.include?('zebra') ? 'fa-barcode' : 'fa-print') %>
-          <tr>
+          <tr class="<%= p.preferred_format %>">
             <td><a href="#" printer_id="<%= p.id %>"><i class="fa fa-fw <%= icon %>"></i> <%= p.name %></a></td>
             <td class="light"><%= p.model %></td>
             <td class="light"><%= p.location%></td>
           </tr>
           <% end %>
         </table>
+        <div class="processing">
+          <div class="loader"></div>
+          <h4>Processing, please wait...</h4>
+        </div>
       </div>
       <div class="modal-footer">
         <a type="button" class="btn btn-default pull-left"><i class="fa fa-download"></i> Download</a>
@@ -29,15 +33,73 @@
 <script type="text/javascript">
     $(document).ready(function () {
       
-        $("#print-dialog a").click(function() {
-          $("input[name='printer_id']").val($(this).attr("printer_id"));
+        function reset_print_dialog() {
+          $("#print-dialog tr").hide();
+          $("#print-dialog .table").show();
+          $("#print-dialog .processing").hide();
+          $("#print-dialog .modal-footer").show();
+        }
+      
+        function submit_print_dialog() {
+          $("#print-dialog .table").hide();
+          $("#print-dialog .processing").show();
+          $("#print-dialog .modal-footer").hide();
           $("#frmBatch").submit();
-        });
+        }
         
+        function hide_print_dialog() {
+          $("#print-dialog").modal('hide');
+        }
+       
         $(".print-link").click(function() {
+          reset_print_dialog();
+
+          var formats = $(this).attr("print-format").split(/,/);
+          for (s of formats)
+            $("#print-dialog ." + s).show();
+          
           $("#frmBatch").attr("action", $(this).attr("href"));
           $("#print-dialog").modal();
           return false;
+        });
+        
+        $("#btnAction").click(function () {
+            reset_print_dialog();
+            var selectedOption = $("#selAction option:selected");
+        
+            if (selectedOption.attr("print-dialog") == "true") {
+              var formats = selectedOption.attr("print-format").split(/,/);
+              for (s of formats)
+                $("#print-dialog ." + s).show();
+              
+              $("#print-dialog").modal();
+              return;
+            }
+            
+            if (selectedOption.attr("email-dialog") == "true") {
+              var email = prompt("Please enter email:", "<%= current_user.email %>");
+              if (email == null || email == '')
+                return;
+              $("#frmBatch input[name='email_address']").val(email);
+            }
+            
+            $("#frmBatch").attr("action", $("#selAction").val());
+            $("#frmBatch").attr("method", selectedOption.attr("method"));
+            submit_print_dialog();
+        });
+      
+        /* capture action in print-dialog */
+        $("#print-dialog a").click(function() {
+          var printer_id = $(this).attr("printer_id");
+          
+          $("input[name='printer_id']").val(printer_id);
+          $("#frmBatch").attr("action", $("#selAction").val());
+          $("#frmBatch").attr("method", $("#selAction option:selected").attr("method"));
+          submit_print_dialog();
+ 
+          if (printer_id == null) {
+            window.setTimeout(hide_print_dialog, 3000);
+          }
         });
     });
 </script>
