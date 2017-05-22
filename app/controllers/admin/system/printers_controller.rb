@@ -51,6 +51,24 @@ class Admin::System::PrintersController < Admin::BaseController
   end
   
   
+  def print_url
+    # check if download specified
+    if params[:print_id].blank?
+      return redirect_to params[:url]
+    end
+    
+    begin
+      p = Printer.find(params[:printer_id])
+      job = p.print_urls([params[:url]])
+      flash[:success] = "Print job sent to #{p.name}.  CUPS Job ID: #{job.id}"
+    rescue => e
+      flash[:error] = e.message
+    end
+    
+    redirect_to :back
+  end
+  
+  
   private
   
     def printer_params

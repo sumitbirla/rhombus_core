@@ -39,6 +39,8 @@ Rails.application.routes.draw do
     get 'search' => 'search#index'
     
     namespace :system do
+      post 'printers/print_url' => 'printers#print_url'
+      
       resources :users do
         member do
           get 'logins' => 'users#show'

@@ -59,6 +59,11 @@
             $("#print-dialog ." + s).show();
           
           $("#frmBatch").attr("action", $(this).attr("href"));
+          
+          var url = $(this).attr("url");
+          if (url != null)
+            $("#frmBatch input[name='url']").val($(this).attr("url"));
+          
           $("#print-dialog").modal();
           return false;
         });
