@@ -53,7 +53,7 @@ class Admin::System::PrintersController < Admin::BaseController
   
   def print_url
     # check if download specified
-    if params[:print_id].blank?
+    if params[:printer_id].blank?
       return redirect_to params[:url]
     end
     
