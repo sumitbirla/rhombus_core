@@ -226,7 +226,7 @@
 
     <% elsif params[:q] == "invoices" %>
   
-      <% invoices = Invoice.where(affiliate_id: @affiliate.id).order(created_at: :desc).paginate(page: params[:page], per_page: params[:per_page] || 20) %>
+      <% invoices = Invoice.where(affiliate_id: @affiliate.id).order(post_date: :desc).paginate(page: params[:page], per_page: params[:per_page] || 20) %>
 
       <div class="pull-right">
         <%= render 'admin/billing/invoices/group_actions' %>
