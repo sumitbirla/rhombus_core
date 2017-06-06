@@ -4,7 +4,6 @@
 %>
 
 <ul class="nav nav-tabs" style="margin-bottom: 10px;">
-  <li role="presentation" class="<%= "active" if params[:type].blank? %>"><a href="<%= admin_system_logs_path %>">All</a></li>
 <% type_list.each do |type| %>
   <li role="presentation" class="<%= "active" if params[:type] == type %>"><a href="<%= admin_system_logs_path(type: type)%>"><%= type %></a></li>
 <% end %>
