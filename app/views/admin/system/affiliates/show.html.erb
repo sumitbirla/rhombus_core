@@ -136,7 +136,7 @@
         orders = Order.where.not(status: "in cart")
                       .where(affiliate_id: @affiliate.id)
                       .order(submitted: :desc)
-                      .paginate(page: params[:page]) 
+                      .paginate(page: params[:page], per_page: params[:per_page] || 20)
       %>
   
       <%
@@ -173,7 +173,9 @@
     <% elsif params[:q] == "po" %>
     
     <%
-      purchase_orders = PurchaseOrder.where(supplier_id: @affiliate.id).order(issue_date: :desc).paginate(page: params[:page]) 
+      purchase_orders = PurchaseOrder.where(supplier_id: @affiliate.id)
+                                     .order(issue_date: :desc)
+                                     .paginate(page: params[:page], per_page: params[:per_page] || 20) 
     %>
     
     <div class="pull-right">
@@ -200,7 +202,9 @@
 
     <% elsif params[:q] == "payments" %>
     
-      <% payments = Payment.where(payable_type: "affiliate", payable_id: @affiliate.id).order(created_at: :desc).paginate(page: params[:page], per_page: 10) %>
+      <% payments = Payment.where(payable_type: "affiliate", payable_id: @affiliate.id)
+                           .order(created_at: :desc)
+                           .paginate(page: params[:page], per_page: 20) %>
 
       <%= will_paginate payments %>
       
@@ -226,7 +230,9 @@
 
     <% elsif params[:q] == "invoices" %>
   
-      <% invoices = Invoice.where(affiliate_id: @affiliate.id).order(post_date: :desc).paginate(page: params[:page], per_page: params[:per_page] || 20) %>
+      <% invoices = Invoice.where(affiliate_id: @affiliate.id)
+                           .order(post_date: :desc)
+                           .paginate(page: params[:page], per_page: params[:per_page] || 20) %>
 
       <div class="pull-right">
         <%= render 'admin/billing/invoices/group_actions' %>
