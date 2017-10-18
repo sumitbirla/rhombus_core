@@ -2,7 +2,7 @@ class Admin::System::UsersController < Admin::BaseController
   skip_before_filter :require_login, only: :password_reset
 
   def index
-    @users = authorize User.where(domain_id: cookies[:domain_id])
+    @users = User.where(domain_id: cookies[:domain_id])
                  .includes(:role)
                  .joins(:role)
                  .order(sort_column + " " + sort_direction)
@@ -10,6 +10,8 @@ class Admin::System::UsersController < Admin::BaseController
     @users = @users.where("core_users.name LIKE '%#{params[:q]}%' OR email LIKE '%#{params[:q]}%'") unless params[:q].nil?
     @users = @users.where(status: params[:status]) unless params[:status].blank?
     @users = @users.where(role_id: params[:role_id]) unless params[:role_id].blank?
+    
+    #  DOES NOT WORK   authorize(@users)
     
     respond_to do |format|
       format.html  { @users = @users.paginate(page: params[:page], per_page: @per_page) }
@@ -26,7 +28,7 @@ class Admin::System::UsersController < Admin::BaseController
                   referral_key: SecureRandom.hex(5), 
                   status: :active )
                   
-    authorize @user
+    authorize(@user)
     render 'edit'
   end
 
@@ -42,17 +44,17 @@ class Admin::System::UsersController < Admin::BaseController
   end
 
   def show
-    @user = authorize User.find(params[:id])
+    @user = authorize(User.find(params[:id]))
     @counts = get_counts(@user)
   end
 
   def edit
     @user = User.find(params[:id])
-    authorize @user,
+    authorize(@user)
   end
 
   def update
-    @user = User.find(params[:id])
+    @user = authorize(User.find(params[:id]))
 
     if @user.update(user_params)
       # update password if needed
@@ -73,7 +75,7 @@ class Admin::System::UsersController < Admin::BaseController
   end
 
   def destroy
-    @user = User.find(params[:id])
+    @user = authorize(User.find(params[:id]))
     @user.destroy
     redirect_to action: 'index', notice: 'User has been deleted.'
   end
