@@ -59,6 +59,10 @@ class User < ActiveRecord::Base
     name
   end
   
+  def admin?
+    role.super_user
+  end
+  
   def name_with_id
     "[#{id}] #{name}"
   end

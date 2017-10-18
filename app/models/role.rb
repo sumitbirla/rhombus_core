@@ -23,4 +23,9 @@ class Role < ActiveRecord::Base
   def to_s
     name
   end
+  
+  def has_permission?(resource, action)
+    permissions.exists?(resource: resource, action: action)
+  end
+      
 end

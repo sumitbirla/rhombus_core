@@ -2,7 +2,7 @@ class Admin::System::UsersController < Admin::BaseController
   skip_before_filter :require_login, only: :password_reset
 
   def index
-    @users = User.where(domain_id: cookies[:domain_id])
+    @users = authorize User.where(domain_id: cookies[:domain_id])
                  .includes(:role)
                  .joins(:role)
                  .order(sort_column + " " + sort_direction)
@@ -25,6 +25,8 @@ class Admin::System::UsersController < Admin::BaseController
                   role_id: Role.find_by(default: true).id, 
                   referral_key: SecureRandom.hex(5), 
                   status: :active )
+                  
+    authorize @user
     render 'edit'
   end
 
@@ -40,12 +42,13 @@ class Admin::System::UsersController < Admin::BaseController
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = authorize User.find(params[:id])
     @counts = get_counts(@user)
   end
 
   def edit
     @user = User.find(params[:id])
+    authorize @user,
   end
 
   def update

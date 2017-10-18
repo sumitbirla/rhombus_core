@@ -1,7 +1,9 @@
 require "xmlrpc/client"
 require "digest/md5"
+require "pundit"
 
 class Admin::BaseController < ActionController::Base
+  include Pundit
   force_ssl  if Rails.env.production?
 
   protect_from_forgery
@@ -14,8 +16,18 @@ class Admin::BaseController < ActionController::Base
   helper_method :systime
   helper_method :sysdate
   helper_method :sort_column, :sort_direction
+  
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
 
   private
+
+
+  def user_not_authorized
+    flash[:notice] = "You are not authorized to perform this action."
+    redirect_to(request.referrer || root_path)
+  end
+
   
   def require_login
     # bypass login requrements if digest parameter is passed, works only when params[:id] is present
