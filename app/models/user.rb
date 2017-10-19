@@ -101,5 +101,10 @@ class User < ActiveRecord::Base
       end
     end
   end
+  
+  # PUNDIT
+  def self.policy_class
+    ApplicationPolicy
+  end
 
 end

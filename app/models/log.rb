@@ -10,4 +10,9 @@ class Log < ActiveRecord::Base
   def set_timestamp
     self.timestamp = Time.now if timestamp.nil?
   end
+  
+  # PUNDIT
+  def self.policy_class
+    ApplicationPolicy
+  end
 end

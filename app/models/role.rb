@@ -27,5 +27,10 @@ class Role < ActiveRecord::Base
   def has_permission?(resource, action)
     permissions.exists?(resource: resource, action: action)
   end
+  
+  # PUNDIT
+  def self.policy_class
+    ApplicationPolicy
+  end
       
 end

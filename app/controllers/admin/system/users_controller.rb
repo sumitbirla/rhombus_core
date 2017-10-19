@@ -2,6 +2,7 @@ class Admin::System::UsersController < Admin::BaseController
   skip_before_filter :require_login, only: :password_reset
 
   def index
+    authorize User
     @users = User.where(domain_id: cookies[:domain_id])
                  .includes(:role)
                  .joins(:role)
@@ -28,13 +29,14 @@ class Admin::System::UsersController < Admin::BaseController
                   referral_key: SecureRandom.hex(5), 
                   status: :active )
                   
-    authorize(@user)
+    authorize @user
     render 'edit'
   end
 
   def create
     @user = User.new(user_params)
     @user.password_digest = BCrypt::Password.create(params[:password]) unless params[:password].blank?
+    authorize @user
     
     if @user.save
       redirect_to action: 'show', id: @user.id, notice: 'User was successfully created.'
@@ -44,17 +46,19 @@ class Admin::System::UsersController < Admin::BaseController
   end
 
   def show
-    @user = authorize(User.find(params[:id]))
+    @user = User.find(params[:id])
+    authorize @user
     @counts = get_counts(@user)
   end
 
   def edit
     @user = User.find(params[:id])
-    authorize(@user)
+    authorize @user
   end
 
   def update
-    @user = authorize(User.find(params[:id]))
+    @user = User.find(params[:id])
+    authorize @user
 
     if @user.update(user_params)
       # update password if needed
@@ -75,7 +79,8 @@ class Admin::System::UsersController < Admin::BaseController
   end
 
   def destroy
-    @user = authorize(User.find(params[:id]))
+    @user = User.find(params[:id])
+    authorize @user
     @user.destroy
     redirect_to action: 'index', notice: 'User has been deleted.'
   end

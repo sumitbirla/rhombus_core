@@ -19,6 +19,11 @@ class Printer < ActiveRecord::Base
   self.table_name = "core_printers"
   validates_presence_of :name, :url
   
+  # PUNDIT
+  def self.policy_class
+    ApplicationPolicy
+  end
+  
   def to_s
     name
   end

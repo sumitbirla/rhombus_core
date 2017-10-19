@@ -1,6 +1,7 @@
 class Admin::System::NotificationsController < Admin::BaseController
   
   def index
+    authorize Notification
     @notifications = Notification.order('created_at DESC')
     
     respond_to do |format|
@@ -10,12 +11,14 @@ class Admin::System::NotificationsController < Admin::BaseController
   end
 
   def new
-    @notification = Notification.new title: 'New notification', web_delivery: true
+    @notification = Notification.new(title: 'New notification', web_delivery: true)
+    authorize @notification
     render 'edit'
   end
 
   def create
     @notification = Notification.new(notification_params)
+    authorize @notification
     
     if @notification.save
       redirect_to action: 'index', notice: 'Notification was successfully created.'
@@ -26,14 +29,17 @@ class Admin::System::NotificationsController < Admin::BaseController
 
   def show
     @notification = Notification.find(params[:id])
+    authorize @notification
   end
 
   def edit
     @notification = Notification.find(params[:id])
+    authorize @notification
   end
 
   def update
     @notification = Notification.find(params[:id])
+    authorize @notification
     
     if @notification.update(notification_params)
       redirect_to action: 'index', notice: 'Notification was successfully updated.'
@@ -44,6 +50,7 @@ class Admin::System::NotificationsController < Admin::BaseController
 
   def destroy
     @notification = Notification.find(params[:id])
+    authorize @notification
     @notification.destroy
     redirect_to action: 'index', notice: 'Notification has been deleted.'
   end

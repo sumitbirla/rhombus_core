@@ -24,7 +24,7 @@ class Admin::BaseController < ActionController::Base
 
 
   def user_not_authorized
-    flash[:notice] = "You are not authorized to perform this action."
+    flash[:error] = "You are not authorized to perform this action."
     redirect_to(request.referrer || root_path)
   end
 

@@ -3,17 +3,20 @@ require 'cupsffi'
 class Admin::System::PrintersController < Admin::BaseController
   
   def index
+    authorize Printer
     @printers = Printer.order(sort_column + " " + sort_direction)
                        .paginate(page: params[:page], per_page: @per_page)
   end
 
   def new
-    @printer = Printer.new name: 'New printer'
+    @printer = Printer.new(name: 'New printer')
+    authorize @printer
     render 'edit'
   end
 
   def create
     @printer = Printer.new(printer_params)
+    authorize @printer
     update_cups_properties(@printer)
     
     if @printer.save
@@ -26,14 +29,17 @@ class Admin::System::PrintersController < Admin::BaseController
 
   def show
     @printer = Printer.find(params[:id])
+    authorize @printer
   end
 
   def edit
     @printer = Printer.find(params[:id])
+    authorize @printer
   end
 
   def update
     @printer = Printer.find(params[:id])
+    authorize @printer
     update_cups_properties(@printer)
     
     if @printer.update(printer_params)
@@ -45,6 +51,7 @@ class Admin::System::PrintersController < Admin::BaseController
 
   def destroy
     @printer = Printer.find(params[:id])
+    authorize @printer
     @printer.destroy
     
     redirect_to action: 'index', notice: 'Printer has been deleted.'

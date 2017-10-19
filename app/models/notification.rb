@@ -23,4 +23,9 @@ class Notification < ActiveRecord::Base
   belongs_to :user
   validates_presence_of :title, :start_time, :expire_time, :message
   has_many :views, class_name: 'NotificationStatus'
+  
+  # PUNDIT
+  def self.policy_class
+    ApplicationPolicy
+  end
 end

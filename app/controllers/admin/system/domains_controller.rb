@@ -1,6 +1,7 @@
 class Admin::System::DomainsController < Admin::BaseController
   
   def index
+    authorize Domain
     @domains = Domain.order(:name)
     
     respond_to do |format|
@@ -10,12 +11,14 @@ class Admin::System::DomainsController < Admin::BaseController
   end
 
   def new
-    @domain = Domain.new name: 'New domain'
+    @domain = Domain.new(name: 'New domain')
+    authorize @domain
     render 'edit'
   end
 
   def create
     @domain = Domain.new(domain_params)
+    authorize @domain
     
     if @domain.save
       Rails.cache.delete :domains
@@ -27,14 +30,17 @@ class Admin::System::DomainsController < Admin::BaseController
 
   def show
     @domain = Domain.find(params[:id])
+    authorize @domain
   end
 
   def edit
     @domain = Domain.find(params[:id])
+    authorize @domain
   end
 
   def update
     @domain = Domain.find(params[:id])
+    authorize @domain
     
     if @domain.update(domain_params)
       Rails.cache.delete :domains
@@ -46,6 +52,7 @@ class Admin::System::DomainsController < Admin::BaseController
 
   def destroy
     @domain = Domain.find(params[:id])
+    authorize @domain
     @domain.destroy
     
     Rails.cache.delete :domains

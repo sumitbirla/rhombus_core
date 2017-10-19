@@ -19,6 +19,11 @@ class Setting < ActiveRecord::Base
   validates_presence_of :section, :key, :value, :value_type
   validates_uniqueness_of :key, scope: [:domain_id, :section]
   
+  # PUNDIT
+  def self.policy_class
+    ApplicationPolicy
+  end
+  
   def to_s
     value
   end

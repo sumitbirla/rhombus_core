@@ -1,6 +1,7 @@
 class Admin::System::RolesController < Admin::BaseController
   
   def index
+    authorize Role
     @roles = Role.order(:name)
     
     respond_to do |format|
@@ -11,11 +12,13 @@ class Admin::System::RolesController < Admin::BaseController
 
   def new
     @role = Role.new
+    authorize @role
     render 'edit'
   end
 
   def create
     @role = Role.new(role_params)
+    authorize @role
     
     if @role.save
       
@@ -39,14 +42,17 @@ class Admin::System::RolesController < Admin::BaseController
 
   def show
     @role = Role.find(params[:id])
+    authorize @role
   end
 
   def edit
     @role = Role.find(params[:id])
+    authorize @role
   end
 
   def update
     @role = Role.find(params[:id])
+    authorize @role
     
     if @role.update(role_params)
       
@@ -69,7 +75,9 @@ class Admin::System::RolesController < Admin::BaseController
 
   def destroy
     @role = Role.find(params[:id])
+    authorize @role
     @role.destroy
+    
     redirect_to action: 'index', notice: 'Role has been deleted.'
   end
   

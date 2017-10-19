@@ -1,5 +1,8 @@
 class Admin::System::AffiliatesController < Admin::BaseController
+  
   def index
+    authorize Affiliate
+    
     @affiliates = Affiliate.order(sort_column + " " + sort_direction)
     @affiliates = @affiliates.where("name LIKE '%#{params[:q]}%' OR code = '#{params[:q]}'") unless params[:q].blank?
     
@@ -16,11 +19,14 @@ class Admin::System::AffiliatesController < Admin::BaseController
 
   def new
     @affiliate = Affiliate.new(name: 'New affiliate', active: true, country: Cache.setting(:system, "Default Country"))
+    authorize @affiliate
     render 'edit'
   end
 
   def create
     @affiliate = Affiliate.new(affiliate_params)
+    authorize @affiliate
+    
     if @affiliate.save
       unless params[:c].blank?
         c = Category.find_by(entity_type: :affiliate, slug: params[:c])
@@ -34,14 +40,18 @@ class Admin::System::AffiliatesController < Admin::BaseController
 
   def show
     @affiliate = Affiliate.find(params[:id])
+    authorize @affiliate
   end
 
   def edit
     @affiliate = Affiliate.find(params[:id])
+    authorize @affiliate
   end
 
   def update
     @affiliate = Affiliate.find(params[:id])
+    authorize @affiliate
+    
     if @affiliate.update(affiliate_params)
       redirect_to action: 'show', id: @affiliate.id, notice: 'Affiliate was successfully updated.'
     else
@@ -51,7 +61,9 @@ class Admin::System::AffiliatesController < Admin::BaseController
 
   def destroy
     @affiliate = Affiliate.find(params[:id])
+    authorize @affiliate
     @affiliate.destroy
+    
     redirect_to action: 'index', notice: 'Affiliate has been deleted.'
   end
   
