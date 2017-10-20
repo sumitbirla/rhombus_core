@@ -1,7 +1,7 @@
 class Admin::System::SettingsController < Admin::BaseController
   
   def index
-    authorize Setting
+    authorize Setting.new
     @settings = Setting.where(domain_id: cookies[:domain_id]).order('section, created_at')
   end
 

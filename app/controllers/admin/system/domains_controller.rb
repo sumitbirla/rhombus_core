@@ -1,7 +1,7 @@
 class Admin::System::DomainsController < Admin::BaseController
   
   def index
-    authorize Domain
+    authorize Domain.new
     @domains = Domain.order(:name)
     
     respond_to do |format|

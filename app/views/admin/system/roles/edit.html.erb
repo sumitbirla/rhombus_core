@@ -12,7 +12,7 @@
   prev_section = ''
   prev_resource = ''
   
-  Permission.all.each do | permission | 
+  Permission.order(:section, :resource).each do | permission | 
 	  
 	  checked = ''
 	  perm_exists = @role.role_permissions.find { |rp| rp.permission_id == permission.id }
@@ -52,7 +52,7 @@
 
 
 
-<%= content_for :title do %>
+<% content_for :title do %>
 	Roles: <%= @role.name %>
 <% end %>
 

@@ -1,7 +1,7 @@
 class Admin::System::RolesController < Admin::BaseController
   
   def index
-    authorize Role
+    authorize Role.new
     @roles = Role.order(:name)
     
     respond_to do |format|

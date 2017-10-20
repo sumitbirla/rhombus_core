@@ -2,7 +2,7 @@ class Admin::System::UsersController < Admin::BaseController
   skip_before_filter :require_login, only: :password_reset
 
   def index
-    authorize User
+    authorize User.new
     @users = User.where(domain_id: cookies[:domain_id])
                  .includes(:role)
                  .joins(:role)

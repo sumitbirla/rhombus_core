@@ -28,6 +28,10 @@ class Role < ActiveRecord::Base
     super_user || permissions.exists?(resource: resource, action: action)
   end
   
+  def has_any_permission?(section)
+    super_user || permissions.exists?(section: section)
+  end
+  
   # PUNDIT
   def self.policy_class
     ApplicationPolicy

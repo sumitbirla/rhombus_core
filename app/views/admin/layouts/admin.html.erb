@@ -121,15 +121,15 @@
 
         <li><a href="/admin"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a></li>
 
-    		<%= render "admin/shared/billing_menu" if Rails.configuration.modules.include?(:billing) %>
-    		<%= render "admin/shared/callcenter_menu" if Rails.configuration.modules.include?(:callcenter) %>
-    		<%= render "admin/shared/cms_menu" if Rails.configuration.modules.include?(:cms) %>
-    		<%= render "admin/shared/store_menu" if Rails.configuration.modules.include?(:store) %>
-    		<%= render "admin/shared/marketing_menu" if Rails.configuration.modules.include?(:marketing) %>
-    		<%= render "admin/shared/pbx_menu" if Rails.configuration.modules.include?(:pbx) %>
-    		<%= render "admin/shared/ticketing_menu" if Rails.configuration.modules.include?(:ticketing) %>
-        <%= render "admin/shared/edi_menu" if Rails.configuration.modules.include?(:edi) %>
-        <%= render "admin/shared/system_menu" %>
+    		<%= render "admin/shared/billing_menu" if (Rails.configuration.modules.include?(:billing) && current_user.role.has_any_permission?(:billing)) %>
+    		<%= render "admin/shared/callcenter_menu" if (Rails.configuration.modules.include?(:callcenter) && current_user.role.has_any_permission?(:callcenter)) %>
+    		<%= render "admin/shared/cms_menu" if (Rails.configuration.modules.include?(:cms) && current_user.role.has_any_permission?(:cms)) %>
+    		<%= render "admin/shared/store_menu" if (Rails.configuration.modules.include?(:store) && current_user.role.has_any_permission?(:store)) %>
+    		<%= render "admin/shared/marketing_menu" if (Rails.configuration.modules.include?(:marketing) && current_user.role.has_any_permission?(:marketing)) %>
+    		<%= render "admin/shared/pbx_menu" if (Rails.configuration.modules.include?(:pbx) && current_user.role.has_any_permission?(:pbx)) %>
+    		<%= render "admin/shared/ticketing_menu" if (Rails.configuration.modules.include?(:ticketing) && current_user.role.has_any_permission?(:ticketing)) %>
+        <%= render "admin/shared/edi_menu" if (Rails.configuration.modules.include?(:edi) && current_user.role.has_any_permission?(:edit)) %>
+        <%= render "admin/shared/system_menu" if current_user.role.has_any_permission?(:system) %>
       </ul>
 
         <!-- /#side-menu -->

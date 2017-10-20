@@ -1,7 +1,7 @@
 class Admin::System::LogsController < Admin::BaseController
   
   def index
-    authorize Log
+    authorize Log.new
     @logs = Log.includes(:user).order(sort_column + " " + sort_direction)
     @logs = @logs.where(loggable_type: params[:type]) unless params[:type].blank?
     

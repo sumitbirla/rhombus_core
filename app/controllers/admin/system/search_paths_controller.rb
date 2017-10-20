@@ -1,6 +1,6 @@
 class Admin::System::SearchPathsController < Admin::BaseController
   def index
-    authorize SearchPath
+    authorize SearchPath.new
     @search_paths = SearchPath.order(:short_code).all
   end
 

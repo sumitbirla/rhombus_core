@@ -1,7 +1,7 @@
 class Admin::System::NotificationsController < Admin::BaseController
   
   def index
-    authorize Notification
+    authorize Notification.new
     @notifications = Notification.order('created_at DESC')
     
     respond_to do |format|

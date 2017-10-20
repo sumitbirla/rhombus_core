@@ -1,7 +1,7 @@
 class Admin::System::AffiliatesController < Admin::BaseController
   
   def index
-    authorize Affiliate
+    authorize Affiliate.new
     
     @affiliates = Affiliate.order(sort_column + " " + sort_direction)
     @affiliates = @affiliates.where("name LIKE '%#{params[:q]}%' OR code = '#{params[:q]}'") unless params[:q].blank?

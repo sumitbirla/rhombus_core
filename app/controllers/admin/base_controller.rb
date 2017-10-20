@@ -38,7 +38,7 @@ class Admin::BaseController < ActionController::Base
         session[:user_id] = cookies.signed[:user_id]
       end
       
-      unless logged_in? && current_user.role.super_user
+      unless logged_in? && current_user.role.has_permission?(:login, :allow)
         flash[:error] = "You must be logged in as admin to access this page"
         redirect_to admin_login_path(redirect: request.fullpath)
       end
