@@ -17,16 +17,13 @@ class Admin::BaseController < ActionController::Base
   helper_method :sysdate
   helper_method :sort_column, :sort_direction
   
-  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  rescue_from Pundit::NotAuthorizedError do |e|
+    @error = e
+    render 'admin/shared/unauthorized'
+  end
 
 
   private
-
-
-  def user_not_authorized
-    flash[:error] = "You are not authorized to perform this action."
-    redirect_to(request.referrer || root_path)
-  end
 
   
   def require_login

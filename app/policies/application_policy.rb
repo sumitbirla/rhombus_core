@@ -7,31 +7,31 @@ class ApplicationPolicy
   end
 
   def index?
-    user.admin? || user.role.has_permission?(record.class.name, :index)
+    user.role.has_permission?(record.class.name, :index)
   end
   
   def show?
-    user.admin? || user.role.has_permission?(record.class.name, :read)
+    user.role.has_permission?(record.class.name, :read)
   end
   
   def new?
-    user.admin? || user.role.has_permission?(record.class.name, :create)
+    user.role.has_permission?(record.class.name, :create)
   end
 
   def create?
-    user.admin? || user.role.has_permission?(record.class.name, :create)
+    user.role.has_permission?(record.class.name, :create)
   end
   
   def edit?
-    user.admin? || user.role.has_permission?(record.class.name, :update)
+    user.role.has_permission?(record.class.name, :update)
   end
 
   def update?
-    user.admin? || user.role.has_permission?(record.class.name, :update)
+    user.role.has_permission?(record.class.name, :update)
   end
   
   def destroy?
-    user.admin? || user.role.has_permission?(record.class.name, :destroy)
+    user.role.has_permission?(record.class.name, :destroy)
   end
 
   def scope

@@ -34,9 +34,8 @@ class Admin::System::UsersController < Admin::BaseController
   end
 
   def create
-    @user = User.new(user_params)
+    @user = authorize User.new(user_params)
     @user.password_digest = BCrypt::Password.create(params[:password]) unless params[:password].blank?
-    authorize @user
     
     if @user.save
       redirect_to action: 'show', id: @user.id, notice: 'User was successfully created.'
@@ -46,19 +45,16 @@ class Admin::System::UsersController < Admin::BaseController
   end
 
   def show
-    @user = User.find(params[:id])
-    authorize @user
+    @user = authorize User.find(params[:id])
     @counts = get_counts(@user)
   end
 
   def edit
-    @user = User.find(params[:id])
-    authorize @user
+    @user = authorize User.find(params[:id])
   end
 
   def update
-    @user = User.find(params[:id])
-    authorize @user
+    @user = authorize User.find(params[:id])
 
     if @user.update(user_params)
       # update password if needed
@@ -79,19 +75,20 @@ class Admin::System::UsersController < Admin::BaseController
   end
 
   def destroy
-    @user = User.find(params[:id])
-    authorize @user
+    @user = authorize User.find(params[:id])
     @user.destroy
     redirect_to action: 'index', notice: 'User has been deleted.'
   end
   
   def extra_properties
     @user = User.find(params[:id])
+    authorize @user, :show?
     5.times { @user.extra_properties.build }
   end
   
   def orders
     @user = User.find(params[:id])
+    authorize @user, :show?
     @orders = Order.where(user_id: @user.id, status: Order.valid_statuses).paginate(page: params[:page], per_page: 10).order('created_at DESC')
 
     @counts = get_counts(@user)
@@ -99,6 +96,7 @@ class Admin::System::UsersController < Admin::BaseController
 
   def packages
     @user = User.find(params[:id])
+    authorize @user, :show?
     @user_packages = UserPackage.where(user_id: @user.id).paginate(page: params[:page], per_page: 10).order('created_at DESC')
 
     @counts = get_counts(@user)
@@ -106,6 +104,7 @@ class Admin::System::UsersController < Admin::BaseController
 
   def payment_methods
     @user = User.find(params[:id])
+    authorize @user, :show?
     @payment_methods = PaymentMethod.where(user_id: @user.id).paginate(page: params[:page], per_page: 10).order('created_at DESC')
 
     @counts = get_counts(@user)
@@ -113,6 +112,7 @@ class Admin::System::UsersController < Admin::BaseController
 
   def locations
     @user = User.find(params[:id])
+    authorize @user, :show?
     @locations = Location.where(user_id: @user.id).paginate(page: params[:page], per_page: 10).order('created_at DESC')
 
     @counts = get_counts(@user)
@@ -120,6 +120,7 @@ class Admin::System::UsersController < Admin::BaseController
 
   def cases
     @user = User.find(params[:id])
+    authorize @user, :show?
     @cases = Case.where(user_id: @user.id).paginate(page: params[:page], per_page: 10).order('created_at DESC')
 
     @counts = get_counts(@user)
@@ -127,18 +128,21 @@ class Admin::System::UsersController < Admin::BaseController
 
   def vouchers
     @user = User.find(params[:id])
+    authorize @user, :show?
     @vouchers = UserVoucherHistory.where(user_id: @user.id).paginate(page: params[:page], per_page: 10).order('created_at DESC')
 
     @counts = get_counts(@user)
   end
 
   def create_voucher
+    authorize User, :update?
     UserVoucherHistory.create(user_id: params[:id], amount: params[:amount], notes: params[:notes])
     redirect_to :back
   end
 
   def pictures
     @user = User.find(params[:id])
+    authorize @user, :show?
     @pictures = Picture.where(user_id: @user.id).paginate(page: params[:page], per_page: 10).order('created_at DESC')
 
     @counts = get_counts(@user)

@@ -11,14 +11,12 @@ class Admin::System::NotificationsController < Admin::BaseController
   end
 
   def new
-    @notification = Notification.new(title: 'New notification', web_delivery: true)
-    authorize @notification
+    @notification = authorize Notification.new(title: 'New notification', web_delivery: true)
     render 'edit'
   end
 
   def create
-    @notification = Notification.new(notification_params)
-    authorize @notification
+    @notification = authorize Notification.new(notification_params)
     
     if @notification.save
       redirect_to action: 'index', notice: 'Notification was successfully created.'
@@ -28,18 +26,15 @@ class Admin::System::NotificationsController < Admin::BaseController
   end
 
   def show
-    @notification = Notification.find(params[:id])
-    authorize @notification
+    @notification = authorize Notification.find(params[:id])
   end
 
   def edit
-    @notification = Notification.find(params[:id])
-    authorize @notification
+    @notification = authorize Notification.find(params[:id])
   end
 
   def update
-    @notification = Notification.find(params[:id])
-    authorize @notification
+    @notification = authorize Notification.find(params[:id])
     
     if @notification.update(notification_params)
       redirect_to action: 'index', notice: 'Notification was successfully updated.'
@@ -49,8 +44,7 @@ class Admin::System::NotificationsController < Admin::BaseController
   end
 
   def destroy
-    @notification = Notification.find(params[:id])
-    authorize @notification
+    @notification = authorize Notification.find(params[:id])
     @notification.destroy
     redirect_to action: 'index', notice: 'Notification has been deleted.'
   end

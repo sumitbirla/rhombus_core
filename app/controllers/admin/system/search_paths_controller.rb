@@ -5,15 +5,12 @@ class Admin::System::SearchPathsController < Admin::BaseController
   end
 
   def new
-    @search_path = SearchPath.new
-    authorize @search_path
-    
+    @search_path = authorize SearchPath.new
     render 'edit'
   end
 
   def create
-    @search_path = SearchPath.new(search_path_params)
-    authorize @search_path
+    @search_path = authorize SearchPath.new(search_path_params)
     
     if @search_path.save
       redirect_to action: 'index'
@@ -23,13 +20,11 @@ class Admin::System::SearchPathsController < Admin::BaseController
   end
 
   def edit
-    @search_path = SearchPath.find(params[:id])
-    authorize @search_path
+    @search_path = authorize SearchPath.find(params[:id])
   end
 
   def update
-    @search_path = SearchPath.find(params[:id])
-    authorize @search_path
+    @search_path = authorize SearchPath.find(params[:id])
     
     if @search_path.update(search_path_params)
       redirect_to action: 'index'
@@ -39,9 +34,8 @@ class Admin::System::SearchPathsController < Admin::BaseController
   end
 
   def destroy
-    SearchPath.destroy(params[:id])
-    authorize @search_path
-    
+    @search_path = authorize SearchPath.find(params[:id])
+    @search_path.destroy
     redirect_to :back
   end
   

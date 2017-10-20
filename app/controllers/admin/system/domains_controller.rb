@@ -11,14 +11,12 @@ class Admin::System::DomainsController < Admin::BaseController
   end
 
   def new
-    @domain = Domain.new(name: 'New domain')
-    authorize @domain
+    @domain = authorize Domain.new(name: 'New domain')
     render 'edit'
   end
 
   def create
-    @domain = Domain.new(domain_params)
-    authorize @domain
+    @domain = authorize Domain.new(domain_params)
     
     if @domain.save
       Rails.cache.delete :domains
@@ -29,18 +27,15 @@ class Admin::System::DomainsController < Admin::BaseController
   end
 
   def show
-    @domain = Domain.find(params[:id])
-    authorize @domain
+    @domain = authorize Domain.find(params[:id])
   end
 
   def edit
-    @domain = Domain.find(params[:id])
-    authorize @domain
+    @domain = authorize Domain.find(params[:id])
   end
 
   def update
-    @domain = Domain.find(params[:id])
-    authorize @domain
+    @domain = authorize Domain.find(params[:id])
     
     if @domain.update(domain_params)
       Rails.cache.delete :domains
@@ -51,8 +46,7 @@ class Admin::System::DomainsController < Admin::BaseController
   end
 
   def destroy
-    @domain = Domain.find(params[:id])
-    authorize @domain
+    @domain = authorize Domain.find(params[:id])
     @domain.destroy
     
     Rails.cache.delete :domains

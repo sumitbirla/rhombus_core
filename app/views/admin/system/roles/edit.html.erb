@@ -3,9 +3,9 @@
 <hr/>
 
 <%= simple_form_for([:admin, :system, @role], html: { class: 'form-inline' }) do |f| %>
-  <%= f.input :name , wrapper_html: { style: 'margin-bottom: 5px;' }%>
-  <%= f.input :default, wrapper_html: { style: 'margin-bottom: 5px;' } %>
-  <%= f.input :super_user %>
+  <b>Name: </b><%= f.input_field :name %> &nbsp; &nbsp;
+  <b>Default? </b><%= f.input_field :default %> &nbsp; &nbsp;
+  <b>Super user? </b><%= f.input_field :super_user %>
   
   <hr/>
   <% 

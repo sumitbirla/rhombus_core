@@ -25,7 +25,7 @@ class Role < ActiveRecord::Base
   end
   
   def has_permission?(resource, action)
-    permissions.exists?(resource: resource, action: action)
+    super_user || permissions.exists?(resource: resource, action: action)
   end
   
   # PUNDIT

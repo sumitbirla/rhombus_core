@@ -9,14 +9,12 @@ class Admin::System::PrintersController < Admin::BaseController
   end
 
   def new
-    @printer = Printer.new(name: 'New printer')
-    authorize @printer
+    @printer = authorize Printer.new(name: 'New printer')
     render 'edit'
   end
 
   def create
-    @printer = Printer.new(printer_params)
-    authorize @printer
+    @printer = authorize Printer.new(printer_params)
     update_cups_properties(@printer)
     
     if @printer.save
@@ -28,18 +26,15 @@ class Admin::System::PrintersController < Admin::BaseController
   end
 
   def show
-    @printer = Printer.find(params[:id])
-    authorize @printer
+    @printer = authorize Printer.find(params[:id])
   end
 
   def edit
-    @printer = Printer.find(params[:id])
-    authorize @printer
+    @printer = authorize Printer.find(params[:id])
   end
 
   def update
-    @printer = Printer.find(params[:id])
-    authorize @printer
+    @printer = authorize Printer.find(params[:id])
     update_cups_properties(@printer)
     
     if @printer.update(printer_params)
@@ -50,8 +45,7 @@ class Admin::System::PrintersController < Admin::BaseController
   end
 
   def destroy
-    @printer = Printer.find(params[:id])
-    authorize @printer
+    @printer = authorize Printer.find(params[:id])
     @printer.destroy
     
     redirect_to action: 'index', notice: 'Printer has been deleted.'

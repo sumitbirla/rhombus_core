@@ -11,14 +11,12 @@ class Admin::System::RolesController < Admin::BaseController
   end
 
   def new
-    @role = Role.new
-    authorize @role
+    @role = authorize Role.new
     render 'edit'
   end
 
   def create
-    @role = Role.new(role_params)
-    authorize @role
+    @role = authorize Role.new(role_params)
     
     if @role.save
       
@@ -41,18 +39,15 @@ class Admin::System::RolesController < Admin::BaseController
   end
 
   def show
-    @role = Role.find(params[:id])
-    authorize @role
+    @role = authorize Role.find(params[:id])
   end
 
   def edit
-    @role = Role.find(params[:id])
-    authorize @role
+    @role = authorize Role.find(params[:id])
   end
 
   def update
-    @role = Role.find(params[:id])
-    authorize @role
+    @role = authorize Role.find(params[:id])
     
     if @role.update(role_params)
       
@@ -74,8 +69,7 @@ class Admin::System::RolesController < Admin::BaseController
   end
 
   def destroy
-    @role = Role.find(params[:id])
-    authorize @role
+    @role = authorize Role.find(params[:id])
     @role.destroy
     
     redirect_to action: 'index', notice: 'Role has been deleted.'

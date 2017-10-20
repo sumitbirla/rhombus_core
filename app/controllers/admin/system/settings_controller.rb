@@ -6,15 +6,13 @@ class Admin::System::SettingsController < Admin::BaseController
   end
 
   def new
-    @setting = Setting.new(section: 'System', key: 'New Key', value_type: 'string')
-    authorize @setting
+    @setting = authorize Setting.new(section: 'System', key: 'New Key', value_type: 'string')
     render 'edit'
   end
 
   def create
-    @setting = Setting.new(setting_params)
+    @setting = authorize Setting.new(setting_params)
     @setting.domain_id = cookies[:domain_id]
-    authorize @setting
     
     if @setting.save
       redirect_to action: 'index', notice: 'Setting was successfully created.'
@@ -24,18 +22,15 @@ class Admin::System::SettingsController < Admin::BaseController
   end
 
   def show
-    @setting = Setting.find(params[:id])
-    authorize @setting
+    @setting = authorize Setting.find(params[:id])
   end
 
   def edit
-    @setting = Setting.find(params[:id])
-    authorize @setting
+    @setting = authorize Setting.find(params[:id])
   end
 
   def update
-    @setting = Setting.find(params[:id])
-    authorize @setting
+    @setting = authorize Setting.find(params[:id])
     
     if @setting.update(setting_params)
       Rails.cache.delete @setting
@@ -46,8 +41,7 @@ class Admin::System::SettingsController < Admin::BaseController
   end
 
   def destroy
-    @setting = Setting.find(params[:id])
-    authorize @setting
+    @setting = authorize Setting.find(params[:id])
     @setting.destroy
     
     Rails.cache.delete @setting
