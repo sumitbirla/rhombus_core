@@ -33,6 +33,11 @@ class Role < ActiveRecord::Base
     super_user || permissions.exists?(section: section)
   end
   
+  # Add read/create/update/destroy/index permissions for given section and resource if not aleady exists
+  def self.create_permissions(section, resource, actions = [:read, :create, :update, :destroy, :index])
+    actions.each { |x| Permission.find_or_create_by(section: section, resource: resource, action: x) }
+  end
+  
   # PUNDIT
   def self.policy_class
     ApplicationPolicy
