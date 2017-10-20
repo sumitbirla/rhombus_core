@@ -20,7 +20,7 @@ class Admin::SessionsController < Admin::BaseController
         return
       end
       
-      redirect_to admin_root_path
+      redirect_to user.role.landing_page || admin_root_path
     else
       flash[:error] = "Invalid email or password"
       redirect_to admin_login_path

@@ -5,7 +5,8 @@
 <%= simple_form_for([:admin, :system, @role], html: { class: 'form-inline' }) do |f| %>
   <b>Name: </b><%= f.input_field :name %> &nbsp; &nbsp;
   <b>Default? </b><%= f.input_field :default %> &nbsp; &nbsp;
-  <b>Super user? </b><%= f.input_field :super_user %>
+  <b>Super user? </b><%= f.input_field :super_user %><br>
+  <b>Landing page: </b><%= f.input_field :landing_page %>
   
   <hr/>
   <% 

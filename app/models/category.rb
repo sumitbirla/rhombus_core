@@ -7,11 +7,12 @@
 #  entity_type :string(255)      default(""), not null
 #  parent_id   :integer
 #  hidden      :boolean          default(FALSE), not null
+#  featured    :boolean          default(FALSE), not null
+#  code        :string(255)
 #  slug        :string(255)      not null
 #  sort        :integer          default(0), not null
 #  desc1       :text(65535)
 #  desc2       :text(65535)
-#  desc3       :text(65535)
 #  image_path  :string(255)
 #  created_at  :datetime
 #  updated_at  :datetime

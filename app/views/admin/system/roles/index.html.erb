@@ -11,6 +11,7 @@
 		<th>Is default</th>
 		<th>Is super user</th>
 		<th class="text-center">Users</th>
+    <th>Landing Page</th>
 		<th class="actions">&nbsp;</th>
 	</tr>
 	<% @roles.each do | role | %>
@@ -20,6 +21,7 @@
 		<td><%= raw tick role.default %></td>
 		<td><%= raw tick role.super_user %></td>
 		<td class="text-center"><%= link_to number_with_delimiter(role.users.count), admin_system_users_path(role_id: role.id) %></td>
+    <td><%= role.landing_page %></td>
 		<td class="actions ralign">
 			<%= link_to "edit", edit_admin_system_role_path(role) %> &nbsp; 
 			<%= link_to "delete", 

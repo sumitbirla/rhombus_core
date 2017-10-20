@@ -2,12 +2,13 @@
 #
 # Table name: core_roles
 #
-#  id         :integer          not null, primary key
-#  name       :string(255)      not null
-#  default    :boolean          not null
-#  super_user :boolean          not null
-#  created_at :datetime
-#  updated_at :datetime
+#  id           :integer          not null, primary key
+#  name         :string(255)      not null
+#  default      :boolean          not null
+#  super_user   :boolean          not null
+#  created_at   :datetime
+#  updated_at   :datetime
+#  landing_page :string(255)
 #
 
 class Role < ActiveRecord::Base

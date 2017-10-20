@@ -52,9 +52,12 @@ class Admin::System::RolesController < Admin::BaseController
     if @role.update(role_params)
       
       # Update permissions
-      RolePermission.delete_all role_id: @role.id
-      params[:permission_ids].each do |id|
-        RolePermission.create role_id: @role.id, permission_id: id
+      RolePermission.delete_all(role_id: @role.id)
+      
+      if params[:permission_ids]
+        params[:permission_ids].each do |id|
+          RolePermission.create role_id: @role.id, permission_id: id
+        end
       end
       
       # Un-default other roles if necessary
@@ -79,7 +82,7 @@ class Admin::System::RolesController < Admin::BaseController
   private
   
     def role_params
-      params.require(:role).permit(:name, :default, :super_user, :about)
+      params.require(:role).permit!
     end
   
   
