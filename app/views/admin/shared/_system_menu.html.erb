@@ -1,14 +1,32 @@
   <li class="<%= 'active' if request.original_url.include? 'admin/system' %>">
     <a href="#"><i class="fa fa-wrench fa-fw"></i> System  <span class="fa arrow"></span></a>
     <ul class="nav nav-second-level">  
-      <li><%= link_to "Affiliates", admin_system_affiliates_path %></li>
-      <li><%= link_to "Domains", admin_system_domains_path %></li>
-      <li><%= link_to "Logs", admin_system_logs_path(type: :session) %></li>
-      <li><%= link_to "Notifications", admin_system_notifications_path %></li>
-      <li><%= link_to "Printers", admin_system_printers_path %></li>
-      <li><%= link_to "Roles & permissions", admin_system_roles_path %></li>
-      <li><%= link_to "Search Paths", admin_system_search_paths_path %></li>
-      <li><%= link_to "Settings", admin_system_settings_path %></li>
-      <li><%= link_to "Users", admin_system_users_path %></li>
+      <% if current_user.has_permission?('Affiliate', 'index')%>
+        <li><%= link_to "Affiliates", admin_system_affiliates_path %></li>
+      <% end %>
+      <% if current_user.has_permission?('Domain', 'index')%>
+        <li><%= link_to "Domains", admin_system_domains_path %></li>
+      <% end %>
+      <% if current_user.has_permission?('Log', 'index')%>
+        <li><%= link_to "Logs", admin_system_logs_path(type: :session) %></li>
+      <% end %>
+      <% if current_user.has_permission?('Notification', 'index')%>
+        <li><%= link_to "Notifications", admin_system_notifications_path %></li>
+      <% end %>
+      <% if current_user.has_permission?('Printer', 'index')%>
+        <li><%= link_to "Printers", admin_system_printers_path %></li>
+      <% end %>
+      <% if current_user.has_permission?('Role', 'index')%>
+        <li><%= link_to "Roles & permissions", admin_system_roles_path %></li>
+      <% end %>
+      <% if current_user.has_permission?('SearchPath', 'index')%>
+        <li><%= link_to "Search Paths", admin_system_search_paths_path %></li>
+      <% end %>
+      <% if current_user.has_permission?('Setting', 'index')%>
+        <li><%= link_to "Settings", admin_system_settings_path %></li>
+      <% end %>
+      <% if current_user.has_permission?('User', 'index')%>
+        <li><%= link_to "Users", admin_system_users_path %></li>
+      <% end %>
     </ul>
   </li>

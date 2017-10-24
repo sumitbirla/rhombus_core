@@ -18,8 +18,8 @@
         <td><%= action_name %></td>
       </tr>
       <tr>
-        <td>ID:</td>
-        <td><%= params[:id]%></td>
+        <td>Params:</td>
+        <td><pre><%= params.to_yaml %></pre></td>
       </tr>
     </table>
   </div>
@@ -29,12 +29,13 @@
 
 <h4 class="text-danger">
   <i class="fa fa-info-circle"></i>&nbsp;
-<% if current_user.role.has_permission?(:role, :update) %>
+<% if current_user.role.has_permission?('Role', 'update') %>
   <%= link_to "Click here to update permissions", admin_system_role_path(current_user.role) %>
 <% else %>
   Please contact an administrator to gain access to this resource/action.
 <% end %>
 </h4>
+
 
 <% content_for :breadcrumbs do %>
   Access Denied

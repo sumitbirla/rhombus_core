@@ -8,7 +8,7 @@ module Cache
   
   def self.user(id)
     Rails.cache.fetch("user-#{id}", expires_in: 2.minutes) do 
-      User.includes(:role).find(id)
+      User.includes(:role, [role: :permissions]).find(id)
     end
   end
 

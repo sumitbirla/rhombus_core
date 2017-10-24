@@ -26,11 +26,12 @@ class Role < ActiveRecord::Base
   end
   
   def has_permission?(resource, action)
-    super_user || permissions.exists?(resource: resource, action: action)
+    puts ">>>>>  #{resource}:#{action}"
+    super_user || permissions.any? { |x| x.resource == resource.to_s && x.action == action.to_s } 
   end
   
   def has_any_permission?(section)
-    super_user || permissions.exists?(section: section)
+    super_user || permissions.any? { |x| x.section == section }
   end
   
   # Add read/create/update/destroy/index permissions for given section and resource if not aleady exists

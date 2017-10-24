@@ -106,5 +106,12 @@ class User < ActiveRecord::Base
   def self.policy_class
     ApplicationPolicy
   end
+  
+  def has_permission?(resource, action)
+    role.has_permission?(resource, action)
+  end
 
+  def has_any_permission?(section)
+    role.has_any_permission?(section)
+  end
 end
