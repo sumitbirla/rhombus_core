@@ -119,7 +119,7 @@
           <!-- /input-group -->
         </li>
 
-        <li><a href="/admin"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a></li>
+        <li><a href="<%= current_user.role.landing_page %>"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a></li>
 
     		<%= render "admin/shared/billing_menu" if (Rails.configuration.modules.include?(:billing) && current_user.has_any_permission?('Billing')) %>
     		<%= render "admin/shared/callcenter_menu" if (Rails.configuration.modules.include?(:callcenter) && current_user.has_any_permission?('Call Center')) %>
