@@ -26,7 +26,7 @@ class Role < ActiveRecord::Base
   end
   
   def has_permission?(resource, action)
-    puts ">>>>>  #{resource}:#{action}"
+    #puts ">>>>>  #{resource}:#{action}"
     super_user || permissions.any? { |x| x.resource == resource.to_s && x.action == action.to_s } 
   end
   
