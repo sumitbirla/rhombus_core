@@ -63,7 +63,7 @@ class Affiliate < ActiveRecord::Base
     unless opts[:skip_country]
       address += delim + Country[country].to_s unless country.blank?
     end
-    address.html_safe
+    address.html_safe unless address.nil?
   end
   
   def valid_password?
