@@ -34,6 +34,7 @@ class User < ActiveRecord::Base
   include Exportable
   
   self.table_name = 'core_users'
+  default_scope { order(:name) }
   has_many :extra_properties, -> { order "sort, name" }, as: :extra_property
   has_many :logs
   
