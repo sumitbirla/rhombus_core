@@ -9,6 +9,7 @@
 #  featured             :boolean          default(FALSE), not null
 #  active               :boolean          default(FALSE), not null
 #  tax_id               :string(255)
+#  tax_exempt           :boolean          default(FALSE), not null
 #  contact_person       :string(255)
 #  street1              :string(255)
 #  street2              :string(255)
