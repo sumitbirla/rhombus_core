@@ -45,7 +45,7 @@ class SessionsController < ApplicationController
     if user.nil?
 
       # WARNING:  extra.raw_info is Facebook specific
-      user = User.new Rails.configuration.domain_id,
+      user = User.new(domain_id: Rails.configuration.domain_id,
                       name: auth.info.name,
                       email: auth.info.email,
                       role_id: Role.find_by(default: true).id,
@@ -56,7 +56,7 @@ class SessionsController < ApplicationController
                       locale: auth.extra.raw_info.locale,
                       password_digest: SecureRandom.hex(5),
                       referral_key: SecureRandom.hex(5),
-                      status: :active
+                      status: :active)
 
       # try to guess timezone
       tz = ActiveSupport::TimeZone[auth.extra.raw_info.timezone]
