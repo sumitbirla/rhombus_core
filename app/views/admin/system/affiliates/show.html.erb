@@ -55,6 +55,8 @@
 		  <%= obj_property @affiliate, :payment_terms %>
       <%= obj_property @affiliate, :tax_exempt %>
       <%= obj_property @affiliate, :tax_id %>
+      <%= obj_property(@affiliate, :discount_percent) { |x| "#{x}%" }  %>
+      <%= obj_property(@affiliate, :markup_percent) { |x| "#{x}%" } %>
 		  <%= obj_property(@affiliate, :description) { |x| x.gsub("\n", "<br>") } %>
       <%= obj_property @affiliate, :purchase_order_email %>
 		  <%= obj_property @affiliate, :shipment_email %>
@@ -114,7 +116,9 @@
       	<tr>
       		<th><input type="checkbox" id="chkAll" /></th>
           <th></th>
-      		<th>Item #</th>
+      		<th>Product #</th>
+          <th>Variant 1</th>
+          <th>Variant 2</th>
           <th>Title</th>
       		<th>Customer Item #</th>
       		<th class="text-right">Price</th>
