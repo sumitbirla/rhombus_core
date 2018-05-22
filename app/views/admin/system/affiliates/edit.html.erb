@@ -92,22 +92,23 @@ end %>
         <li class="active">edit</li>
     <% end %>
 <% end %>
-
-
+  
+  
 <% content_for :head do %>
-	<script type="text/javascript" src="/ckfinder/ckfinder.js"></script>
+  <% static_url = Cache.setting(Rails.configuration.domain_id, :system, 'Static Files Url') %>
+	<script src="/ckfinder/ckfinder.js"></script>
 	<script>
-
-<% unless @affiliate.persisted? %>
-    $(document).ready(function() {
-      $("#affiliate_name").select();
-    });
-<% end %>
-
+    
+  <% unless @affiliate.persisted? %>
+      $(document).ready(function() {
+        $("#affiliate_name").select();
+      });
+  <% end %>
+      
 	function BrowseServer()
 	{
 		// You can use the "CKFinder" class to render CKFinder in a page:
-		var finder = new CKFinder( { connectorPath : '<%= Cache.setting('System', 'Static Files Url') %>/ckfinder/core/connector/php/connector.php' });
+		var finder = new CKFinder( { connectorPath : '<%= static_url  %>/ckfinder/core/connector/php/connector.php' });
 		//finder.basePath = '../';	// The path for the installation of CKFinder (default = "/ckfinder/").
 		finder.selectActionFunction = SetFileField;
 		finder.popup();
@@ -116,7 +117,7 @@ end %>
 	// This is a sample function which is called when a file is selected in CKFinder.
 	function SetFileField( fileUrl )
 	{
-		document.getElementById('affiliate_logo').value = fileUrl.substring(<%= Cache.setting(Rails.configuration.domain_id, 'System', 'Static Files Url').length %>);
+		document.getElementById('affiliate_logo').value = fileUrl.substring(<%= static_url.length +  5 %>);
 	}
 	</script>
 <% end %>
