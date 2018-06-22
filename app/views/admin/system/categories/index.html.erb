@@ -8,6 +8,7 @@
 	<tr>
 		<th>Sort</th>
 		<th>Name</th>
+    <th>Code</th>
 		<th>Slug</th>
 		<th>Visible</th>
 		<th class="actions">&nbsp;</th>
@@ -19,6 +20,7 @@
 	<tr class="parent">
 		<td><%= cat.sort %></td>
 		<td><%= cat.name %></td>
+    <td><%= cat.code.presence || '-' %></td>
 		<td><%= cat.slug %></td>
 		
 		<td>
@@ -42,6 +44,7 @@
 	<tr class="child">
 		<td></td>
 		<td> - <%= child.name %></td>
+    <td><%= child.code.presence || '-' %></td>
 		<td><%= child.slug %></td>
 		<td><%= raw tick !child.hidden %></td>
 		<td class="actions">

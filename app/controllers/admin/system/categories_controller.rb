@@ -1,7 +1,7 @@
 class Admin::System::CategoriesController < Admin::BaseController
   
   def index
-    @categories = Category.select("id, name, parent_id, slug, sort, hidden").where(entity_type: params[:type]).order(:sort)
+    @categories = Category.select("id, name, code, parent_id, slug, sort, hidden").where(entity_type: params[:type]).order(:sort)
   end
 
   def new
@@ -56,7 +56,7 @@ class Admin::System::CategoriesController < Admin::BaseController
   private
   
     def category_params
-      params.require(:category).permit(:entity_type, :name, :parent_id, :slug, :sort, :hidden, :image_path, :desc1, :desc2, :desc3)
+      params.require(:category).permit!
     end
   
 end

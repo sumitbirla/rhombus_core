@@ -13,6 +13,7 @@
       <%= f.hidden_field :entity_type, value: @category.entity_type  %>
       <%= f.association :parent, collection: Category.select("id, name").where(entity_type: @category.entity_type, parent_id: nil) %>
       <%= f.input :name, input_html: { class: 'span6' } %>
+      <%= f.input :code %>
       <%= f.input :slug %>
       <%= f.input :sort %>
       <%= f.input :hidden %>
