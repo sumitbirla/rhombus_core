@@ -38,7 +38,7 @@ class Affiliate < ActiveRecord::Base
   self.table_name = 'core_affiliates'
   
   default_scope { order(:name) }
-  has_many :affiliate_categories
+  has_many :affiliate_categories, dependent: :destroy
   has_many :categories, through: :affiliate_categories
   has_many :extra_properties, -> { order "sort, name" }, as: :extra_property
   validates_presence_of :name
