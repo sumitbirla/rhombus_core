@@ -21,6 +21,11 @@ class Admin::BaseController < ActionController::Base
     @error = e
     render 'admin/shared/unauthorized'
   end
+	
+	rescue_from ActiveRecord::ActiveRecordError do |e|
+		@error = e
+		render 'admin/shared/database_error'
+	end
 
 
   private

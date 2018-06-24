@@ -1,0 +1,33 @@
+<h1 class="text-danger"><i class="fa fa-database"></i> Database Error</h1>
+<hr>
+<p class="text-danger"><%= @error.message %></p>
+
+<div class="row">
+  <div class="col-md-3">
+    <table class="table table-bordered table-condensed summary">
+      <tr>
+        <td>User:</td>
+        <td><%= current_user.name_with_id %></td>
+      </tr>
+      <tr>
+        <td>Resource:</td>
+        <td><%= controller_name %></td>
+      </tr>
+      <tr>
+        <td>Action:</td>
+        <td><%= action_name %></td>
+      </tr>
+      <tr>
+        <td>Params:</td>
+        <td><pre><%= params.to_yaml %></pre></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<br>
+
+<%= link_to "&larr; back to previous page".html_safe, url_for(:back), class: "btn btn-lg btn-danger" %>
+
+
+<%= content_for :breadcrumbs, "Database Error" %>
