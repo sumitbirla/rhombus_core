@@ -19,7 +19,7 @@ require 'socket'
 
 class Printer < ActiveRecord::Base
   self.table_name = "core_printers"
-  validates_presence_of :name, :url
+  validates_presence_of :name, :url, :preferred_format
   
   # PUNDIT
   def self.policy_class
