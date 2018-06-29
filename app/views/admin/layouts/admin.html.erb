@@ -41,9 +41,16 @@
 
         $("#chkAll").change(function() {
           if ($(this).prop("checked"))
-            $(".multiselect").prop("checked", true);
+            $(".multiselect").prop("checked", true).change();
           else
-            $(".multiselect").prop("checked", false);
+            $(".multiselect").prop("checked", false).change();
+        });
+        
+        $(".multiselect").on('change', function (e) {
+            if ($(this).is(":checked")) 
+              $(this).parent().parent().addClass("highlight"); 
+            else 
+              $(this).parent().parent().removeClass("highlight");
         });
 
       });
