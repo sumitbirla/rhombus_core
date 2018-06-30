@@ -38,6 +38,7 @@ class Admin::System::PrintersController < Admin::BaseController
     update_cups_properties(@printer)
     
     if @printer.update(printer_params)
+			Rails.cache.delete :printers
       redirect_to action: 'index', notice: 'Printer was successfully updated.'
     else
       render 'edit'
@@ -47,7 +48,8 @@ class Admin::System::PrintersController < Admin::BaseController
   def destroy
     @printer = authorize Printer.find(params[:id])
     @printer.destroy
-    
+		
+		Rails.cache.delete :printers
     redirect_to action: 'index', notice: 'Printer has been deleted.'
   end
   
@@ -86,7 +88,9 @@ class Admin::System::PrintersController < Admin::BaseController
     
     def update_cups_properties(printer)
       # attempt to get printer info from CUPS server
-      uri = URI(printer.url)
+      return unless printer.url =~ URI::regexp
+			
+			uri = URI(printer.url)
       if uri.scheme == 'ipp'
         printer_name = uri.path.split("/").last
         begin

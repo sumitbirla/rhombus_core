@@ -33,6 +33,12 @@ module Cache
     end
   end
   
+  def self.printers
+    Rails.cache.fetch("printers") do
+      Printer.order(:name).all.load
+    end
+  end
+	
   def self.affiliate(slug)
     Rails.cache.fetch("affiliate-#{slug}") do
       Affiliate.find_by(slug: slug)

@@ -7,7 +7,7 @@
       </div>
       <div class="modal-body">
         <table class="table">
-          <% Printer.order(:name).each do |p| 
+          <% Cache.printers.each do |p| 
               icon = (['epl2', 'zpl'].include?(p.preferred_format) ? 'fa-barcode' : 'fa-print') %>
           <tr class="<%= p.preferred_format %>">
             <td><a href="#" printer_id="<%= p.id %>"><i class="fa fa-fw <%= icon %>"></i> <%= p.name %></a></td>
