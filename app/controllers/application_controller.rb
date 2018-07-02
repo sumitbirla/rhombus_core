@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   helper_method :sysdate
   helper_method :systime
   helper_method :mobile_device?
+	helper_method :sort_column, :sort_direction
   
   
   def not_found(msg = 'Not found')
