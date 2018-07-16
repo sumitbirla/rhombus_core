@@ -53,8 +53,6 @@
 		  <%= obj_property @affiliate, :fax %>
 		  <%= obj_property @affiliate, :website %>
 		  <%= obj_property @affiliate, :payment_terms %>
-      <%= obj_property @affiliate, :free_shipping %>
-      <%= obj_property @affiliate, :tax_exempt %>
       <%= obj_property @affiliate, :tax_id %>
       <%= obj_property(@affiliate, :discount_percent) { |x| "#{x}%" }  %>
       <%= obj_property(@affiliate, :markup_percent) { |x| "#{x}%" } %>
@@ -85,6 +83,18 @@
 
  		<% if @affiliate.featured %>
  		<span class="label label-warning">featured</span> &nbsp; 
+ 		<% end %>
+    
+ 		<% if @affiliate.disable_invoicing %>
+ 		<span class="label label-warning">NO Invoicing</span> &nbsp; 
+ 		<% end %>
+    
+ 		<% if @affiliate.free_shipping %>
+ 		<span class="label label-warning">FREE Shipping</span> &nbsp; 
+ 		<% end %>
+    
+ 		<% if @affiliate.tax_exempt %>
+ 		<span class="label label-warning">Tax Exempt</span> &nbsp; 
  		<% end %>
     
     <hr>

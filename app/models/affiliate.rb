@@ -43,6 +43,7 @@ class Affiliate < ActiveRecord::Base
   has_many :extra_properties, -> { order "sort, name" }, as: :extra_property
   validates_presence_of :name
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, unless: Proc.new { |a| a.email.blank? }
+  validates_uniqueness_of :code, unless: Proc.new { |a| a.code.blank? }
   validates_uniqueness_of :name
   
   # following used only during signup (not stored in database)
