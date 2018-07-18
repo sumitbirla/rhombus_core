@@ -159,9 +159,13 @@
         status_list << 'awaiting_shipment' if !status_list.include?('awaiting_shipment')
         status_list = status_list.sort
       %>
+      
       <div class="pull-right">
         <%= render 'admin/store/orders/group_actions' %>
       </div>
+      
+      <% total = Order.where(status: :shipped).where(affiliate_id: @affiliate.id).sum(:total) %>
+      <div class="text-success"><b>Total sales: </b><%= number_to_currency(total) %></div>
 
       <%= will_paginate orders %>
       <form id="frmBatch" action="" method="post">
@@ -217,9 +221,13 @@
 
     <% elsif params[:q] == "payments" %>
     
-      <% payments = Payment.where(payable_type: "affiliate", payable_id: @affiliate.id)
+      <% payments = Payment.where(affiliate_id: @affiliate.id)
                            .order(created_at: :desc)
                            .paginate(page: params[:page], per_page: 20) %>
+
+
+      <% balance = Payment.where(affiliate_id: @affiliate.id).sum(:amount) %>
+      <div class="text-<%= balance < 0 ? 'danger' : 'success' %>"><b>Balance: </b><%= number_to_currency(balance) %></div>
 
       <%= will_paginate payments %>
       
@@ -239,6 +247,8 @@
         </tr>
         <% end %>
       </table>
+      
+      
       
       <%= render 'admin/shared/table_summary', data: payments %>
       
