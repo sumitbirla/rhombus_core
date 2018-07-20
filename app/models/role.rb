@@ -16,7 +16,7 @@ class Role < ActiveRecord::Base
   self.table_name = 'core_roles'
   
   has_many :role_permissions
-  has_many :permissions, through: :role_permissions
+  has_many :permissions, through: :role_permissions, dependent: :destroy
   has_many :users
   
   validates_uniqueness_of :name
