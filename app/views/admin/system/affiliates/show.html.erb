@@ -229,25 +229,19 @@
       <div class="text-<%= balance < 0 ? 'danger' : 'success' %>"><b>Balance: </b><%= number_to_currency(balance) %></div>
 
       <%= will_paginate payments %>
-      
       <table class="table table-striped table-condensed">
         <tr>
           <th>ID</th>
           <th>Date</th>
+          <th>User</th>
+          <th class="text-center">Cust.</th>
+          <th>Item</th>
+          <th>Method</th>
           <th>Memo</th>
-          <th>Amount</th>
+          <th class="text-right">Amount</th>
         </tr>
-        <% payments.order('created_at DESC').each do |pmt| %>
-        <tr>
-          <td><%= pmt.id %></td>
-          <td><%= systime pmt.created_at %></td>
-          <td><%= pmt.memo%></td>
-          <td><%= number_to_currency(pmt.amount, negative_format: "(%u%n)") %></td>
-        </tr>
-        <% end %>
+        <%= render partial: "admin/billing/payments/payment", collection: payments %>
       </table>
-      
-      
       
       <%= render 'admin/shared/table_summary', data: payments %>
       
