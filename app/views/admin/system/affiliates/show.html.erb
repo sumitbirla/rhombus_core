@@ -97,6 +97,10 @@
  		<span class="label label-warning">Tax Exempt</span> &nbsp; 
  		<% end %>
     
+ 		<% if @affiliate.enable_edi %>
+ 		<span class="label label-info">EDI</span> &nbsp; 
+ 		<% end %>
+    
     <hr>
 		
 		<% if @affiliate.categories.length > 0 %>
