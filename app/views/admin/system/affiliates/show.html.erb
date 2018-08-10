@@ -224,22 +224,24 @@
 
     <% elsif params[:q] == "payments" %>
     
-      <% payments = Payment.where(affiliate_id: @affiliate.id)
+      <% payments = Payment.includes(:user, :affiliate)
+                           .where(affiliate_id: @affiliate.id)
                            .order(created_at: :desc)
-                           .paginate(page: params[:page], per_page: 20) %>
+                           .paginate(page: params[:page], per_page: params[:per_page].presence || 20) %>
 
 
       <% balance = Payment.where(affiliate_id: @affiliate.id).sum(:amount) %>
-      <div class="text-<%= balance < 0 ? 'danger' : 'success' %>"><b>Balance: </b><%= number_to_currency(balance) %></div>
+      <div class="pull-right text-<%= balance < 0 ? 'danger' : 'success' %>"><b>Balance: </b><%= number_to_currency(balance) %></div>
 
       <%= will_paginate payments %>
       <table class="table table-striped table-condensed">
         <tr>
           <th>ID</th>
           <th>Date</th>
-          <th>User</th>
+          <th>User / Affiliate</th>
           <th class="text-center">Cust.</th>
           <th>Item</th>
+          <th>Transaction ID</td>
           <th>Method</th>
           <th>Memo</th>
           <th class="text-right">Amount</th>
