@@ -22,6 +22,7 @@ class ApplicationController < ActionController::Base
   end
   
   def current_user
+		return nil if session[:user_id].blank?
     @current_user ||= Cache.user(session[:user_id])
   end
 
