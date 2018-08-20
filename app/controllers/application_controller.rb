@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
   helper_method :sysdate
   helper_method :systime
-  helper_method :mobile_device?
 	helper_method :sort_column, :sort_direction
   
   
@@ -18,11 +17,11 @@ class ApplicationController < ActionController::Base
   private
   
   def logged_in?
-    session[:user_id]
+    !!current_user
   end
   
   def current_user
-		return nil if session[:user_id].blank?
+		return nil unless session[:user_id]
     @current_user ||= Cache.user(session[:user_id])
   end
 
@@ -38,17 +37,4 @@ class ApplicationController < ActionController::Base
     time.in_time_zone(sys_time_zone).strftime("%m/%d/%Y").html_safe
   end
   
-  def mobile_device?
-    if session[:mobile_param]
-      session[:mobile_param] == "1"
-    else
-      request.user_agent =~ /Mobile|webOS/
-    end
-  end
-  
-  def prepare_for_mobile
-    session[:mobile_param] = params[:mobile] if params[:mobile]
-    request.format = :mobile if mobile_device?
-  end
-
 end
