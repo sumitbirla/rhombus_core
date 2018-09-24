@@ -57,7 +57,7 @@ class Affiliate < ActiveRecord::Base
   def address_as_text(opts = {})
     delim = opts[:delimiter] || "\n"
     
-    address = street1
+    address = street1.presence || ""
     address = address + delim + street2 unless street2.blank?
     address = address + delim + city unless city.blank?
     address = address + ', ' + state unless state.blank?
