@@ -68,7 +68,7 @@
 	// This is a sample function which is called when a file is selected in CKFinder.
 	function SetFileField( fileUrl )
 	{
-		document.getElementById( 'category_image_path' ).value = fileUrl.substring(<%= Cache.setting(Rails.configuration.domain_id, :system, 'Static Files Url').length %>);
+		document.getElementById( 'category_image_path' ).value = fileUrl.substring(<%= Cache.setting(Rails.configuration.domain_id, :system, 'Static Files Url').length +  5 %>);
 	}
 	
 	$(document).ready(function() {
