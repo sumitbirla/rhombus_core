@@ -32,8 +32,8 @@ class Setting < ActiveRecord::Base
     "setting:#{domain_id}:#{section}:#{key}"
   end
   
-  def self.get(section, key)
-    s = Setting.find_by(section: section, key: key)
+  def self.get(domain_id, section, key)
+    s = Setting.find_by(domain_id: domain_id, section: section, key: key)
     
     return nil if s.nil?
     return s.value.to_i if s.value_type == "number"
