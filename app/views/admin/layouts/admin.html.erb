@@ -144,6 +144,7 @@
 
         <li><a href="<%= current_user.role.landing_page %>"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a></li>
 
+        <%= render "admin/shared/astrology_menu" if (Rails.configuration.modules.include?(:astrology) && current_user.has_any_permission?('Astrology')) %>
     		<%= render "admin/shared/billing_menu" if (Rails.configuration.modules.include?(:billing) && current_user.has_any_permission?('Billing')) %>
     		<%= render "admin/shared/callcenter_menu" if (Rails.configuration.modules.include?(:callcenter) && current_user.has_any_permission?('Call Center')) %>
     		<%= render "admin/shared/cms_menu" if (Rails.configuration.modules.include?(:cms) && current_user.has_any_permission?('Web Content')) %>
