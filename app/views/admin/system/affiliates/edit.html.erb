@@ -66,7 +66,14 @@ input.boolean { margin: 0; }
     	<%= f.input_field :summary, class: "form-control text", rows: 3 %>
       <br>
       <h4>Long Description</h4>
-    	<%= f.input_field :description, class: "form-control text", rows: 10  %>
+    	<%= f.input_field :description, class: "form-control text" %>
+      <script>
+              ClassicEditor
+                  .create( document.querySelector( '#affiliate_description' ) )
+                  .catch( error => {
+                      console.error( error );
+                  } );
+        </script>
       <br>
     	<%= button_tag "Save changes", :class => "btn btn-primary", data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait ..." } %>
     </div>
@@ -99,7 +106,6 @@ end %>
   
 <% content_for :head do %>
   <% static_url = Cache.setting(Rails.configuration.domain_id, :system, 'Static Files Url') %>
-	<script src="/ckfinder/ckfinder.js"></script>
 	<script>
     
   <% unless @affiliate.persisted? %>

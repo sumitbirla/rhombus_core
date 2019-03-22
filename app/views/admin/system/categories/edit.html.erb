@@ -1,41 +1,61 @@
 <h2><%= @category.name %></h2>
 <hr/>
 
+<%= simple_form_for [:admin, :system, @category] do |f| %>
 
+  <%= render 'admin/shared/error_messages', object: f.object %>
+  <div class="row">
 
-<div class="row">
+    <div class="col-md-8">
+        <%= f.hidden_field :entity_type, value: @category.entity_type  %>
+        <%= f.association :parent, collection: Category.select("id, name").where(entity_type: @category.entity_type, parent_id: nil) %>
+        <%= f.input :name, input_html: { class: 'span6' } %>
+        <%= f.input :code %>
+        <%= f.input :slug %>
+        <%= f.input :sort %>
+        <%= f.input :hidden %>
+        <div class="form-group string optional brand_website">
+      	  <label class="string optional control-label" for="brand_website">Image path</label>
+            <%= f.input_field :image_path %>
+      	  <input type="button" value="Browse Server" class="btn btn-default btn-sm" onclick="javascript:BrowseServer();">
+        </div>
+    </div>
 
-  <div class="col-md-8">
-    <%= simple_form_for [:admin, :system, @category] do |f| %>
-
-      <%= render 'admin/shared/error_messages', object: f.object %>
   
-      <%= f.hidden_field :entity_type, value: @category.entity_type  %>
-      <%= f.association :parent, collection: Category.select("id, name").where(entity_type: @category.entity_type, parent_id: nil) %>
-      <%= f.input :name, input_html: { class: 'span6' } %>
-      <%= f.input :code %>
-      <%= f.input :slug %>
-      <%= f.input :sort %>
-      <%= f.input :hidden %>
-      <div class="form-group string optional brand_website">
-    	  <label class="string optional control-label" for="brand_website">Image path</label>
-          <%= f.input_field :image_path %>
-    	  <input type="button" value="Browse Server" class="btn btn-primary" onclick="javascript:BrowseServer();">
-      </div>
-      <%= f.input :desc1, as: :text, input_html: { style: 'width: 80%', rows: 9 } %>
-      <%= f.input :desc2, as: :text, input_html: { style: 'width: 80%', rows: 9 } %>
-
-      <%= button_tag "Save changes", :class => "btn btn-primary", data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait ..." } %>
+    <div class="col-md-4">
+    <% unless @category.image_path.blank? %>
+    	<img src="<%= cdn_image_url @category.image_path, 400, 300, 0 %>" alt="image" class="img-responsive"/>
+    <% else %>
+      <img src="https://cdn5.io/rhombus/img/default.jpg" alt="image" class="img-responsive"/>
     <% end %>
+    </div>
+
   </div>
 
-  <% unless @category.image_path.blank? %>
-  <div class="col-md-4">
-  	<img src="<%= cdn_image_url @category.image_path, 400, 300, 0 %>" alt="image" class="img-responsive"/>
-  </div>
-  <% end %>
+  <br>
+  <b>Description 1</b>
+  <%= f.input_field :desc1 %>
+  <script>
+        ClassicEditor
+            .create( document.querySelector( '#category_desc1' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+  </script>
+  <br>
+          
+  <b>Description 2</b>
+  <%= f.input_field :desc2 %>
+  <script>
+        ClassicEditor
+            .create( document.querySelector( '#category_desc2' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+  </script>
 
-</div>
+  <%= button_tag "Save changes", :class => "btn btn-primary", data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait ..." } %>
+<% end %>
 
 
 
@@ -54,7 +74,6 @@
 
 
 <% content_for :head do %>
-	<script type="text/javascript" src="/ckfinder/ckfinder.js"></script>
 	<script>
 	function BrowseServer()
 	{
