@@ -31,6 +31,21 @@
 	  <%= csrf_meta_tags %>
     
     <script>
+      function filePopup(input_field_id) {
+          CKFinder.model( {
+              chooseFiles: true,
+              onInit: function( finder ) {
+                  finder.on( 'files:choose', function( evt ) {
+                      var file = evt.data.files.first();
+                      document.getElementById( input_field_id ).value = file.getUrl().substring(10);
+                  } );
+                  finder.on( 'file:choose:resizedImage', function( evt ) {
+                      document.getElementById( input_field_id ).value = evt.data.resizedUrl.substring(10);
+                  } );
+              }
+          } );
+      }
+      
       $(document).ready(function() {
         
         $('.footable').footable();
