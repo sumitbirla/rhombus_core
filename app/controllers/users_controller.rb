@@ -70,7 +70,7 @@ class UsersController < ApplicationController
 
     begin
       UserMailer.reset_password_email(user, reset_url).deliver_later
-      flash[:notice] = "Password reset instructions have been emailed to #{user.email}"
+      flash.now[:notice] = "Password reset instructions have been emailed to #{user.email}"
     rescue Exception => e
       flash[:error] = e.message
       return redirect_to :back
