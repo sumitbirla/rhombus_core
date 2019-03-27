@@ -89,7 +89,12 @@ class SessionsController < ApplicationController
   def destroy
     Log.create(user_id: session[:user_id], loggable_type: 'Session', loggable_id: session.id, event: 'destroyed', ip_address: request.remote_ip)
     reset_session
-    redirect_to login_path, notice: "You have been logged out."
+    
+    unless params[:redirect].blank?
+      redirect_to params[:redirect]
+    else
+      redirect_to login_path, notice: "You have been logged out."
+    end
   end
   
 end
