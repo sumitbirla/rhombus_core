@@ -120,4 +120,34 @@ module HtmlHelper
     str.html_safe
   end
   
+  def ckeditor_input(obj, attr_name, options = {})
+    obj_name = obj.class.name.underscore
+    element_id = obj_name + "_" + attr_name
+    value = obj.send(attr_name)
+    
+    str = <<-EOF
+      <div class="form-group #{element_id}">
+    	  <label class="string optional control-label col-sm-3" for="#{element_id}">#{attr_name.titlecase}</label>
+        <div class="col-md-9">
+    	    <textarea class="form-control" name="#{obj_name}[#{attr_name}]" id="#{element_id}">#{value}</textarea>
+        </div>
+      </div>
+    
+      <script>
+      ClassicEditor
+      	.create( document.querySelector( '##{element_id}' ), {
+      		ckfinder: {
+      			uploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
+      		},
+      		toolbar: [ 'ckfinder', '|', 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'undo', 'redo' ]
+      	} )
+      	.catch( error => {
+      		console.error( error );
+      	} );
+        </script>
+    EOF
+    
+    str.html_safe
+  end
+  
 end
