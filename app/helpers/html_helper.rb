@@ -96,4 +96,21 @@ module HtmlHelper
     str.html_safe
   end
   
+  def ckfinder_input(obj, attr_name)
+    obj_name = obj.class.name.downcase
+    element_id = obj_name + "_" + attr_name
+    
+    str = <<-EOF
+      <div class="form-group #{element_id}">
+    	  <label class="string optional control-label col-sm-3" for="#{element_id}">#{attr_name}</label>
+        <div class="col-md-9">
+    	    <input type="text" class="form-control" style="width: 50%; display: inline;" name="#{obj_name}[#{attr_name}]" id="#{element_id}" value="#{obj.send(attr_name)}" />
+          <input type="button" value="Browse Server" class="btn btn-default" onclick="filePopup('#{element_id}')">
+        </div>
+      </div>
+    EOF
+    
+    str.html_safe
+  end
+  
 end
