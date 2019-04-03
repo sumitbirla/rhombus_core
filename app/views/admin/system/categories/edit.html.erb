@@ -14,11 +14,7 @@
         <%= f.input :slug %>
         <%= f.input :sort %>
         <%= f.input :hidden %>
-        <div class="form-group string optional brand_website">
-      	  <label class="string optional control-label" for="brand_website">Image path</label>
-            <%= f.input_field :image_path %>
-      	  <input type="button" value="Browse Server" class="btn btn-default btn-sm" onclick="javascript:BrowseServer();">
-        </div>
+        <%= ckfinder_input @category, "image_path", preview: false %>
     </div>
 
   

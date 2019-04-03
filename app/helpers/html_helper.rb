@@ -96,13 +96,13 @@ module HtmlHelper
     str.html_safe
   end
   
-  def ckfinder_input(obj, attr_name)
+  def ckfinder_input(obj, attr_name, options = {})
     obj_name = obj.class.name.underscore
     element_id = obj_name + "_" + attr_name
     value = obj.send(attr_name)
     
     preview = ""
-    unless value.blank?
+    unless (options[:preview] == false) ||  value.blank?
       preview = "<img src='#{cdn_image_url(value, 200, 120, 0)}'/><br>"
     end
     
