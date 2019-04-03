@@ -97,14 +97,21 @@ module HtmlHelper
   end
   
   def ckfinder_input(obj, attr_name)
-    obj_name = obj.class.name.downcase
+    obj_name = obj.class.name.underscore
     element_id = obj_name + "_" + attr_name
+    value = obj.send(attr_name)
+    
+    preview = ""
+    unless value.blank?
+      preview = "<img src='#{cdn_image_url(value, 200, 120, 0)}'/><br>"
+    end
     
     str = <<-EOF
       <div class="form-group #{element_id}">
     	  <label class="string optional control-label col-sm-3" for="#{element_id}">#{attr_name}</label>
         <div class="col-md-9">
-    	    <input type="text" class="form-control" style="width: 50%; display: inline;" name="#{obj_name}[#{attr_name}]" id="#{element_id}" value="#{obj.send(attr_name)}" />
+          #{preview}
+    	    <input type="text" class="form-control" style="width: 50%; display: inline;" name="#{obj_name}[#{attr_name}]" id="#{element_id}" value="#{value}" />
           <input type="button" value="Browse Server" class="btn btn-default" onclick="filePopup('#{element_id}')">
         </div>
       </div>
