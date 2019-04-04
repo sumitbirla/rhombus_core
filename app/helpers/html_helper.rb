@@ -137,9 +137,34 @@ module HtmlHelper
       ClassicEditor
       	.create( document.querySelector( '##{element_id}' ), {
       		ckfinder: {
-      			uploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
+      			uploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json',
       		},
-      		toolbar: [ 'ckfinder', '|', 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'undo', 'redo' ]
+      		toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'ckfinder', '|', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'undo', 'redo' ]
+      	} )
+      	.catch( error => {
+      		console.error( error );
+      	} );
+        </script>
+    EOF
+    
+    str.html_safe
+  end
+	
+  def ckeditor_input_field(obj, attr_name, options = {})
+    obj_name = obj.class.name.underscore
+    element_id = obj_name + "_" + attr_name
+    value = obj.send(attr_name)
+    
+    str = <<-EOF
+			<textarea class="form-control" name="#{obj_name}[#{attr_name}]" id="#{element_id}">#{value}</textarea>
+
+      <script>
+      ClassicEditor
+      	.create( document.querySelector( '##{element_id}' ), {
+      		ckfinder: {
+      			uploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json',
+      		},
+      		toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'ckfinder', '|', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'undo', 'redo' ]
       	} )
       	.catch( error => {
       		console.error( error );
