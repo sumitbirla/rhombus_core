@@ -11,10 +11,11 @@ class UserMailer < ActionMailer::Base
     
     from_name = Cache.setting(@user.domain_id, :system, 'From Email Name')
     from_email = Cache.setting(@user.domain_id, :system, 'From Email Address')
+    subject = Cache.setting(@user.domain_id, :system, 'Welcome Email Subject') || "Welcome to #{@website_name}"
 
     mail(from: "#{from_name} <#{from_email}>",
          to: @user.email, 
-         subject: "Welcome to #{@website_name}")
+         subject: subject)
   end
 
 
