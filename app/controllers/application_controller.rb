@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
-  #before_filter :prepare_for_mobile
+  #before_action :prepare_for_mobile
   helper_method :logged_in?
   helper_method :current_user
   helper_method :sysdate

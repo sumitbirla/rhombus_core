@@ -1,6 +1,6 @@
 <div class="pull-right">
   <%= select_tag :role_id, options_from_collection_for_select(Role.all, :id, :name, params[:role_id]), prompt: 'All roles'%> &nbsp; 
-  <%= select_tag :status, options_for_select(User.uniq(:status).pluck(:status), params[:status]), prompt: 'Any status'%> &nbsp; 
+  <%= select_tag :status, options_for_select(User.distinct(:status).pluck(:status), params[:status]), prompt: 'Any status'%> &nbsp; 
   <%= link_to new_admin_system_user_path, class: 'btn btn-sm btn-default' do %>
     <i class="fa fa-plus"></i> New user
   <% end %>

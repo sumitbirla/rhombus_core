@@ -8,8 +8,8 @@ class Admin::BaseController < ActionController::Base
 
   protect_from_forgery
   layout 'admin/layouts/admin'
-  before_filter :require_login
-  before_filter :set_page_size
+  before_action :require_login
+  before_action :set_page_size
   
   helper_method :current_domain
   helper_method :current_user

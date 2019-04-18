@@ -158,7 +158,7 @@
       %>
   
       <%
-        status_list = Order.uniq(:status).pluck(:status)
+        status_list = Order.distinct(:status).pluck(:status)
         status_list << 'awaiting_shipment' if !status_list.include?('awaiting_shipment')
         status_list = status_list.sort
       %>
@@ -315,11 +315,11 @@
     				<td class="text-center"><%= number_to_currency campaign.signup_commission %></td>
     				<td class="text-center"><%= campaign.sale_commission %>%</td>
     				<td class="text-center"><%= number_with_delimiter(campaign.raw_clicks) %></td>
-    				<td class="text-center"><%= number_with_delimiter(campaign.unique_clicks) %></td>
+    				<td class="text-center"><%= number_with_delimiter(campaign.distinctue_clicks) %></td>
     				<td class="text-center"><%= number_with_delimiter(campaign.signups) %></td>
     				<td class="text-center"><%= number_with_delimiter(campaign.orders) %></td>
-            <td class="text-center"><%= (100.0 * campaign.signups / campaign.unique_clicks).round(1) %>%</td>
-            <td class="text-center"><%= (100.0 * campaign.orders / campaign.unique_clicks).round(1) %>%</td>
+            <td class="text-center"><%= (100.0 * campaign.signups / campaign.distinctue_clicks).round(1) %>%</td>
+            <td class="text-center"><%= (100.0 * campaign.orders / campaign.distinctue_clicks).round(1) %>%</td>
             <td><%= number_to_currency(earning) %></td>
     			</tr>
     			<% end %>

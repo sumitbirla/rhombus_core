@@ -1,7 +1,7 @@
 class Account::BaseController < ApplicationController
   force_ssl  if Rails.env.production?
   
-  before_filter :require_login
+  before_action :require_login
   helper_method :current_user
 
 	layout 'account'
