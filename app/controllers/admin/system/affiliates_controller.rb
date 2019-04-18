@@ -75,7 +75,7 @@ class Admin::System::AffiliatesController < Admin::BaseController
   def create_categories
     authorize Affiliate, :update?
     
-    AffiliateCategory.delete_all affiliate_id: params[:id]
+    AffiliateCategory.where(affiliate_id: params[:id]).delete_all
     category_ids = params[:category_ids]
     
     unless category_ids.nil?
