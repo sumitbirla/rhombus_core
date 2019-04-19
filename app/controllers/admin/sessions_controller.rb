@@ -1,5 +1,5 @@
 class Admin::SessionsController < Admin::BaseController
-  skip_before_action :require_login
+  skip_before_action :require_login, raise: false
   layout 'admin/layouts/dialog'
   
   def new
