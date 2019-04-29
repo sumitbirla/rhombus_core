@@ -35,6 +35,8 @@ class User < ActiveRecord::Base
   
   self.table_name = 'core_users'
   default_scope { order(:name) }
+  
+  has_many :comments, as: :commentable, dependent: :destroy
   has_many :extra_properties, -> { order "sort, name" }, as: :extra_property
   has_many :logs
   

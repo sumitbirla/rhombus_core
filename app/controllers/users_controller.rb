@@ -61,7 +61,7 @@ class UsersController < ApplicationController
     user = User.find_by(email: params[:email], domain_id: Rails.configuration.domain_id)
     unless user
       flash[:error] = 'This email does not exist in our system.'
-      return redirect_to :back
+      return redirect_back(fallback_location: reset_password_path)
     end
 
     # create a temporary token
@@ -73,7 +73,7 @@ class UsersController < ApplicationController
       flash.now[:notice] = "Password reset instructions have been emailed to #{user.email}"
     rescue Exception => e
       flash[:error] = e.message
-      return redirect_to :back
+      return redirect_back(fallback_location: reset_password_path)
     end
 
     render 'shared/notice'

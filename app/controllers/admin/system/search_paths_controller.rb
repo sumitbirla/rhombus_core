@@ -36,7 +36,7 @@ class Admin::System::SearchPathsController < Admin::BaseController
   def destroy
     @search_path = authorize SearchPath.find(params[:id])
     @search_path.destroy
-    redirect_to :back
+    redirect_back(fallback_location: admin_root_path)
   end
   
   private

@@ -64,7 +64,7 @@ class SessionsController < ApplicationController
 
       unless user.save
         flash[:error] = "User account could not be created"
-        return redirect_to :back
+        return redirect_back(fallback_location: login_path)
       end
     end
 

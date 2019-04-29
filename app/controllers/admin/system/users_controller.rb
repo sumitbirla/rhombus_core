@@ -137,7 +137,7 @@ class Admin::System::UsersController < Admin::BaseController
   def create_voucher
     authorize User, :update?
     UserVoucherHistory.create(user_id: params[:id], amount: params[:amount], notes: params[:notes])
-    redirect_to :back
+    redirect_back(fallback_location: admin_root_path)
   end
 
   def pictures
@@ -163,7 +163,7 @@ class Admin::System::UsersController < Admin::BaseController
       flash[:error] = e.message
     end
     
-    redirect_to :back
+    redirect_back(fallback_location: admin_root_path)
   end
 
   def password_reset

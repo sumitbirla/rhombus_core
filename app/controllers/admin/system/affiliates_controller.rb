@@ -96,14 +96,14 @@ class Admin::System::AffiliatesController < Admin::BaseController
     authorize Affiliate, :update?
     
     params[:product_ids].each { |id| AffiliateProduct.create product_id: id, affiliate_id: params[:id] }
-    redirect_to :back
+    redirect_back(fallback_location: admin_root_path)
   end
   
   def remove_products
     authorize Affiliate, :update?
     
     AffiliateProduct.delete_all id: params[:affiliate_product_ids]
-    redirect_to :back
+    redirect_back(fallback_location: admin_root_path)
   end
   
 
