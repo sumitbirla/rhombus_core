@@ -151,7 +151,7 @@ class Admin::System::UsersController < Admin::BaseController
   def login
     reset_session
     session[:user_id] = params[:id]
-    redirect_to root_path
+    redirect_to account_root_path
   end
   
   def welcome_email
