@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     get 'profile/edit' => 'profile#edit'
     patch 'profile/edit' => 'profile#update'
     resources :affiliate
+		resources :logs
   end
   
   namespace :admin do
