@@ -49,6 +49,7 @@
       $(document).ready(function() {
         
         $('.footable').footable();
+        $("#master-search").focus();
         
         $("#domain-selector").on("change", function() {
           window.location = "/admin/system/domains/" + $(this).val() + "/set_current";
@@ -149,7 +150,7 @@
 
         <li class="sidebar-search">
           <form action="/admin/search" class="input-group custom-search-form">
-           <input type="text" name="q" class="form-control" placeholder="Search...">
+           <input type="text" name="q" id="master-search" class="form-control" placeholder="Search...">
            <span class="input-group-btn">
            	<button class="btn btn-default">
             	<i class="fa fa-search"></i>

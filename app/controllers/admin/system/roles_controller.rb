@@ -52,7 +52,7 @@ class Admin::System::RolesController < Admin::BaseController
     if @role.update(role_params)
       
       # Update permissions
-      RolePermission.delete_all(role_id: @role.id)
+      RolePermission.where(role_id: @role.id).delete_all
       
       if params[:permission_ids]
         params[:permission_ids].each do |id|
