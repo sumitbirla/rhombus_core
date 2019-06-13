@@ -124,7 +124,7 @@
       <% ap_list = AffiliateProduct.joins(:product)
                                    .includes(:product)
                                    .order("store_products.title")
-                                   .where(affiliate_id: @affiliate.id).paginate(page: params[:page]) %>
+                                   .where(affiliate_id: @affiliate.id).paginate(page: params[:page], per_page: params[:per_page].presence || 20) %>
       
       <%= will_paginate ap_list %>
       <table class="table table-striped table-condensed">
