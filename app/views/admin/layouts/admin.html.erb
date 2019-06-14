@@ -11,7 +11,7 @@
 
     <link href="//cdn5.io/rhombus/sb-admin-2/css/bootstrap.min.css" rel="stylesheet">
     <link href="//cdn5.io/rhombus/sb-admin-2/css/sb-admin-2.css" rel="stylesheet">
-    <link href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.3.0/css/all.css" rel="stylesheet">
     <link href="//cdn5.io/rhombus/datetimepicker/jquery.datetimepicker.css" rel="stylesheet">
     <link href="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css" rel="stylesheet">
     <link href="//cdn5.io/rhombus/footable/css/footable.bootstrap.min.css" rel="stylesheet">
@@ -160,7 +160,7 @@
           <!-- /input-group -->
         </li>
 
-        <li><a href="<%= current_user.role.landing_page %>"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a></li>
+        <li><a href="<%= current_user.role.landing_page %>"><i class="fa fa-star fa-fw"></i> Dashboard</a></li>
 
         <%= render "admin/shared/astrology_menu" if (Rails.configuration.modules.include?(:astrology) && current_user.has_any_permission?('Astrology')) %>
     		<%= render "admin/shared/billing_menu" if (Rails.configuration.modules.include?(:billing) && current_user.has_any_permission?('Billing')) %>
