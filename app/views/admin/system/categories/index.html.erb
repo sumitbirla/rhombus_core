@@ -1,6 +1,6 @@
 <%= link_to "new root category", new_admin_system_category_path(type: params[:type]), class: 'btn btn-sm btn-default pull-right' %>
 <h2><%= params[:type].titlecase %> Categories</h2>
-
+<hr>
 
 
 <% top_levels = @categories.select { |c| c.parent_id == nil } %>

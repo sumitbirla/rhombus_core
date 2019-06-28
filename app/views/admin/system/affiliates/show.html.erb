@@ -2,7 +2,7 @@
   <i class="fa fa-edit"></i> Edit
 <% end %>
 <h2><i class="fa fa-rocket"></i> <%= @affiliate.name %></h2>
-
+<hr>
 
 <% mods = Rails.configuration.modules %>
 
@@ -52,14 +52,7 @@
 		  <%= obj_property @affiliate, :phone %>
 		  <%= obj_property @affiliate, :fax %>
 		  <%= obj_property @affiliate, :website %>
-		  <%= obj_property @affiliate, :payment_terms %>
-      <%= obj_property @affiliate, :tax_id %>
-      <%= obj_property(@affiliate, :discount_percent) { |x| "#{x}%" }  %>
-      <%= obj_property(@affiliate, :markup_percent) { |x| "#{x}%" } %>
 		  <%= obj_property(@affiliate, :description) { |x| x.gsub("\n", "<br>") } %>
-      <%= obj_property @affiliate, :purchase_order_email %>
-		  <%= obj_property @affiliate, :shipment_email %>
-		  <%= obj_property @affiliate, :invoice_email %>
 		</table>
     
     <%= render partial: 'admin/shared/extra_properties', locals: { object: @affiliate }%>
@@ -72,6 +65,23 @@
 		<img src="<%= cdn_image_url(@affiliate.logo, 240, 240, 0)%>" alt="logo" class="img-polaroid" />
     <hr/>
 		<% end %>
+    
+    <div class="panel panel-success">
+        <div class="panel-heading">
+          <h3 class="panel-title">Billing</h3>
+        </div>
+        <div class="panel-body">
+          <table class="table table-condensed" style="margin-bottom: 0">
+            <tbody>
+        		  <%= obj_property @affiliate, :payment_terms %>
+              <%= obj_property @affiliate, :tax_id %>
+              <%= obj_property(@affiliate, :transaction_fee) { |x| number_to_currency(x) } %>
+              <%= obj_property(@affiliate, :discount_percent) { |x| "#{x}%" }  %>
+              <%= obj_property(@affiliate, :markup_percent) { |x| "#{x}%" } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
     
     <h4>Flags</h4>
     

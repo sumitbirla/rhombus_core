@@ -3,6 +3,7 @@ input.boolean { margin: 0; }
 </style>
 
 <h2><i class="fa fa-rocket"></i> <%= @affiliate.name %></h2>
+<hr>
 
 <% unless @affiliate.id.nil? %>
 <ul class="nav nav-tabs" style="margin-bottom: 20px;">
@@ -30,31 +31,45 @@ input.boolean { margin: 0; }
   	  <%= f.input :state %>
   	  <%= f.input :zip %>
   	  <%= f.input :country %>
-      <%= f.input :discount_percent %>
-      <%= f.input :markup_percent %>
-      <%= ckfinder_input(@affiliate, "logo") %>
-	  
-    </div>
-
-    <div class="col-md-6">
-  	  <%= f.input :featured %>
-  	  <%= f.input :active %>
   	  <%= f.input :phone %>
   	  <%= f.input :fax %>
   	  <%= f.input :email %>
   	  <%= f.input :website %>
-      <%= f.input :payment_terms %>
-      <%= f.input :free_shipping %>
-      <%= f.input :tax_exempt %>
-      <%= f.input :tax_id, label: "Tax ID" %>
-      <%= f.input :disable_invoicing %>
-      <%= f.input :enable_edi %>
-      <%= f.input :purchase_order_email, label: 'PO email' %>
-      <%= f.input :shipment_email %>
-      <%= f.input :invoice_email %>
     </div>
 
-    <div class="col-md-12">
+    <div class="col-md-6">
+      
+      <div class="panel panel-default options-panel">
+        <div class="panel-heading">Options</div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-6"><%= f.input_field :featured %> &nbsp; Featured</div>
+            <div class="col-md-6"><%= f.input_field :active %> &nbsp; Active</div>
+            <div class="col-md-6"><%= f.input_field :free_shipping %> &nbsp; Free Shipping</div>
+            <div class="col-md-6"><%= f.input_field :tax_exempt %> &nbsp; Tax Exempt</div>
+            <div class="col-md-6"><%= f.input_field :disable_invoicing %> &nbsp; Disable Invoicing</div>
+            <div class="col-md-6"><%= f.input_field :enable_edi %> &nbsp; Enable EDI</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="panel panel-success options-panel">
+        <div class="panel-heading">Billing</div>
+        <div class="panel-body">
+          <div class="row">
+            <%= f.input :transaction_fee %>
+            <%= f.input :discount_percent %>
+            <%= f.input :markup_percent %>
+            <%= f.input :payment_terms %>
+            <%= f.input :tax_id, label: "Tax ID" %>
+          </div>
+        </div>
+      </div>
+      
+      <%= ckfinder_input(@affiliate, "logo") %>
+    </div>
+
+    <div class="col-md-12" style="margin-top: 20px;">
       <h4>Short Description</h4>
     	<%= f.input_field :summary, class: "form-control text", rows: 3 %>
       <br>
