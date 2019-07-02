@@ -31,9 +31,11 @@
   <%
      inv_count = Invoice.where(affiliate_id: @affiliate.id).count
      pmt_count = Payment.where(affiliate_id: @affiliate.id).count
+     ba_count = BillingArrangement.where("affiliate_id = ? OR seller_id = ?", @affiliate.id, @affiliate.id).count
   %>
     <li role="presentation" class="<%= "active" if params[:q] == "payments" %>"><a href="<%= admin_system_affiliate_path(@affiliate, q: "payments")%>" role="tab"><%= tab_count('Payments', pmt_count) %></a></li>
     <li role="presentation" class="<%= "active" if params[:q] == "invoices" %>"><a href="<%= admin_system_affiliate_path(@affiliate, q: "invoices")%>" role="tab"><%= tab_count('Invoices', inv_count) %></a></li>
+    <li role="presentation" class="<%= "active" if params[:q] == "billing_arrangements" %>"><a href="<%= admin_system_affiliate_path(@affiliate, q: "billing_arrangements")%>" role="tab"><%= tab_count('Billing Arrangements', ba_count) %></a></li>
   <% end %>
 </ul>
 
@@ -296,6 +298,28 @@
       </form>
     
       <%= render 'admin/shared/table_summary', data: invoices %>
+      
+    <% elsif params[:q] == "billing_arrangements" %>
+  
+      <% ba_list = BillingArrangement.where("affiliate_id = ? OR seller_id = ?", @affiliate.id, @affiliate.id)
+                                     .paginate(page: params[:page], per_page: params[:per_page] || 20) %>
+
+      <%= will_paginate ba_list %>
+
+      <table class="table table-striped table-condensed">
+      	<tr>
+      		<th>Dropshipper</th>
+      		<th>Seller</th>
+      		<th class="text-center">Dropshipper Transaction Fee</th>
+      		<th class="text-center">Seller Transaction Fee</th>
+          <th>Created</th>
+      		<th>&nbsp;</th>
+      	</tr>
+        <%= render partial: 'admin/billing/billing_arrangements/billing_arrangement', collection: ba_list %>
+      </table>
+
+    
+      <%= render 'admin/shared/table_summary', data: ba_list %>
 
     <% elsif params[:q] == "campaigns" %>
         <% campaigns = AffiliateCampaign.where(affiliate_id: @affiliate.id).order(created_at: :desc)%>
