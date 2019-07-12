@@ -243,8 +243,11 @@
 
 
       <% balance = Payment.where(affiliate_id: @affiliate.id).sum(:amount) %>
-      <div class="pull-right text-<%= balance < 0 ? 'danger' : 'success' %>"><b>Balance: </b><%= number_to_currency(balance) %></div>
-
+      
+      <div class="pull-right">
+        <b>Balance: </b><%= number_to_currency(balance, negative_format: "(%u%n)") %>
+      </div>
+      
       <%= will_paginate payments %>
       <table class="table table-striped table-condensed">
         <tr>
@@ -261,6 +264,7 @@
       </table>
       
       <%= render 'admin/shared/table_summary', data: payments %>
+      
       
 
     <% elsif params[:q] == "invoices" %>
