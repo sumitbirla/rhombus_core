@@ -245,7 +245,8 @@
       <% balance = Payment.where(affiliate_id: @affiliate.id).sum(:amount) %>
       
       <div class="pull-right">
-        <b>Balance: </b><%= number_to_currency(balance, negative_format: "(%u%n)") %>
+        <b>Balance: </b><%= number_to_currency(balance, negative_format: "(%u%n)") %> &nbsp; / &nbsp; 
+        <b>Unpaid Invoices:</b> <%= number_to_currency Invoice.where(affiliate_id: @affiliate.id, paid: false).sum(:amount) %>
       </div>
       
       <%= will_paginate payments %>
@@ -276,6 +277,9 @@
       <div class="pull-right">
         <%= render 'admin/billing/invoices/group_actions' %>
       </div>
+      
+      <b>Total:</b> <%= number_to_currency Invoice.where(affiliate_id: @affiliate.id).sum(:amount) %> &nbsp; / &nbsp; 
+      <b>Unpaid:</b> <%= number_to_currency Invoice.where(affiliate_id: @affiliate.id, paid: false).sum(:amount) %>
 
       <%= will_paginate invoices %>
       <form id="frmBatch" action="" method="post">
@@ -315,6 +319,7 @@
       		<th>Seller</th>
       		<th class="text-center">Dropshipper Transaction Fee</th>
       		<th class="text-center">Seller Transaction Fee</th>
+          <th class="text-center">Seller Shipping Acct?</th>
           <th>Created</th>
       		<th>&nbsp;</th>
       	</tr>
