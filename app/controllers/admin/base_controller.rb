@@ -1,4 +1,3 @@
-require "xmlrpc/client"
 require "digest/md5"
 require "pundit"
 
