@@ -174,5 +174,10 @@ module HtmlHelper
     
     str.html_safe
   end
+	
+  def cdn_url(path)
+		@base_path ||= Cache.setting(Rails.configuration.domain_id, :system, 'Static Files Url')
+    @base_path + path
+  end
   
 end
