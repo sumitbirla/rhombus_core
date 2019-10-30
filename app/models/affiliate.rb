@@ -36,6 +36,8 @@ class Affiliate < ActiveRecord::Base
   include Exportable
   
   self.table_name = 'core_affiliates'
+	
+	before_save :set_api_key
   
   has_many :affiliate_categories, dependent: :destroy
   has_many :categories, through: :affiliate_categories
@@ -51,6 +53,10 @@ class Affiliate < ActiveRecord::Base
   def to_s
     name
   end
+	
+	def set_api_key
+		self.api_key = SecureRandom.uuid if api_key.blank?
+	end
   
   
   def address_as_text(opts = {})

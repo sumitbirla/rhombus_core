@@ -54,6 +54,7 @@
 		  <%= obj_property @affiliate, :phone %>
 		  <%= obj_property @affiliate, :fax %>
 		  <%= obj_property @affiliate, :website %>
+      <%= obj_property @affiliate, :api_key %>
 		  <%= obj_property(@affiliate, :description) { |x| x.gsub("\n", "<br>") } %>
 		</table>
     
