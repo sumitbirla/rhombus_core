@@ -79,6 +79,7 @@
         		  <%= obj_property @affiliate, :payment_terms %>
               <%= obj_property @affiliate, :tax_id %>
               <%= obj_property(@affiliate, :transaction_fee) { |x| number_to_currency(x) } %>
+              <%= obj_property(@affiliate, :transaction_percent)  { |x| "#{x}%" } %>
               <%= obj_property(@affiliate, :discount_percent) { |x| "#{x}%" }  %>
               <%= obj_property(@affiliate, :markup_percent) { |x| "#{x}%" } %>
             </tbody>
@@ -112,6 +113,10 @@
     
  		<% if @affiliate.enable_edi %>
  		<span class="label label-info">EDI</span> &nbsp; 
+ 		<% end %>
+    
+ 		<% if @affiliate.requires_approval %>
+ 		<span class="label label-danger">Requires Approval</span> &nbsp; 
  		<% end %>
     
     <hr>

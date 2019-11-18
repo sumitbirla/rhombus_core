@@ -50,6 +50,7 @@ input.boolean { margin: 0; }
             <div class="col-md-6"><%= f.input_field :tax_exempt %> &nbsp; Tax Exempt</div>
             <div class="col-md-6"><%= f.input_field :disable_invoicing %> &nbsp; Disable Invoicing</div>
             <div class="col-md-6"><%= f.input_field :enable_edi %> &nbsp; Enable EDI</div>
+            <div class="col-md-6"><%= f.input_field :requires_approval %> &nbsp; Requires Approval</div>
           </div>
         </div>
       </div>
@@ -59,6 +60,7 @@ input.boolean { margin: 0; }
         <div class="panel-body">
           <div class="row">
             <%= f.input :transaction_fee %>
+            <%= f.input :transaction_percent %>
             <%= f.input :discount_percent %>
             <%= f.input :markup_percent %>
             <%= f.input :payment_terms %>
