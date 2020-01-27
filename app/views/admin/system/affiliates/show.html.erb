@@ -36,6 +36,7 @@
     <li role="presentation" class="<%= "active" if params[:q] == "payments" %>"><a href="<%= admin_system_affiliate_path(@affiliate, q: "payments")%>" role="tab"><%= tab_count('Payments', pmt_count) %></a></li>
     <li role="presentation" class="<%= "active" if params[:q] == "invoices" %>"><a href="<%= admin_system_affiliate_path(@affiliate, q: "invoices")%>" role="tab"><%= tab_count('Invoices', inv_count) %></a></li>
     <li role="presentation" class="<%= "active" if params[:q] == "billing_arrangements" %>"><a href="<%= admin_system_affiliate_path(@affiliate, q: "billing_arrangements")%>" role="tab"><%= tab_count('Billing Arrangements', ba_count) %></a></li>
+    <li role="presentation" class="<%= "active" if params[:q] == "users" %>"><a href="<%= admin_system_affiliate_path(@affiliate, q: "users")%>" role="tab"><%= tab_count('Users', @affiliate.users.count) %></a></li>
   <% end %>
 </ul>
 
@@ -393,6 +394,26 @@
         <i class="fa fa-plus"></i> New task
       <% end %>
     
+    
+    <% elsif params[:q] == "users" %>
+    
+      <table class="table table-striped table-condensed">
+      	<tr>
+          <th>ID</th>
+      		<th>Name</th>
+      		<th>Email</th>
+      		<th>Role</th>
+      		<th>Created</th>
+          <th><%= sortable "status" %></th>
+      		<th class="actions">&nbsp;</th>
+      	</tr>
+        <%= render partial: 'admin/system/users/user', collection: @affiliate.users  %>
+      </table>
+    
+      <%= link_to new_admin_system_user_path(affiliate_id: @affiliate.id), class: 'btn btn-sm btn-default' do %>
+        <i class="fa fa-plus"></i> New user
+      <% end %>
+     
     <% end %>
   </div>
 </div>

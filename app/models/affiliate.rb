@@ -42,6 +42,8 @@ class Affiliate < ActiveRecord::Base
   has_many :affiliate_categories, dependent: :destroy
   has_many :categories, through: :affiliate_categories
   has_many :extra_properties, -> { order "sort, name" }, as: :extra_property
+  has_many :users
+  
   validates_presence_of :name
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, unless: Proc.new { |a| a.email.blank? }
   validates_uniqueness_of :code, unless: Proc.new { |a| a.code.blank? }

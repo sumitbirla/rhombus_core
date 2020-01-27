@@ -3,7 +3,7 @@
     <table class="table table-condensed table-bordered summary">
     	<% object.extra_properties.each do |ep| %>
     	<tr>
-    		<td class="key"><%= ep.name %></td>
+    		<td class="key" nowrap><%= ep.name %></td>
     		<td><%= ep.value.gsub("\n", "<br>").html_safe unless ep.value.nil? %></td>
     	</tr>
     	<% end %>
