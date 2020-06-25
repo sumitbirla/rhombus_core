@@ -1,4 +1,4 @@
-class EventType < ActiveRecord::Base
+class NotificationDeliveryMethod < ActiveRecord::Base
   
   self.table_name = 'core_notification_delivery_methods'
   validates_presence_of :name, :available
