@@ -38,6 +38,7 @@ class User < ActiveRecord::Base
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :extra_properties, -> { order "sort, name" }, as: :extra_property
   has_many :logs
+	has_many :notification_subscriptions
   
   attr_accessor :password, :password_confirmation, :current_password
 
