@@ -2,7 +2,7 @@ class Event < ApplicationRecord
 	self.table_name = 'core_events'
 	belongs_to :event_type
 	
-	def self.transmit(event_type_name, data, expires = 10.days.from_now)
+	def self.transmit(event_type_name, data, expires = 1.day.from_now)
 		eid = EventType.find_by(name: event_type_name).id
 		
 		# delete any previous events which may be redundant now
