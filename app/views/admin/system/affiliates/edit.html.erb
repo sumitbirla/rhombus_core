@@ -1,16 +1,18 @@
 <style>
-input.boolean { margin: 0; }
+    input.boolean {
+        margin: 0;
+    }
 </style>
 
 <h2><i class="fa fa-rocket"></i> <%= @affiliate.name %></h2>
 <hr>
 
 <% unless @affiliate.id.nil? %>
-<ul class="nav nav-tabs" style="margin-bottom: 20px;">
-  <li class="active"><a href="#">Summary</a></li>
-  <li><%= link_to "Categories", categories_admin_system_affiliate_path(@affiliate) %></li>
-  <li><%= link_to "Extra Properties", extra_properties_admin_system_affiliate_path(@affiliate) %></li>
-</ul>
+  <ul class="nav nav-tabs" style="margin-bottom: 20px;">
+    <li class="active"><a href="#">Summary</a></li>
+    <li><%= link_to "Categories", categories_admin_system_affiliate_path(@affiliate) %></li>
+    <li><%= link_to "Extra Properties", extra_properties_admin_system_affiliate_path(@affiliate) %></li>
+  </ul>
 <% end %>
 
 <%= simple_form_for [:admin, :system, @affiliate] do |f| %>
@@ -18,28 +20,28 @@ input.boolean { margin: 0; }
   <input type="hidden" name="c" value="<%= params[:c] %>">
 
   <%= render 'admin/shared/error_messages', object: f.object %>
-  
+
   <div class="row">
     <div class="col-md-6">
-  	  <%= f.input :name %>
-  	  <%= f.input :slug %>
-  	  <%= f.input :code %>
-  	  <%= f.input :contact_person %>
-  	  <%= f.input :street1 %>
-  	  <%= f.input :street2 %>
-  	  <%= f.input :city %>
-  	  <%= f.input :state %>
-  	  <%= f.input :zip %>
-  	  <%= f.input :country %>
-  	  <%= f.input :phone %>
-  	  <%= f.input :fax %>
-  	  <%= f.input :email %>
-  	  <%= f.input :website %>
+      <%= f.input :name %>
+      <%= f.input :slug %>
+      <%= f.input :code %>
+      <%= f.input :contact_person %>
+      <%= f.input :street1 %>
+      <%= f.input :street2 %>
+      <%= f.input :city %>
+      <%= f.input :state %>
+      <%= f.input :zip %>
+      <%= f.input :country %>
+      <%= f.input :phone %>
+      <%= f.input :fax %>
+      <%= f.input :email %>
+      <%= f.input :website %>
       <%= f.input :api_key %>
     </div>
 
     <div class="col-md-6">
-      
+
       <div class="panel panel-default options-panel">
         <div class="panel-heading">Options</div>
         <div class="panel-body">
@@ -54,7 +56,7 @@ input.boolean { margin: 0; }
           </div>
         </div>
       </div>
-      
+
       <div class="panel panel-success options-panel">
         <div class="panel-heading">Billing</div>
         <div class="panel-body">
@@ -68,70 +70,68 @@ input.boolean { margin: 0; }
           </div>
         </div>
       </div>
-      
+
       <%= ckfinder_input(@affiliate, "logo") %>
     </div>
 
     <div class="col-md-12" style="margin-top: 20px;">
       <h4>Short Description</h4>
-    	<%= f.input_field :summary, class: "form-control text", rows: 3 %>
+      <%= f.input_field :summary, class: "form-control text", rows: 3 %>
       <br>
       <h4>Long Description</h4>
-    	<%= ckeditor_input_field(@affiliate, "description") %>
+      <%= ckeditor_input_field(@affiliate, "description") %>
       <br>
-    	<%= button_tag "Save changes", :class => "btn btn-primary", data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait ..." } %>
+      <%= button_tag "Save changes", :class => "btn btn-primary", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait ..."} %>
     </div>
   </div>
-  
+
 <% end %>
 
 
 <%= content_for :title do %>
-	Affiliates: <%= @affiliate.name %>
+  Affiliates: <%= @affiliate.name %>
 <% end %>
 
 
 <% content_for :menu do
-    render "admin/shared/system_menu"
+  render "admin/shared/system_menu"
 end %>
 
 
 <% content_for :breadcrumbs do %>
-	<li><a href="#">System</a></li>
-	<li><%= link_to "Affiliates", admin_system_affiliates_path %></li>
-    <% if @affiliate.id.nil? %>
-        <li class="active"><%= @affiliate.name %></li>
-    <% else %>
-	    <li><%= link_to @affiliate.name, admin_system_affiliate_path(@affiliate) %></li>
-        <li class="active">edit</li>
-    <% end %>
+  <li><a href="#">System</a></li>
+  <li><%= link_to "Affiliates", admin_system_affiliates_path %></li>
+  <% if @affiliate.id.nil? %>
+    <li class="active"><%= @affiliate.name %></li>
+  <% else %>
+    <li><%= link_to @affiliate.name, admin_system_affiliate_path(@affiliate) %></li>
+    <li class="active">edit</li>
+  <% end %>
 <% end %>
-  
-  
+
+
 <% content_for :head do %>
   <% static_url = Cache.setting(Rails.configuration.domain_id, :system, 'Static Files Url') %>
-	<script>
-    
-  <% unless @affiliate.persisted? %>
-      $(document).ready(function() {
-        $("#affiliate_name").select();
-      });
-  <% end %>
-      
-	function BrowseServer()
-	{
-		// You can use the "CKFinder" class to render CKFinder in a page:
-		var finder = new CKFinder( { connectorPath : '<%= static_url  %>/ckfinder/core/connector/php/connector.php' });
-		//finder.basePath = '../';	// The path for the installation of CKFinder (default = "/ckfinder/").
-		finder.selectActionFunction = SetFileField;
-		finder.popup();
-	}
+  <script>
 
-	// This is a sample function which is called when a file is selected in CKFinder.
-	function SetFileField( fileUrl )
-	{
-		document.getElementById('affiliate_logo').value = fileUrl.substring(<%= static_url.length +  5 %>);
-	}
-	</script>
+      <% unless @affiliate.persisted? %>
+      $(document).ready(function () {
+          $("#affiliate_name").select();
+      });
+      <% end %>
+
+      function BrowseServer() {
+          // You can use the "CKFinder" class to render CKFinder in a page:
+          var finder = new CKFinder({connectorPath: '<%= static_url  %>/ckfinder/core/connector/php/connector.php'});
+          //finder.basePath = '../';	// The path for the installation of CKFinder (default = "/ckfinder/").
+          finder.selectActionFunction = SetFileField;
+          finder.popup();
+      }
+
+      // This is a sample function which is called when a file is selected in CKFinder.
+      function SetFileField(fileUrl) {
+          document.getElementById('affiliate_logo').value = fileUrl.substring(<%= static_url.length +  5 %>);
+      }
+  </script>
 <% end %>
 

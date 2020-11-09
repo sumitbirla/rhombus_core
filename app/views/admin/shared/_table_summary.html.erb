@@ -1,7 +1,7 @@
 <div class="table-summary">
   <% unless data.total_entries < 20 %>
   <span class="pull-right">
-    per page: &nbsp; &nbsp; 
+    per page: &nbsp; &nbsp;
     <% [20, 30, 50, 100].each do |pp| %>
       <% if @per_page.to_i == pp %>
         <em><%= pp %></em> &nbsp; 
@@ -11,5 +11,6 @@
     <% end %>
   </span>
   <% end %>
-	<%= number_with_delimiter(data.total_entries) %> records | <%= link_to 'CSV', params.to_unsafe_h.merge(format: :csv) %>
+  <%= number_with_delimiter(data.total_entries) %> records
+  | <%= link_to 'CSV', params.to_unsafe_h.merge(format: :csv) %>
 </div>

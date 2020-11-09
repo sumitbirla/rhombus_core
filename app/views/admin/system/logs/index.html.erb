@@ -5,25 +5,26 @@
 %>
 
 <ul class="nav nav-tabs" style="margin-bottom: 10px;">
-<% type_list.each do |type| %>
-  <li role="presentation" class="<%= "active" if params[:type] == type %>"><a href="<%= admin_system_logs_path(type: type)%>"><%= type %></a></li>
-<% end %>
+  <% type_list.each do |type| %>
+    <li role="presentation" class="<%= "active" if params[:type] == type %>">
+      <a href="<%= admin_system_logs_path(type: type) %>"><%= type %></a></li>
+  <% end %>
 </ul>
 
 
 <%= will_paginate @logs %>
 <table class="table table-striped table-condensed">
-	<tr>
-		<th><%= sortable "timestamp" %></th>
+  <tr>
+    <th><%= sortable "timestamp" %></th>
     <th><%= sortable "core_users.name", "Name" %></th>
     <th><%= sortable "ip_address" %></th>
     <td><%= sortable "loggable_type", "Entity" %>
     <th><%= sortable "event" %></th>
-		<th><%= sortable "data1" %></th>
-		<th><%= sortable "data2" %></th>
+    <th><%= sortable "data1" %></th>
+    <th><%= sortable "data2" %></th>
     <th><%= sortable "data3" %></th>
-	</tr>
-	<%= render @logs %>
+  </tr>
+  <%= render @logs %>
 </table>
 
 
@@ -31,11 +32,11 @@
 
 
 <% content_for :title do %>
-    Recent Logins
+  Recent Logins
 <% end %>
 
 
 <% content_for :breadcrumbs do %>
-	<li><a href="#">System</a></li>
-	<li class="active">Recent Logins</li>
+  <li><a href="#">System</a></li>
+  <li class="active">Recent Logins</li>
 <% end %>

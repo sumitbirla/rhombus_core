@@ -32,14 +32,14 @@ require 'bcrypt'
 
 class User < ActiveRecord::Base
   include Exportable
-  
+
   self.table_name = 'core_users'
-  
+
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :extra_properties, -> { order "sort, name" }, as: :extra_property
   has_many :logs
-	has_many :notification_subscriptions
-  
+  has_many :notification_subscriptions
+
   attr_accessor :password, :password_confirmation, :current_password
 
   belongs_to :domain
@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
   validates_uniqueness_of :email, scope: :domain_id
   before_validation :normalize_phone
-  
+
   def authenticate(pwd)
     BCrypt::Password.new(password_digest) == pwd
   end
@@ -57,41 +57,41 @@ class User < ActiveRecord::Base
   def password_confirmed?
     !password.blank? && password == password_confirmation
   end
-  
+
   def to_s
     name
   end
-  
+
   def admin?
     role.super_user
   end
-  
+
   def name_with_id
     "[#{id}] #{name}"
   end
 
   def record_login(request, source)
     user_agent = UserAgent.parse(request.user_agent)
-    
-    Log.create(loggable_type: 'Session', 
+
+    Log.create(loggable_type: 'Session',
                loggable_id: request.session.id,
-               user_id: id, 
-               ip_address: request.remote_ip, 
-               event: :created, 
+               user_id: id,
+               ip_address: request.remote_ip,
+               event: :created,
                data1: source,
                data2: user_agent.platform,
                data3: "#{user_agent.browser} #{user_agent.version}")
   end
-  
-	def normalize_phone
-	  self.phone.gsub!(/\D/, '') unless self.phone.nil?
-	end
-  
+
+  def normalize_phone
+    self.phone.gsub!(/\D/, '') unless self.phone.nil?
+  end
+
   def get_property(name)
     a = extra_properties.find { |x| x.name == name }
     a.nil? ? "" : a.value
   end
-  
+
   def set_property(name, value)
     a = extra_properties.find { |x| x.name == name }
     if a.nil?
@@ -104,12 +104,12 @@ class User < ActiveRecord::Base
       end
     end
   end
-  
+
   # PUNDIT
   def self.policy_class
     ApplicationPolicy
   end
-  
+
   def has_permission?(resource, action)
     role.has_permission?(resource, action)
   end

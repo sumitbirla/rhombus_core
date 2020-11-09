@@ -8,99 +8,104 @@
 </ul>
 <br/>
 <form action="/admin/system/affiliates/<%= params[:id] %>/products_remove" method="post">
-<h4>Listed products  &nbsp; <button class="btn btn-sm btn-default"><i class="icon-minus"></i> remove selected</button></h4>
-	<%= token_tag %>
-	<input type="hidden" name="id" value="<%= params[:id] %>">
-<table class="table table-striped table-condensed">
-	<tr>
-		<th><input type="checkbox" id="check-all-listed"></th>
-		<th>Item #</th>
-		<th>Title</th>
-		<th>Price</th>
-		<th></th>
-	</tr>
-	<% @affiliate.products.each do |ap| %>
-	<tr>
-		<td><input type="checkbox" name="affiliate_product_ids[]" value="<%= ap.id %>"></td>
-		<td><%= ap.product.sku %></td>
-		<td><% if ap.title.blank? %>
-				<%= ap.product.title %>
-				<% else %>
-				<%= ap.title %>
-				<% end %>
+  <h4>Listed products &nbsp;
+    <button class="btn btn-sm btn-default"><i class="icon-minus"></i> remove selected</button>
+  </h4>
+  <%= token_tag %>
+  <input type="hidden" name="id" value="<%= params[:id] %>">
+  <table class="table table-striped table-condensed">
+    <tr>
+      <th><input type="checkbox" id="check-all-listed"></th>
+      <th>Item #</th>
+      <th>Title</th>
+      <th>Price</th>
+      <th></th>
+    </tr>
+    <% @affiliate.products.each do |ap| %>
+      <tr>
+        <td><input type="checkbox" name="affiliate_product_ids[]" value="<%= ap.id %>"></td>
+        <td><%= ap.product.sku %></td>
+        <td>
+          <% if ap.title.blank? %>
+            <%= ap.product.title %>
+          <% else %>
+            <%= ap.title %>
+          <% end %>
           <span class="light"><%= " (#{ap.product.option_title})" unless ap.product.option_title.blank? %></span>
-		</td>
-		<td><%= number_to_currency(ap.price || ap.product.price)%></td>
-		<td>
-			<%= link_to "edit", edit_admin_store_affiliate_product_path(ap) %> &nbsp;
-			<%= link_to "remove", 
-						  { action: "destroy", controller: "store/affiliate_products", id: ap.id },
-						  method: :delete %>
-		</td>
-	</tr>	
-	<% end %>
-</table>
+        </td>
+        <td><%= number_to_currency(ap.price || ap.product.price) %></td>
+        <td>
+          <%= link_to "edit", edit_admin_store_affiliate_product_path(ap) %> &nbsp;
+          <%= link_to "remove",
+                      {action: "destroy", controller: "store/affiliate_products", id: ap.id},
+                      method: :delete %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
 </form>
 
 
 <br/>
 
 <form action="/admin/system/affiliates/<%= params[:id] %>/products" method="post">
-	<h4>Available products  &nbsp; <button class="btn btn-sm btn-default"><i class="icon-plus"></i> add selected</button></h4>
-	<%= token_tag %>
-	<input type="hidden" name="id" value="<%= params[:id] %>">
-	
-	<% products = Product.order(:title).all %>
-	<table class="table table-striped table-condensed">
-		<tr>
-			<th><input type="checkbox" id="check-all-available"></th>
-			<th>Item #</th>
-			<th>Title</th>
-			<th>Price</th>
-		</tr>
-		<% products.each do |p| 
-			next if @affiliate.products.any? { |ap| ap.product_id == p.id } %>
-		<tr>
-			<td><input type="checkbox" name="product_ids[]" value="<%= p.id %>"></td>
-			<td><%= p.sku %></td>
-			<td><%= p.title %> <span class="light"><%= " (#{p.option_title})" unless p.option_title.blank? %></span></td>
-			<td><%= number_to_currency(p.price)%></td>
-		</tr>	
-		<% end %>
-	</table>
+  <h4>Available products &nbsp;
+    <button class="btn btn-sm btn-default"><i class="icon-plus"></i> add selected</button>
+  </h4>
+  <%= token_tag %>
+  <input type="hidden" name="id" value="<%= params[:id] %>">
+
+  <% products = Product.order(:title).all %>
+  <table class="table table-striped table-condensed">
+    <tr>
+      <th><input type="checkbox" id="check-all-available"></th>
+      <th>Item #</th>
+      <th>Title</th>
+      <th>Price</th>
+    </tr>
+    <% products.each do |p|
+      next if @affiliate.products.any? { |ap| ap.product_id == p.id } %>
+      <tr>
+        <td><input type="checkbox" name="product_ids[]" value="<%= p.id %>"></td>
+        <td><%= p.sku %></td>
+        <td><%= p.title %> <span class="light"><%= " (#{p.option_title})" unless p.option_title.blank? %></span></td>
+        <td><%= number_to_currency(p.price) %></td>
+      </tr>
+    <% end %>
+  </table>
 </form>
 
 
 
 <%= content_for :title do %>
-	Affiliates: <%= @affiliate.name %>
+  Affiliates: <%= @affiliate.name %>
 <% end %>
 
 
 <% content_for :head do %>
-<script>
-$(document).ready(function() {
-	$("#check-all-available").click(function () {
-		$("input[name='product_ids[]']").prop("checked", this.checked)
-    }); 
-	
-	$("#check-all-listed").click(function () {
-		$("input[name='affiliate_product_ids[]']").prop("checked", this.checked)
-    }); 
-})
-</script>
+  <script>
+      $(document).ready(function () {
+          $("#check-all-available").click(function () {
+              $("input[name='product_ids[]']").prop("checked", this.checked)
+          });
+
+          $("#check-all-listed").click(function () {
+              $("input[name='affiliate_product_ids[]']").prop("checked", this.checked)
+          });
+      })
+  </script>
 <% end %>
 
 
 <% content_for :menu do
-    render "admin/shared/system_menu"
+  render "admin/shared/system_menu"
 end %>
 
 
 <% content_for :breadcrumbs do %>
-	<li><a href="#">System</a></li>
-	<li><%= link_to "Affiliates", admin_system_affiliates_path %></li>
-	<li><%= link_to @affiliate.name, admin_system_affiliate_path(@affiliate) %></li>
-	<li class="active">edit</li>
+  <li><a href="#">System</a></li>
+  <li><%= link_to "Affiliates", admin_system_affiliates_path %></li>
+  <li><%= link_to @affiliate.name, admin_system_affiliate_path(@affiliate) %></li>
+  <li class="active">edit</li>
 <% end %>
 

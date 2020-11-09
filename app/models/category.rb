@@ -20,17 +20,17 @@
 
 class Category < ActiveRecord::Base
   self.table_name = "core_categories"
-  
+
   has_many :children, -> { order :sort }, class_name: "Category", foreign_key: "parent_id"
   belongs_to :parent, class_name: "Category"
-  
+
   validates_presence_of :entity_type, :name
   #validates_uniqueness_of :slug, scope: :entity_type
-  
+
   def to_s
     name
   end
-  
+
   def cache_key
     "category:#{slug}"
   end

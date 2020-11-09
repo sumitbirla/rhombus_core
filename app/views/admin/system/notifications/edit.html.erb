@@ -3,17 +3,17 @@
 <%= simple_form_for [:admin, :system, @notification] do |f| %>
 
   <%= render 'admin/shared/error_messages', object: f.object %>
-  
-  <%= f.input :title, input_html: { class: 'span5' } %>
-  <%= f.association :user, hint: '(leave blank for broadcast)'  %>
-  <%= f.input :start_time, as: :string, input_html: { class: "datetime-field" } %>
-  <%= f.input :expire_time, as: :string, input_html: { class: "datetime-field" } %>
+
+  <%= f.input :title, input_html: {class: 'span5'} %>
+  <%= f.association :user, hint: '(leave blank for broadcast)' %>
+  <%= f.input :start_time, as: :string, input_html: {class: "datetime-field"} %>
+  <%= f.input :expire_time, as: :string, input_html: {class: "datetime-field"} %>
   <%= f.input :web_delivery %>
-  <%= f.input :email_delivery  %>
+  <%= f.input :email_delivery %>
   <%= f.input :sms_delivery %>
-  <%= f.input :message, input_html: { rows: 10 } %>
-  
-  <%= button_tag "Save changes", :class => "btn btn-primary", data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait ..." } %>
+  <%= f.input :message, input_html: {rows: 10} %>
+
+  <%= button_tag "Save changes", :class => "btn btn-primary", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait ..."} %>
 
 <% end %>
 
@@ -25,7 +25,7 @@
 
 
 <% content_for :breadcrumbs do %>
-	<li><a href="#">System</a></li>
-	<li><%= link_to "Notifications", admin_system_notifications_path %></li>
-	<li class="active"><%= @notification.title %></li>
+  <li><a href="#">System</a></li>
+  <li><%= link_to "Notifications", admin_system_notifications_path %></li>
+  <li class="active"><%= @notification.title %></li>
 <% end %>

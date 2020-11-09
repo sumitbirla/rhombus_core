@@ -11,13 +11,13 @@
 
 
 <% content_for :title do %>
-	Users: <%= @user.name %>
+  Users: <%= @user.name %>
 <% end %>
 
 
 <% content_for :breadcrumbs do %>
-	<li><a href="#">System</a></li>
-	<li><%= link_to "Users", admin_system_users_path %></li>
-	<li><%= link_to @user.name, admin_system_user_path(@user) %></li>
-	<li class="active">edit</li>
+  <li><a href="#">System</a></li>
+  <li><%= link_to "Users", admin_system_users_path %></li>
+  <li><%= link_to @user.name, admin_system_user_path(@user) %></li>
+  <li class="active">edit</li>
 <% end %>

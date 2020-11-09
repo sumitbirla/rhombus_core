@@ -11,7 +11,7 @@ class Admin::System::SearchPathsController < Admin::BaseController
 
   def create
     @search_path = authorize SearchPath.new(search_path_params)
-    
+
     if @search_path.save
       redirect_to action: 'index'
     else
@@ -25,7 +25,7 @@ class Admin::System::SearchPathsController < Admin::BaseController
 
   def update
     @search_path = authorize SearchPath.find(params[:id])
-    
+
     if @search_path.update(search_path_params)
       redirect_to action: 'index'
     else
@@ -38,10 +38,10 @@ class Admin::System::SearchPathsController < Admin::BaseController
     @search_path.destroy
     redirect_back(fallback_location: admin_root_path)
   end
-  
+
   private
-  
-    def search_path_params
-      params.require(:search_path).permit(:short_code, :url, :description)
-    end
+
+  def search_path_params
+    params.require(:search_path).permit(:short_code, :url, :description)
+  end
 end

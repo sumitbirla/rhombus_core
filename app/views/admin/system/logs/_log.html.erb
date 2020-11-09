@@ -1,16 +1,16 @@
-	<tr>
-		<td><%= systime log.timestamp %></td>
-		<td>
-      <% unless log.user.nil? %>
-        <%= link_to log.user, admin_system_user_path(log.user, q: 'logs')  %>
-      <% else %>
-        User: <%= log.user_id %>
-      <% end %>
-    </td>
-    <td><%= log.ip_address %></td>
-    <td><%= log.loggable_type %></td>
-    <td><%= log.event %></td>
-		<td><%= log.data1 %></td>
-		<td><%= log.data2 %></td>
-		<td><%= log.data3 %></td>
-	</tr>
+<tr>
+  <td><%= systime log.timestamp %></td>
+  <td>
+    <% unless log.user.nil? %>
+      <%= link_to log.user, admin_system_user_path(log.user, q: 'logs') %>
+    <% else %>
+      User: <%= log.user_id %>
+    <% end %>
+  </td>
+  <td><%= log.ip_address %></td>
+  <td><%= log.loggable_type %></td>
+  <td><%= log.event %></td>
+  <td><%= log.data1 %></td>
+  <td><%= log.data2 %></td>
+  <td><%= log.data3 %></td>
+</tr>

@@ -17,5 +17,5 @@
 class Authorization < ActiveRecord::Base
   self.table_name = 'core_authorizations'
   validates_presence_of :provider, :uid, :user_id
-	belongs_to :user
+  belongs_to :user
 end

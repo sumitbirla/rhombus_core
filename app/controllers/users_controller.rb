@@ -1,40 +1,40 @@
 class UsersController < ApplicationController
-  
+
   layout 'single_column'
-  
+
   def new
     @user = User.new
   end
-  
+
   # Create a new user. Note that a user with this email may already exist in status "Z"
   def create
     @user = User.find_by(domain_id: Rails.configuration.domain_id, email: user_params[:email], status: "Z") || User.new
     @user.assign_attributes(user_params)
 
     if @user.password.length < 5
-      @user.errors[:password] <<  "must be at least 5 characters long"
+      @user.errors[:password] << "must be at least 5 characters long"
       return render 'new'
     end
 
     unless @user.password_confirmed?
-      @user.errors[:base] <<  "Passwords do not match"
+      @user.errors[:base] << "Passwords do not match"
       return render 'new'
     end
 
     @user.assign_attributes(
-            domain_id: Rails.configuration.domain_id,
-            role_id: Role.find_by(default: true).id,
-            password_digest: BCrypt::Password.create(@user.password),
-            referral_key: SecureRandom.hex(5),
-            status: :active)
+        domain_id: Rails.configuration.domain_id,
+        role_id: Role.find_by(default: true).id,
+        password_digest: BCrypt::Password.create(@user.password),
+        referral_key: SecureRandom.hex(5),
+        status: :active)
 
     if @user.save
       session[:user_id] = @user.id
       @user.record_login(request, 'web')
-      
+
       # subscribe user to email list
       if params[:email_signup] == "1"
-        
+
       end
 
       begin
@@ -43,7 +43,7 @@ class UsersController < ApplicationController
         logger.error e
       end
 
-      return redirect_to params[:redirect]  unless params[:redirect].blank?
+      return redirect_to params[:redirect] unless params[:redirect].blank?
       redirect_to root_path
     else
       render 'new'
@@ -97,12 +97,12 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     unless @user.password_confirmed?
-      @user.errors[:base] <<  "Passwords do not match"
+      @user.errors[:base] << "Passwords do not match"
       return render 'new_password'
     end
 
     if @user.password.length < 5
-      @user.errors[:base] <<  "Password must be atleast 5 characters long"
+      @user.errors[:base] << "Password must be atleast 5 characters long"
       return render 'new_password'
     end
 
@@ -116,14 +116,14 @@ class UsersController < ApplicationController
 
   def status
     user = User.find(params[:id])
-    render json: { status: user.nil? ? "not found" : user.status }
+    render json: {status: user.nil? ? "not found" : user.status}
   end
-  
+
 
   private
 
-    def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :data1, :data2)
-    end
-  
+  def user_params
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :data1, :data2)
+  end
+
 end

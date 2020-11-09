@@ -9,7 +9,7 @@
 
 class AffiliateCategory < ActiveRecord::Base
   self.table_name = 'core_affiliate_categories'
-  
+
   belongs_to :affiliate
   belongs_to :category
 end

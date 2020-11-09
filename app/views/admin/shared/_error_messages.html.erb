@@ -1,52 +1,52 @@
 <% if object && object.errors.any? %>
-    <div class="bs-callout bs-callout-danger">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <ul>
-        <% object.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
+  <div class="bs-callout bs-callout-danger">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <ul>
+      <% object.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
 <% end %>
 
 <% unless flash[:notice].nil? %>
-    <div class="bs-callout bs-callout-warning">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <i class="fa fa-info-circle"></i> &nbsp; <%= flash[:notice] %>
-    </div>
+  <div class="bs-callout bs-callout-warning">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <i class="fa fa-info-circle"></i> &nbsp; <%= flash[:notice] %>
+  </div>
 <% end %>
 
 <% unless flash[:info].nil? %>
-    <div class="bs-callout bs-callout-info">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <i class="fa fa-info-circle"></i> &nbsp; <%= flash[:info] %>
-    </div>
+  <div class="bs-callout bs-callout-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <i class="fa fa-info-circle"></i> &nbsp; <%= flash[:info] %>
+  </div>
 <% end %>
 
 <% unless flash[:warning].nil? %>
-    <div class="bs-callout bs-callout-info">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <i class="fa fa-info-circle"></i> &nbsp; <%= flash[:warning] %>
-    </div>
+  <div class="bs-callout bs-callout-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <i class="fa fa-info-circle"></i> &nbsp; <%= flash[:warning] %>
+  </div>
 <% end %>
 
 <% unless flash[:error].nil? %>
-    <div class="bs-callout bs-callout-danger">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <i class="fa fa-exclamation"></i> &nbsp; <%= flash[:error] %>
-    </div>
+  <div class="bs-callout bs-callout-danger">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <i class="fa fa-exclamation"></i> &nbsp; <%= flash[:error] %>
+  </div>
 <% end %>
 
 <% unless flash[:success].nil? %>
-    <div class="bs-callout bs-callout-warning">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <i class="fa fa-check"></i> &nbsp; <%= flash[:success] %>
-    </div>
+  <div class="bs-callout bs-callout-warning">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <i class="fa fa-check"></i> &nbsp; <%= flash[:success] %>
+  </div>
 <% end %>
 
 <% unless params[:notice].nil? %>
-    <div class="bs-callout bs-callout-info">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <i class="fa fa-check"></i> &nbsp; <%= params[:notice] %>
-    </div>
+  <div class="bs-callout bs-callout-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <i class="fa fa-check"></i> &nbsp; <%= params[:notice] %>
+  </div>
 <% end %>

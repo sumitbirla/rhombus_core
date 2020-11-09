@@ -34,36 +34,36 @@
 
 class Affiliate < ActiveRecord::Base
   include Exportable
-  
+
   self.table_name = 'core_affiliates'
-	
-	before_save :set_api_key
-  
+
+  before_save :set_api_key
+
   has_many :affiliate_categories, dependent: :destroy
   has_many :categories, through: :affiliate_categories
   has_many :extra_properties, -> { order "sort, name" }, as: :extra_property
   has_many :users
-  
+
   validates_presence_of :name
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, unless: Proc.new { |a| a.email.blank? }
   validates_uniqueness_of :code, unless: Proc.new { |a| a.code.blank? }
   validates_uniqueness_of :name
-  
+
   # following used only during signup (not stored in database)
   attr_accessor :password, :password_confirmation
-  
+
   def to_s
     name
   end
-	
-	def set_api_key
-		self.api_key = SecureRandom.uuid if api_key.blank?
-	end
-  
-  
+
+  def set_api_key
+    self.api_key = SecureRandom.uuid if api_key.blank?
+  end
+
+
   def address_as_text(opts = {})
     delim = opts[:delimiter] || "\n"
-    
+
     address = street1.presence || ""
     address = address + delim + street2 unless street2.blank?
     address = address + delim + city unless city.blank?
@@ -74,38 +74,38 @@ class Affiliate < ActiveRecord::Base
     end
     address.html_safe unless address.nil?
   end
-  
+
   def valid_password?
-    
+
     if password.blank?
       errors.add(:password, "cannot be blank")
       return false
     end
-    
+
     if password.length < 5
       errors.add(:password, "is too short")
       return false
     end
-    
+
     if password != password_confirmation
       errors.add(:base, "passwords do not match")
       return false
     end
-    
+
     return true
   end
-  
+
   def get_property(name)
     a = extra_properties.find { |x| x.name == name }
     a.nil? ? "" : a.value
   end
-  
+
   def set_property(name, value)
     a = extra_properties.find { |x| x.name == name }
     if [true, false].include? value
       value = (value ? "Yes" : "No")
     end
-    
+
     if a.nil?
       self.extra_properties.build(name: name, value: value) unless value.blank?
     else
@@ -116,10 +116,10 @@ class Affiliate < ActiveRecord::Base
       end
     end
   end
-  
+
   # PUNDIT
   def self.policy_class
     ApplicationPolicy
   end
-  
+
 end

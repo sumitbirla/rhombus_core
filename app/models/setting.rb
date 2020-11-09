@@ -18,23 +18,23 @@ class Setting < ActiveRecord::Base
   belongs_to :domain
   validates_presence_of :section, :key, :value, :value_type
   validates_uniqueness_of :key, scope: [:domain_id, :section]
-  
+
   # PUNDIT
   def self.policy_class
     ApplicationPolicy
   end
-  
+
   def to_s
     value
   end
-  
+
   def cache_key
     "setting:#{domain_id}:#{section}:#{key}"
   end
-  
+
   def self.get(domain_id, section, key)
     s = Setting.find_by(domain_id: domain_id, section: section, key: key)
-    
+
     return nil if s.nil?
     return s.value.to_i if s.value_type == "number"
     s.value

@@ -2,18 +2,19 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header modal-header-primary">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
         <h3 class="modal-title"><i class="fa fa-print"></i> &nbsp;Choose Printer</h3>
       </div>
       <div class="modal-body">
         <table class="table table-striped table-bordered" style="margin-bottom: 0;">
-          <% Cache.printers.each do |p| 
-              icon = (['epl2', 'zpl'].include?(p.preferred_format) ? ' fa fa-barcode' : 'far fa-file-alt') %>
-          <tr class="<%= p.preferred_format %>">
-            <td nowrap><a href="#" printer_id="<%= p.id %>"><i class="<%= icon %>"></i> &nbsp;<%= p.name %></a></td>
-            <td class="light"><%= p.model%></td>
-            <td class="light"><%= p.location%></td>
-          </tr>
+          <% Cache.printers.each do |p|
+            icon = (['epl2', 'zpl'].include?(p.preferred_format) ? ' fa fa-barcode' : 'far fa-file-alt') %>
+            <tr class="<%= p.preferred_format %>">
+              <td nowrap><a href="#" printer_id="<%= p.id %>"><i class="<%= icon %>"></i> &nbsp;<%= p.name %></a></td>
+              <td class="light"><%= p.model %></td>
+              <td class="light"><%= p.location %></td>
+            </tr>
           <% end %>
         </table>
         <div class="processing">
@@ -32,79 +33,79 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-      
-        function reset_print_dialog() {
-          $("#print-dialog tr").hide();
-          $("#print-dialog .table").show();
-          $("#print-dialog .processing").hide();
-          $("#print-dialog .modal-footer").show();
-        }
-      
-        function submit_print_dialog() {
-          $("#print-dialog .table").hide();
-          $("#print-dialog .processing").show();
-          $("#print-dialog .modal-footer").hide();
-          $("#frmBatch").submit();
-        }
-        
-        function hide_print_dialog() {
-          $("#print-dialog").modal('hide');
-        }
-       
-        $(".print-link").click(function() {
-          reset_print_dialog();
 
-          var formats = $(this).attr("print-format").split(/,/);
-          for (s of formats)
-            $("#print-dialog ." + s).show();
-          
-          $("#frmBatch").attr("action", $(this).attr("href"));
-          
-          var url = $(this).attr("url");
-          if (url != null)
-            $("#frmBatch input[name='url']").val($(this).attr("url"));
-          
-          $("#print-dialog").modal();
-          return false;
+        function reset_print_dialog() {
+            $("#print-dialog tr").hide();
+            $("#print-dialog .table").show();
+            $("#print-dialog .processing").hide();
+            $("#print-dialog .modal-footer").show();
+        }
+
+        function submit_print_dialog() {
+            $("#print-dialog .table").hide();
+            $("#print-dialog .processing").show();
+            $("#print-dialog .modal-footer").hide();
+            $("#frmBatch").submit();
+        }
+
+        function hide_print_dialog() {
+            $("#print-dialog").modal('hide');
+        }
+
+        $(".print-link").click(function () {
+            reset_print_dialog();
+
+            var formats = $(this).attr("print-format").split(/,/);
+            for (s of formats)
+                $("#print-dialog ." + s).show();
+
+            $("#frmBatch").attr("action", $(this).attr("href"));
+
+            var url = $(this).attr("url");
+            if (url != null)
+                $("#frmBatch input[name='url']").val($(this).attr("url"));
+
+            $("#print-dialog").modal();
+            return false;
         });
-        
+
         $("#btnAction").click(function () {
             reset_print_dialog();
             var selectedOption = $("#selAction option:selected");
-        
+
             if (selectedOption.attr("print-dialog") == "true") {
-              var formats = selectedOption.attr("print-format").split(/,/);
-              for (s of formats)
-                $("#print-dialog ." + s).show();
-              
-              $("#print-dialog").modal();
-              return;
-            }
-            
-            if (selectedOption.attr("email-dialog") == "true") {
-              var email = prompt("Please enter email:", "<%= current_user.email %>");
-              if (email == null || email == '')
+                var formats = selectedOption.attr("print-format").split(/,/);
+                for (s of formats)
+                    $("#print-dialog ." + s).show();
+
+                $("#print-dialog").modal();
                 return;
-              $("#frmBatch input[name='email_address']").val(email);
             }
-            
+
+            if (selectedOption.attr("email-dialog") == "true") {
+                var email = prompt("Please enter email:", "<%= current_user.email %>");
+                if (email == null || email == '')
+                    return;
+                $("#frmBatch input[name='email_address']").val(email);
+            }
+
             $("#frmBatch").attr("action", $("#selAction").val());
             $("#frmBatch").attr("method", selectedOption.attr("method"));
             submit_print_dialog();
         });
-      
+
         /* capture action in print-dialog */
-        $("#print-dialog a").click(function() {
-          var printer_id = $(this).attr("printer_id");
-          
-          $("input[name='printer_id']").val(printer_id);
-          $("#frmBatch").attr("action", $("#selAction").val());
-          $("#frmBatch").attr("method", $("#selAction option:selected").attr("method"));
-          submit_print_dialog();
- 
-          if (printer_id == null) {
-            window.setTimeout(hide_print_dialog, 3000);
-          }
+        $("#print-dialog a").click(function () {
+            var printer_id = $(this).attr("printer_id");
+
+            $("input[name='printer_id']").val(printer_id);
+            $("#frmBatch").attr("action", $("#selAction").val());
+            $("#frmBatch").attr("method", $("#selAction option:selected").attr("method"));
+            submit_print_dialog();
+
+            if (printer_id == null) {
+                window.setTimeout(hide_print_dialog, 3000);
+            }
         });
     });
 </script>

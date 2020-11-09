@@ -1,15 +1,15 @@
 class SessionsController < ApplicationController
-  force_ssl only: :new if Rails.env.production? 
+  force_ssl only: :new if Rails.env.production?
   layout 'single_column'
-  
+
   def new
     # delete existing facebook cookie otherwise reauth may not work
     app_id = Cache.setting(Rails.configuration.domain_id, :system, 'Facebook App ID')
     cookies.delete "fbsr_#{app_id}"
   end
-  
+
   def create
-    reset_session  # clear out any previous session data
+    reset_session # clear out any previous session data
     user = User.find_by(domain_id: Rails.configuration.domain_id, email: params[:email])
 
     if user && (user.password_digest.nil? || user.password_digest.length < 20)
@@ -17,17 +17,17 @@ class SessionsController < ApplicationController
       redirect_to login_path
 
     elsif user && user.authenticate(params[:password])
-      
+
       # check if user is in active state
       if user.status != 'active'
         flash[:error] = "Your account is not in active status.  Please contact customer service."
         return redirect_to login_path
       end
-      
+
       session[:user_id] = user.id
       user.record_login(request, 'web')
 
-      return  redirect_to params[:redirect] unless params[:redirect].blank?
+      return redirect_to params[:redirect] unless params[:redirect].blank?
       redirect_to account_root_path
 
     else
@@ -37,7 +37,7 @@ class SessionsController < ApplicationController
   end
 
   def create_omniauth
-    reset_session  # clear out any previous session data
+    reset_session # clear out any previous session data
     auth = request.env['omniauth.auth']
 
     # check if user exists
@@ -82,19 +82,19 @@ class SessionsController < ApplicationController
     session[:user_id] = user.id
     user.record_login(request, auth.provider)
 
-    return  redirect_to params[:redirect] unless params[:redirect].blank?
+    return redirect_to params[:redirect] unless params[:redirect].blank?
     redirect_to account_root_path
   end
-  
+
   def destroy
     Log.create(user_id: session[:user_id], loggable_type: 'Session', loggable_id: session.id, event: 'destroyed', ip_address: request.remote_ip)
     reset_session
-    
+
     unless params[:redirect].blank?
       redirect_to params[:redirect]
     else
       redirect_to login_path, notice: "You have been logged out."
     end
   end
-  
+
 end

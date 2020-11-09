@@ -7,28 +7,28 @@ class Admin::System::UsersController < Admin::BaseController
                  .includes(:role)
                  .joins(:role)
                  .order(sort_column + " " + sort_direction)
-                 
+
     @users = @users.where("core_users.name LIKE '%#{params[:q]}%' OR email LIKE '%#{params[:q]}%'") unless params[:q].nil?
     @users = @users.where(status: params[:status]) unless params[:status].blank?
     @users = @users.where(role_id: params[:role_id]) unless params[:role_id].blank?
-    
+
     #  DOES NOT WORK   authorize(@users)
-    
+
     respond_to do |format|
-      format.html  { @users = @users.paginate(page: params[:page], per_page: @per_page) }
+      format.html { @users = @users.paginate(page: params[:page], per_page: @per_page) }
       format.csv { send_data User.to_csv(@users, skip_cols: ["password_digest"]) }
     end
   end
 
   def new
     @user = User.new(
-                  name: 'New user', 
-                  domain_id: Rails.configuration.domain_id,
-                  time_zone: Cache.setting(Rails.configuration.domain_id, :system, 'Time Zone'),
-                  role_id: Role.find_by(default: true).id, 
-                  referral_key: SecureRandom.hex(5), 
-                  status: :active )
-                  
+        name: 'New user',
+        domain_id: Rails.configuration.domain_id,
+        time_zone: Cache.setting(Rails.configuration.domain_id, :system, 'Time Zone'),
+        role_id: Role.find_by(default: true).id,
+        referral_key: SecureRandom.hex(5),
+        status: :active)
+
     authorize @user
     render 'edit'
   end
@@ -36,7 +36,7 @@ class Admin::System::UsersController < Admin::BaseController
   def create
     @user = authorize User.new(user_params)
     @user.password_digest = BCrypt::Password.create(params[:password]) unless params[:password].blank?
-    
+
     if @user.save
       redirect_to action: 'show', id: @user.id, notice: 'User was successfully created.'
     else
@@ -62,12 +62,12 @@ class Admin::System::UsersController < Admin::BaseController
         @user.password_digest = BCrypt::Password.create(params[:password])
         @user.save
       end
-      
+
       if @user.referral_key.blank?
         @user.referral_key = SecureRandom.hex(5)
         @user.save
       end
-      
+
       redirect_to action: 'show', id: @user.id, notice: 'User was successfully updated.'
     else
       render 'edit'
@@ -79,13 +79,13 @@ class Admin::System::UsersController < Admin::BaseController
     @user.destroy
     redirect_to action: 'index', notice: 'User has been deleted.'
   end
-  
+
   def extra_properties
     @user = User.find(params[:id])
     authorize @user, :show?
     5.times { @user.extra_properties.build }
   end
-  
+
   def orders
     @user = User.find(params[:id])
     authorize @user, :show?
@@ -153,7 +153,7 @@ class Admin::System::UsersController < Admin::BaseController
     session[:user_id] = params[:id]
     redirect_to account_root_path
   end
-  
+
   def welcome_email
     begin
       user = User.find(params[:id])
@@ -162,7 +162,7 @@ class Admin::System::UsersController < Admin::BaseController
     rescue => e
       flash[:error] = e.message
     end
-    
+
     redirect_back(fallback_location: admin_root_path)
   end
 
@@ -193,22 +193,22 @@ class Admin::System::UsersController < Admin::BaseController
   end
 
   def random
-    render :json => { random: SecureRandom.hex(5) }
+    render :json => {random: SecureRandom.hex(5)}
   end
-  
-  
-  private
-  
-    def user_params
-      params.require(:user).permit!
-    end
-    
-    def sort_column
-      params[:sort] || "core_users.id"
-    end
 
-    def sort_direction
-      %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
-    end
-  
+
+  private
+
+  def user_params
+    params.require(:user).permit!
+  end
+
+  def sort_column
+    params[:sort] || "core_users.id"
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
+  end
+
 end

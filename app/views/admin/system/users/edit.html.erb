@@ -4,81 +4,82 @@
 <%= render 'admin/shared/error_messages', object: @user %>
 
 <% if @user.persisted? %>
-<ul class="nav nav-tabs" style="margin-bottom: 20px;">
-  <li class="active"><a href="#">Edit</a></li>
-  <li><%= link_to "Extra Properties", extra_properties_admin_system_user_path(@user) %></li>
-</ul>
+  <ul class="nav nav-tabs" style="margin-bottom: 20px;">
+    <li class="active"><a href="#">Edit</a></li>
+    <li><%= link_to "Extra Properties", extra_properties_admin_system_user_path(@user) %></li>
+  </ul>
 <% end %>
 
-<%= simple_form_for [:admin, :system,  @user] do |f| %>
+<%= simple_form_for [:admin, :system, @user] do |f| %>
 
   <div class="col-md-6">
     <%= f.input :password_digest, as: :hidden %>
-    <%= f.input :name%>
+    <%= f.input :name %>
     <%= f.association :domain %>
     <%= f.association :role %>
     <%= f.association :affiliate, collection: Affiliate.where(active: true).order(:name) %>
-    <%= f.input :email  %>
+    <%= f.input :email %>
     <%= f.input :phone %>
     <%= f.input :birth_date, as: :datepicker %>
-    <%= f.input :gender, collection: [ 'male', 'female' ]  %>
+    <%= f.input :gender, collection: ['male', 'female'] %>
     <%= f.input :avatar_url %>
     <%= f.input :vip %>
   </div>
-    
+
   <div class="col-md-6">
     <%= f.input :status, as: :select, collection: ['active', 'pending', 'suspended', 'deactived', 'Z'] %>
-    
-    <%= f.input :pin  %>
+
+    <%= f.input :pin %>
     <%= f.input :referral_key %>
     <%= f.input :locale %>
     <%= f.input :location %>
     <%= f.input :time_zone %>
-  
+
     <div class="form-group string optional password">
       <label class="string optional col-sm-3 control-label" for="password">Password</label>
       <div class="col-sm-9">
-        <input class="string optional form-control" type="password" name="password" id="password"> (leave blank if not updating)
+        <input class="string optional form-control" type="password" name="password" id="password"> (leave blank if not
+        updating)
       </div>
     </div>
   </div>
-  
+
   <div class="col-md-12">
-    <%= button_tag "Save changes", :class => "btn btn-primary", data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait ..." } %>
+    <%= button_tag "Save changes", :class => "btn btn-primary", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait ..."} %>
   </div>
-  
+
 <% end %>
 
 
 
 <% content_for :title do %>
-	Users: <%= @user.name %>
+  Users: <%= @user.name %>
 <% end %>
 
 
 <% content_for :menu do
-    render "admin/shared/system_menu"
+  render "admin/shared/system_menu"
 end %>
 
 
 <% content_for :breadcrumbs do %>
-	<li><a href="#">System</a></li>
-	<li><%= link_to "Users", admin_system_users_path %></li>
-    <% if @user.id.nil? %>
-        <li class="active"><%= @user.name %></li>
-    <% else %>
-	    <li><%= link_to @user.name, admin_system_user_path(@user) %></li>
-	    <li class="active">edit</li>
-    <% end %>
+  <li><a href="#">System</a></li>
+  <li><%= link_to "Users", admin_system_users_path %></li>
+  <% if @user.id.nil? %>
+    <li class="active"><%= @user.name %></li>
+  <% else %>
+    <li><%= link_to @user.name, admin_system_user_path(@user) %></li>
+    <li class="active">edit</li>
+  <% end %>
 <% end %>
 
 
 <% content_for :head do %>
   <% unless @user.persisted? %>
     <script>
-      $(document).ready(function() {
-        $("#user_name").select();
-      });
+        $(document).ready(function () {
+            $("#user_name").select();
+        });
     </script>
   <% end %>
 <% end %>

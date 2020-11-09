@@ -1,15 +1,15 @@
-	<tr>
-    <td><%= user.id %></td>
-		<td><%= link_to user.name, admin_system_user_path(user) %></td>
-		<td><%= user.email %>
-		<td><%= user.role.name %></td>
-		<td><%= systime user.created_at %></td>
-    <td><%= user.status %></td>
-		<td class="actions">
-			<%= link_to "edit", edit_admin_system_user_path(user) %> &nbsp;
-			<%= link_to "delete", 
-						  { action: "destroy", id: user.id }, 
-						  method: :delete, 
-						  data: { confirm: "Are you sure?" } %>
-		</td>
-	</tr>
+<tr>
+  <td><%= user.id %></td>
+  <td><%= link_to user.name, admin_system_user_path(user) %></td>
+  <td><%= user.email %>
+  <td><%= user.role.name %></td>
+  <td><%= systime user.created_at %></td>
+  <td><%= user.status %></td>
+  <td class="actions">
+    <%= link_to "edit", edit_admin_system_user_path(user) %> &nbsp;
+    <%= link_to "delete",
+                {action: "destroy", id: user.id},
+                method: :delete,
+                data: {confirm: "Are you sure?"} %>
+  </td>
+</tr>

@@ -15,15 +15,15 @@
     <th>description</th>
   </tr>
   <% SearchPath.order(:short_code).each do |sp| %>
-  <tr>
-    <td><code><%= sp.short_code %></code></td>
-    <td><%= sp.description %></td>
-  </tr>
+    <tr>
+      <td><code><%= sp.short_code %></code></td>
+      <td><%= sp.description %></td>
+    </tr>
   <% end %>
 </table>
 
 
 <% content_for :title do %>
-    Search Help
+  Search Help
 <% end %>
 

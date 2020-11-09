@@ -1,11 +1,11 @@
 require 'cupsffi'
 
 class Admin::System::PrintersController < Admin::BaseController
-  
+
   def index
     authorize Printer.new
     @printers = Printer.order(sort_column + " " + sort_direction)
-                       .paginate(page: params[:page], per_page: @per_page)
+                    .paginate(page: params[:page], per_page: @per_page)
   end
 
   def new
@@ -16,7 +16,7 @@ class Admin::System::PrintersController < Admin::BaseController
   def create
     @printer = authorize Printer.new(printer_params)
     update_cups_properties(@printer)
-    
+
     if @printer.save
       Rails.cache.delete :printers
       redirect_to action: 'index', notice: 'Printer was successfully created.'
@@ -36,9 +36,9 @@ class Admin::System::PrintersController < Admin::BaseController
   def update
     @printer = authorize Printer.find(params[:id])
     update_cups_properties(@printer)
-    
+
     if @printer.update(printer_params)
-			Rails.cache.delete :printers
+      Rails.cache.delete :printers
       redirect_to action: 'index', notice: 'Printer was successfully updated.'
     else
       render 'edit'
@@ -48,18 +48,18 @@ class Admin::System::PrintersController < Admin::BaseController
   def destroy
     @printer = authorize Printer.find(params[:id])
     @printer.destroy
-		
-		Rails.cache.delete :printers
+
+    Rails.cache.delete :printers
     redirect_to action: 'index', notice: 'Printer has been deleted.'
   end
-  
-  
+
+
   def print_url
     # check if download specified
     if params[:printer_id].blank?
       return redirect_to params[:url]
     end
-    
+
     begin
       p = Printer.find(params[:printer_id])
       job = p.print_urls([params[:url]])
@@ -67,40 +67,40 @@ class Admin::System::PrintersController < Admin::BaseController
     rescue => e
       flash[:error] = e.message
     end
-    
+
     redirect_back(fallback_location: admin_root_path)
   end
-  
-  
-  private
-  
-    def printer_params
-      params.require(:printer).permit!
-    end
-    
-    def sort_column
-      params[:sort] || "name"
-    end
 
-    def sort_direction
-      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
-    end
-    
-    def update_cups_properties(printer)
-      # attempt to get printer info from CUPS server
-      return unless printer.url =~ URI::regexp
-			
-			uri = URI(printer.url)
-      if uri.scheme == 'ipp'
-        printer_name = uri.path.split("/").last
-        begin
-          p = CupsPrinter.new(printer_name, hostname: uri.host)
-          a = p.attributes
-          printer.location = a["printer-location"] if printer.location.blank?
-          printer.model = a["printer-make-and-model"]
-        rescue => e
-          flash[:error] = e.message
-        end
+
+  private
+
+  def printer_params
+    params.require(:printer).permit!
+  end
+
+  def sort_column
+    params[:sort] || "name"
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
+
+  def update_cups_properties(printer)
+    # attempt to get printer info from CUPS server
+    return unless printer.url =~ URI::regexp
+
+    uri = URI(printer.url)
+    if uri.scheme == 'ipp'
+      printer_name = uri.path.split("/").last
+      begin
+        p = CupsPrinter.new(printer_name, hostname: uri.host)
+        a = p.attributes
+        printer.location = a["printer-location"] if printer.location.blank?
+        printer.model = a["printer-make-and-model"]
+      rescue => e
+        flash[:error] = e.message
       end
     end
+  end
 end

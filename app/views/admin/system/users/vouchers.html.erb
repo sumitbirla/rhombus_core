@@ -1,10 +1,10 @@
-<%=  render partial: 'admin/shared/user_summary', locals: { user: @user } %>
-<%=  render partial: 'admin/shared/user_tabs', locals: { user: @user, counts: @counts, selected: :vouchers } %>
+<%= render partial: 'admin/shared/user_summary', locals: {user: @user} %>
+<%= render partial: 'admin/shared/user_tabs', locals: {user: @user, counts: @counts, selected: :vouchers} %>
 
 <form action="/admin/system/users/<%= @user.id %>/vouchers" method="post" class="pull-right" style="margin: 10px 0 0 0">
   <%= token_tag %>
   <input type="text" name="amount" class="col-md-3" placeholder="$0.0"/> &nbsp;
-  <input type="text" name="notes" class="col-md-6" placeholder="notes" />
+  <input type="text" name="notes" class="col-md-6" placeholder="notes"/>
   <button class="btn btn-sm btn-default">Add Credit</button>
 </form>
 
@@ -20,40 +20,40 @@
     <th>Notes</th>
   </tr>
   <% @vouchers.each do |uv| %>
-      <tr>
-        <td>
+    <tr>
+      <td>
         <% if uv.voucher_id %>
-          <%= uv.voucher.code  %>
+          <%= uv.voucher.code %>
         <% else %>
           n/a
         <% end %>
-        </td>
-        <td><%= systime uv.created_at %></td>
-        <td><%= number_to_currency(uv.amount) %></td>
-        <td>
-          <% unless uv.order_id.nil? %>
-            <%= link_to uv.order_id.to_s, admin_store_order_path(uv.order_id) %>
-          <% else %>
-            -
-          <% end %>
-        </td>
-        <td><%= uv.notes %>
+      </td>
+      <td><%= systime uv.created_at %></td>
+      <td><%= number_to_currency(uv.amount) %></td>
+      <td>
+        <% unless uv.order_id.nil? %>
+          <%= link_to uv.order_id.to_s, admin_store_order_path(uv.order_id) %>
+        <% else %>
+          -
+        <% end %>
+      </td>
+      <td><%= uv.notes %>
   <% end %>
 </table>
 
 
 <%= content_for :title do %>
-	Users: <%= @user.name %>
+  Users: <%= @user.name %>
 <% end %>
 
 
 <% content_for :menu do
-    render "admin/shared/system_menu"
+  render "admin/shared/system_menu"
 end %>
 
 
 <% content_for :breadcrumbs do %>
-	<li><a href="#">System</a></li>
-	<li><%= link_to "Users", admin_system_users_path %></li>
-	<li class="active"><%= @user.name %></li>
+  <li><a href="#">System</a></li>
+  <li><%= link_to "Users", admin_system_users_path %></li>
+  <li class="active"><%= @user.name %></li>
 <% end %>

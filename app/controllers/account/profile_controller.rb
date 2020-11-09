@@ -31,7 +31,7 @@ class Account::ProfileController < Account::BaseController
 
       return redirect_to action: 'show' if @user.save
     else
-      @user.errors.add(:current_password,  "The current password entered is not correct.")
+      @user.errors.add(:current_password, "The current password entered is not correct.")
     end
 
     render 'edit'

@@ -5,46 +5,46 @@
 <hr>
 
 <% prev_section = ''
-   @settings.each do |setting| 
-	   if setting.section != prev_section 
-		   prev_section = setting.section %>
-		   
-		   <% if prev_section != '' %>
-	   </table>
-		   <% end %>
-<h3>Module: <%= setting.section.titlecase %></h3>
-<table class="table table-condensed table-bordered">
-	<tr>
-		<th width="25%">Key</th>
-		<th>Value</th>
-		<th width="120" class="actions">&nbsp;</th>
-	</tr>
-	<% end%>
-	<tr>
-		<td><%= setting.key %></td>
-		<td><%= setting.value %></td>
-		<td class="actions ralign">
-			<%= link_to "edit", edit_admin_system_setting_path(setting) %> &nbsp; 
-			<%= link_to "delete", 
-						  { action: "destroy", id: setting.id }, 
-						  method: :delete, 
-						  data: { confirm: "Are you sure?" } %>
-		</td>
-	</tr>
-	<% end%>
+   @settings.each do |setting|
+     if setting.section != prev_section
+       prev_section = setting.section %>
+
+    <% if prev_section != '' %>
+      </table>
+    <% end %>
+    <h3>Module: <%= setting.section.titlecase %></h3>
+    <table class="table table-condensed table-bordered">
+      <tr>
+        <th width="25%">Key</th>
+        <th>Value</th>
+        <th width="120" class="actions">&nbsp;</th>
+      </tr>
+  <% end %>
+  <tr>
+    <td><%= setting.key %></td>
+    <td><%= setting.value %></td>
+    <td class="actions ralign">
+      <%= link_to "edit", edit_admin_system_setting_path(setting) %> &nbsp;
+      <%= link_to "delete",
+                  {action: "destroy", id: setting.id},
+                  method: :delete,
+                  data: {confirm: "Are you sure?"} %>
+    </td>
+  </tr>
+<% end %>
 </table>
 
 
 <% content_for :title do %>
-    Settings
+  Settings
 <% end %>
 
 
 <% content_for :menu do
-    render "admin/shared/system_menu"
+  render "admin/shared/system_menu"
 end %>
 
 <% content_for :breadcrumbs do %>
-	<li><a href="#">System</a></li>
-	<li class="active">Settings</li>
+  <li><a href="#">System</a></li>
+  <li class="active">Settings</li>
 <% end %>

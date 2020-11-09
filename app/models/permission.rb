@@ -12,7 +12,7 @@
 
 class Permission < ActiveRecord::Base
   self.table_name = 'core_permissions'
-  
+
   validates_presence_of :section, :resource, :action
   validates_uniqueness_of :action, scope: [:section, :resource]
 end

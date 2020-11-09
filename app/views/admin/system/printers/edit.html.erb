@@ -11,7 +11,7 @@
 </div>
 
 <%= simple_form_for [:admin, :system, @printer] do |f| %>
-  
+
   <%= render 'admin/shared/error_messages', object: f.object %>
   <%= f.input :name %>
   <%= f.input :model %>
@@ -19,7 +19,7 @@
   <%= f.input :preferred_format %>
   <%= f.input :location %>
   <%= f.input :print_count %>
-  <%= button_tag "Save changes", class: "btn btn-primary", data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait ...".html_safe } %>
+  <%= button_tag "Save changes", class: "btn btn-primary", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait ...".html_safe} %>
 
 <% end %>
 
@@ -29,13 +29,13 @@
 
 
 <% content_for :title do %>
-	Printers: <%= @printer.name %>
+  Printers: <%= @printer.name %>
 <% end %>
 
 
 
 <% content_for :breadcrumbs do %>
   <li><a href="#">System</a></li>
-	<li><%= link_to "Printers", admin_system_printers_path %></li>
-	<li class="active"><%= @printer.name %></li>
+  <li><%= link_to "Printers", admin_system_printers_path %></li>
+  <li class="active"><%= @printer.name %></li>
 <% end %>

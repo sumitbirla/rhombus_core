@@ -2,7 +2,7 @@
   <%= link_to welcome_email_admin_system_user_path(@user), class: "btn btn-default btn-sm" do %>
     <i class="fa fa-envelope"></i> welcome email
   <% end %> &nbsp;
-  <%= link_to login_admin_system_user_path(@user), class: "btn btn-default btn-sm" do %> 
+  <%= link_to login_admin_system_user_path(@user), class: "btn btn-default btn-sm" do %>
     <i class="fa fa-user"></i> login as
   <% end %> &nbsp;
   <%= link_to "edit", edit_admin_system_user_path(@user), class: "btn btn-default btn-sm" %>
@@ -10,9 +10,9 @@
 
 <h2>
   <% if @user.avatar_url.blank? %>
-      <i class="fa fa-user"></i>
+    <i class="fa fa-user"></i>
   <% else %>
-      <%= image_tag @user.avatar_url, size: "50x50" %>
+    <%= image_tag @user.avatar_url, size: "50x50" %>
   <% end %>
   <%= @user.name %>
 </h2>
@@ -20,152 +20,171 @@
 
 
 <div class="row">
-	<div class="col-md-6">
-		<table class="table table-bordered table-condensed summary">
-		  <%= obj_property @user, :role %>
-      <%= obj_property(@user, :affiliate) { |x| link_to x.name, admin_system_affiliate_path(x.id) }%>
-		  <%= obj_property @user, :email %>
-		  <%= obj_property @user, :phone %>
-		  <%= obj_property @user, :birth_date %>
-		  <%= obj_property @user, :gender %>
-		  <%= obj_property @user, :pin, label: "PIN" %>
-  		<%= obj_property @user, :time_zone %>
+  <div class="col-md-6">
+    <table class="table table-bordered table-condensed summary">
+      <%= obj_property @user, :role %>
+      <%= obj_property(@user, :affiliate) { |x| link_to x.name, admin_system_affiliate_path(x.id) } %>
+      <%= obj_property @user, :email %>
+      <%= obj_property @user, :phone %>
+      <%= obj_property @user, :birth_date %>
+      <%= obj_property @user, :gender %>
+      <%= obj_property @user, :pin, label: "PIN" %>
+      <%= obj_property @user, :time_zone %>
       <%= obj_property @user, :locale %>
       <%= obj_property @user, :location %>
-		</table>
-	</div>
-	
-	<div class="col-md-6">
-		<table class="table table-bordered table-condensed summary">
-		  <%= obj_property @user, :referral_key %>
-		  <%= obj_property @user, :referral_clicks %>
-		  <%= obj_property @user, :referral_signups %>
-		  <%= obj_property @user, :created_at, label: "Joined" %>
-		  <tr>
-		  	<td>Last Login</td>
-		    <td>
-				<% last_login = Log.where(user_id: @user.id, loggable_type: 'Session').last
-				unless last_login.nil?
-				%>
-				<%= systime last_login.timestamp %>
-				<% else %>
-				- never -
-				<% end %>
-			</td>
-		  </tr>
-		</table>
-	</div>
+    </table>
+  </div>
+
+  <div class="col-md-6">
+    <table class="table table-bordered table-condensed summary">
+      <%= obj_property @user, :referral_key %>
+      <%= obj_property @user, :referral_clicks %>
+      <%= obj_property @user, :referral_signups %>
+      <%= obj_property @user, :created_at, label: "Joined" %>
+      <tr>
+        <td>Last Login</td>
+        <td>
+          <% last_login = Log.where(user_id: @user.id, loggable_type: 'Session').last
+             unless last_login.nil?
+          %>
+            <%= systime last_login.timestamp %>
+          <% else %>
+            - never -
+          <% end %>
+        </td>
+      </tr>
+    </table>
+  </div>
 </div>
 
 
 
-<%= render partial: 'admin/shared/extra_properties', locals: { object: @user } %>
+<%= render partial: 'admin/shared/extra_properties', locals: {object: @user} %>
 
 
-<% 
-  mods = Rails.configuration.modules 
+<%
+  mods = Rails.configuration.modules
   log_count = Log.where(user_id: @user.id).count
   q = params[:q].presence || "logins"
 %>
 
 <ul class="nav nav-tabs" role="tablist">
   <% if mods.include? :store %>
-  <% 
-    order_count = Order.where(user_id: @user.id).count
-    asi_count = AutoShipItem.where(user_id: @user.id).count
-  %>
-  <li class="<%= "active" if q == "orders" %>"><a href="<%= admin_system_user_path(@user, q: "orders")%>" role="tab"><%= tab_count "Orders", order_count %></a></li>
-  <li class="<%= "active" if q == "autoship" %>"><a href="<%= admin_system_user_path(@user, q: "autoship")%>" role="tab"><%= tab_count "Auto Ship", asi_count %></a></li>
+    <%
+      order_count = Order.where(user_id: @user.id).count
+      asi_count = AutoShipItem.where(user_id: @user.id).count
+    %>
+    <li class="<%= "active" if q == "orders" %>">
+      <a href="<%= admin_system_user_path(@user, q: "orders") %>" role="tab"><%= tab_count "Orders", order_count %></a>
+    </li>
+    <li class="<%= "active" if q == "autoship" %>">
+      <a href="<%= admin_system_user_path(@user, q: "autoship") %>" role="tab"><%= tab_count "Auto Ship", asi_count %></a>
+    </li>
   <% end %>
-  
+
   <% if mods.include? :ticketing %>
-  <% ticket_count = Case.where(user_id: @user.id).count %>
-  <li class="<%= "active" if q == "tickets" %>"><a href="<%= admin_system_user_path(@user, q: "tickets")%>" role="tab"><%= tab_count "Tickets", ticket_count %></a></li>
+    <% ticket_count = Case.where(user_id: @user.id).count %>
+    <li class="<%= "active" if q == "tickets" %>">
+      <a href="<%= admin_system_user_path(@user, q: "tickets") %>" role="tab"><%= tab_count "Tickets", ticket_count %></a>
+    </li>
   <% end %>
-  
-  <% if mods.include?  :cms%>
-  <% 
-    pic_count = Picture.where(user_id: @user.id).count
-    loc_count = Location.where(user_id: @user.id).count
-  %>
-  <li class="<%= "active" if q == "pictures" %>"><a href="<%= admin_system_user_path(@user, q: "pictures")%>" role="tab"><%= tab_count "Photos", pic_count %></a></li>
-  <li class="<%= "active" if q == "locations" %>"><a href="<%= admin_system_user_path(@user, q: "locations")%>" role="tab"><%= tab_count "Locations", loc_count %></a></li>
+
+  <% if mods.include? :cms %>
+    <%
+      pic_count = Picture.where(user_id: @user.id).count
+      loc_count = Location.where(user_id: @user.id).count
+    %>
+    <li class="<%= "active" if q == "pictures" %>">
+      <a href="<%= admin_system_user_path(@user, q: "pictures") %>" role="tab"><%= tab_count "Photos", pic_count %></a>
+    </li>
+    <li class="<%= "active" if q == "locations" %>">
+      <a href="<%= admin_system_user_path(@user, q: "locations") %>" role="tab"><%= tab_count "Locations", loc_count %></a>
+    </li>
   <% end %>
-  
+
   <% if mods.include? :billing %>
-  <% 
-    cc_count = PaymentMethod.where(user_id: @user.id).count
-    pmt_count = Payment.where(user_id: @user.id).count
-    sub_count = UserPackage.where(user_id: @user.id).count
-  %>
-  <li class="<%= "active" if q == "cc" %>"><a href="<%= admin_system_user_path(@user, q: "cc")%>" role="tab"><%= tab_count "CC", cc_count %></a></li>
-  <li class="<%= "active" if q == "payments" %>"><a href="<%= admin_system_user_path(@user, q: "payments")%>" role="tab"><%= tab_count "Payments", pmt_count %></a></li>
-  <li class="<%= "active" if q == "subs" %>"><a href="<%= admin_system_user_path(@user, q: "subs")%>" role="tab"><%= tab_count "Subscriptions", sub_count %></a></li>
+    <%
+      cc_count = PaymentMethod.where(user_id: @user.id).count
+      pmt_count = Payment.where(user_id: @user.id).count
+      sub_count = UserPackage.where(user_id: @user.id).count
+    %>
+    <li class="<%= "active" if q == "cc" %>">
+      <a href="<%= admin_system_user_path(@user, q: "cc") %>" role="tab"><%= tab_count "CC", cc_count %></a></li>
+    <li class="<%= "active" if q == "payments" %>">
+      <a href="<%= admin_system_user_path(@user, q: "payments") %>" role="tab"><%= tab_count "Payments", pmt_count %></a>
+    </li>
+    <li class="<%= "active" if q == "subs" %>">
+      <a href="<%= admin_system_user_path(@user, q: "subs") %>" role="tab"><%= tab_count "Subscriptions", sub_count %></a>
+    </li>
   <% end %>
-  
+
   <% if mods.include? :pbx %>
-  <% 
-    pbx_domain = PbxDomain.find_by(user_id: @user.id)
-    if pbx_domain
-      did_count = PbxDid.where(pbx_domain_id: pbx_domain.id).count
-      vm_count = PbxVmMessage.where(domain: pbx_domain.name).count
-      cdr_count = PbxDbCdr.where(pbx_domain_id: pbx_domain.id).count
-  %>
-  <li class="<%= "active" if q == "dids" %>"><a href="<%= admin_system_user_path(@user, q: "dids")%>" role="tab">DID's</a></li>
-  <li class="<%= "active" if q == "vm" %>"><a href="<%= admin_system_user_path(@user, q: "vm")%>" role="tab">Voicemail</a></li>
-  <li class="<%= "active" if q == "cdr" %>"><a href="<%= admin_system_user_path(@user, q: "cdr")%>" role="tab">CDR</a></li>
+    <%
+      pbx_domain = PbxDomain.find_by(user_id: @user.id)
+      if pbx_domain
+        did_count = PbxDid.where(pbx_domain_id: pbx_domain.id).count
+        vm_count = PbxVmMessage.where(domain: pbx_domain.name).count
+        cdr_count = PbxDbCdr.where(pbx_domain_id: pbx_domain.id).count
+    %>
+      <li class="<%= "active" if q == "dids" %>">
+        <a href="<%= admin_system_user_path(@user, q: "dids") %>" role="tab">DID's</a></li>
+      <li class="<%= "active" if q == "vm" %>">
+        <a href="<%= admin_system_user_path(@user, q: "vm") %>" role="tab">Voicemail</a></li>
+      <li class="<%= "active" if q == "cdr" %>">
+        <a href="<%= admin_system_user_path(@user, q: "cdr") %>" role="tab">CDR</a></li>
+    <% end %>
   <% end %>
-  <% end %>
-  <li class="<%= "active" if q == "logs" %>"><a href="<%= admin_system_user_path(@user, q: "logs")%>" role="tab"><%= tab_count "Logs", log_count %></a></li>
+  <li class="<%= "active" if q == "logs" %>">
+    <a href="<%= admin_system_user_path(@user, q: "logs") %>" role="tab"><%= tab_count "Logs", log_count %></a></li>
 </ul>
 
 
-<% if q == "orders" 
-  orders = Order.where(user_id: params[:id]).where.not(status: "in cart").order(submitted: :desc).paginate(page: params[:page], per_page: 10) %>
-  
+<% if q == "orders"
+     orders = Order.where(user_id: params[:id]).where.not(status: "in cart").order(submitted: :desc).paginate(page: params[:page], per_page: 10) %>
+
   <div class="pull-right">
-    <%= render 'admin/store/orders/group_actions'%>
+    <%= render 'admin/store/orders/group_actions' %>
   </div>
 
   <%= will_paginate orders %>
   <table class="table table-striped table-condensed">
-  	<tr>
+    <tr>
       <th></th>
-  		<th>Order #</th>
+      <th>Order #</th>
       <th>Sales Channel</th>
-  		<th>Date</th>
-  		<th>Customer</th>
-  		<th>Location</th>
-  		<th>Amount</th>
+      <th>Date</th>
+      <th>Customer</th>
+      <th>Location</th>
+      <th>Amount</th>
       <th>Ship by</th>
       <th></th>
-  		<th>Status</th>
-  	</tr>
-    <%= render partial: 'admin/store/orders/order', collection: orders%>
+      <th>Status</th>
+    </tr>
+    <%= render partial: 'admin/store/orders/order', collection: orders %>
   </table>
-  
-  <%= render 'admin/shared/table_summary', data: orders%>
-  
-  
-<% elsif q == "autoship" 
-  items = AutoShipItem.where(user_id: params[:id]) %>
-  
+
+  <%= render 'admin/shared/table_summary', data: orders %>
+
+
+<% elsif q == "autoship"
+     items = AutoShipItem.where(user_id: params[:id]) %>
+
   <table class="table table-striped table-condensed">
-  	<tr>
-  		<th>Item ID</th>
+    <tr>
+      <th>Item ID</th>
       <th>User</th>
       <th>SKU</th>
       <th>Description</th>
-  		<th class="text-center">Qty</th>
+      <th class="text-center">Qty</th>
       <th class="text-center">Frequency</th>
-  		<th class="text-center">Last Shipped</th>
-  		<th class="text-center">Next Ship Date</th>
+      <th class="text-center">Last Shipped</th>
+      <th class="text-center">Next Ship Date</th>
       <th class="text-center">Status</th>
-  		<th class="actions">&nbsp;</th>
-  	</tr>
+      <th class="actions">&nbsp;</th>
+    </tr>
     <%= render partial: 'admin/store/auto_ship_items/auto_ship_item', collection: items %>
   </table>
-  
+
   <%= link_to "new autoship item", new_admin_store_auto_ship_item_path(user_id: params[:id]), class: "btn btn-default btn-sm" %>
 
 <% elsif q == "tickets" %>
@@ -177,9 +196,9 @@
   </div>
 
   <%= link_to "new case", new_admin_ticketing_case_path(user_id: params[:id], queue_id: 1), class: "btn btn-default btn-sm" %>
-  
+
   <table class="table table-striped table-condensed">
-  	<tr>
+    <tr>
       <th></th>
       <th>ID</th>
       <th>Received</th>
@@ -188,13 +207,13 @@
       <th>Status</th>
       <th>Priority</th>
       <th>Assigned to</th>
-  	</tr>
-  	<% cases.each do |c| %>
-  	  <%= render partial: 'admin/ticketing/cases/case', locals: { c: c } %>
-  	<% end %>
+    </tr>
+    <% cases.each do |c| %>
+      <%= render partial: 'admin/ticketing/cases/case', locals: {c: c} %>
+    <% end %>
   </table>
-  
-  
+
+
 <% elsif q == "pictures" %>
 
   <% pics = Picture.where(user_id: params[:id]).order(created_at: :desc) %>
@@ -204,29 +223,29 @@
       <img src="<%= cdn_image_url pic.file_path, 100, 100, 0 %>" class="img-thumbnail" alt="<%= pic.caption %>" style="margin: 4px;">
     <% end %>
   <% end %>
-  
+
 <% elsif q == "locations" %>
 
   <% locations = Location.where(user_id: params[:id]).order(created_at: :desc).paginate(page: params[:page], per_page: 10) %>
 
   <%= will_paginate locations %>
   <table class="table table-striped table-condensed">
-  	<tr>
-  		<th>Name</th>
-  		<th>Address</th>
+    <tr>
+      <th>Name</th>
+      <th>Address</th>
       <th>Country</th>
-  		<th>Created</th>
-  	</tr>
-  	<% locations.each do |loc| %>
-  	<tr>
-  		<td><%= link_to loc.name, admin_cms_location_path(loc) %></td>
-  		<td><%= loc.to_text(newline: ", ", skip_country: true) %></td>
-      <td><%= loc.country %></td>	
-  		<td><%= systime loc.created_at %></td>	
+      <th>Created</th>
     </tr>
-  	<% end %>
+    <% locations.each do |loc| %>
+      <tr>
+        <td><%= link_to loc.name, admin_cms_location_path(loc) %></td>
+        <td><%= loc.to_text(newline: ", ", skip_country: true) %></td>
+        <td><%= loc.country %></td>
+        <td><%= systime loc.created_at %></td>
+      </tr>
+    <% end %>
   </table>
-  
+
 <% elsif q == "cc" %>
 
   <% payment_methods = PaymentMethod.where(user_id: params[:id]).order(created_at: :desc) %>
@@ -243,35 +262,35 @@
       <th>Default ?</th>
     </tr>
     <% payment_methods.each do |pm| %>
-    <tr>
-      <td><%= link_to pm.cardholder_name, admin_billing_payment_method_path(pm) %></td>
-      <td><%= pm.card_display %></td>
-      <td><%= pm.card_brand.titlecase %></td>
-      <td><%= pm.expiration_month %> / <%= pm.expiration_year %></td>
-      <td>
-       <% if pm.last_transaction_date %>
-        <%= systime pm.last_transaction_date %>
-       <% else %>
-         -
-       <% end %>
-      </td>
-      <td><%= pm.last_transaction_result %></td>
-      <td><%= pm.bill_attempts %></td>
-      <td><%= tick pm.default %></td>
-    </tr>
+      <tr>
+        <td><%= link_to pm.cardholder_name, admin_billing_payment_method_path(pm) %></td>
+        <td><%= pm.card_display %></td>
+        <td><%= pm.card_brand.titlecase %></td>
+        <td><%= pm.expiration_month %> / <%= pm.expiration_year %></td>
+        <td>
+          <% if pm.last_transaction_date %>
+            <%= systime pm.last_transaction_date %>
+          <% else %>
+            -
+          <% end %>
+        </td>
+        <td><%= pm.last_transaction_result %></td>
+        <td><%= pm.bill_attempts %></td>
+        <td><%= tick pm.default %></td>
+      </tr>
     <% end %>
   </table>
-  
+
   <%= link_to "new payment method", new_admin_billing_payment_method_path(user_id: params[:id]), class: "btn btn-default btn-sm" %>
-  
+
 <% elsif q == "subs" %>
 
   <% @user_packages = UserPackage.joins(:package)
-                                .where("bill_packages.domain_id = #{cookies[:domain_id]}")
-                                .where(user_id: @user.id)
-                                .includes(:package)
-                                .paginate(page: params[:page], per_page: 10)
-                                .order(recurr_date: :desc) %>
+      .where("bill_packages.domain_id = #{cookies[:domain_id]}")
+      .where(user_id: @user.id)
+      .includes(:package)
+      .paginate(page: params[:page], per_page: 10)
+      .order(recurr_date: :desc) %>
 
   <table class="table table-striped table-condensed">
     <tr>
@@ -284,23 +303,23 @@
       <th>Status</th>
     </tr>
     <% @user_packages.each do |up| %>
-    <tr>
-      <td><%= link_to up.id.to_s, admin_billing_user_package_path(up) %></td>
-      <td><%= link_to up.package.name, admin_billing_package_path(up.package) %></td>
-      <td><%= number_to_currency(up.amount) %></td>
-      <td><%= number_to_currency(up.rate) %></td>
-      <td><%= sysdate up.recurr_date %></td>
-      <td><%= up.bill_attempts %></td>
-      <td><%= up.recurr_status %></td>
-    </tr>
+      <tr>
+        <td><%= link_to up.id.to_s, admin_billing_user_package_path(up) %></td>
+        <td><%= link_to up.package.name, admin_billing_package_path(up.package) %></td>
+        <td><%= number_to_currency(up.amount) %></td>
+        <td><%= number_to_currency(up.rate) %></td>
+        <td><%= sysdate up.recurr_date %></td>
+        <td><%= up.bill_attempts %></td>
+        <td><%= up.recurr_status %></td>
+      </tr>
     <% end %>
   </table>
-  
+
 <% elsif q == "payments" %>
 
-  <% 
+  <%
     payments = Payment.where(user_id: params[:id]).order(created_at: :desc)
-    balance = payments.sum(:amount) 
+    balance = payments.sum(:amount)
     payments = payments.paginate(page: params[:page], per_page: 10)
   %>
 
@@ -318,18 +337,18 @@
     </tr>
     <%= render partial: 'admin/billing/payments/payment', collection: payments %>
   </table>
-  
-  
+
+
   <%= link_to new_admin_billing_payment_path(user_id: params[:id]), class: "btn btn-sm btn-default" do %>
     <i class="fa fa-plus"></i> New payment
-  <% end %> &nbsp; 
+  <% end %> &nbsp;
   <b>Balance:</b> <%= number_to_currency(balance) %><br>
-  
+
 <% elsif q == "dids" %>
 
   <%
     domain = PbxDomain.find_by(user_id: params[:id])
-    dids = PbxDid.where(pbx_domain_id: domain.id).paginate(page: params[:page], per_page: 10) 
+    dids = PbxDid.where(pbx_domain_id: domain.id).paginate(page: params[:page], per_page: 10)
   %>
 
   <%= will_paginate dids %>
@@ -343,26 +362,26 @@
       <th>Status</th>
     </tr>
     <% dids.each do |d| %>
-    <tr>
-      <td><%= number_to_phone d.number %></td>
-  		<td>
-        <% unless d.name.nil? %>
-          <%= d.name %>
-        <% else %>
-          <span class="light">- not set -</span>
-        <% end %>
-      </td>
-      <td><code><%= d.app%> <%= d.app_data %></code></td>
-      <td><%= tick d.sms %></td>
-      <td><%= d.source.blank? ? '- unknown -' : d.source %></td> 
-  		<td><%= d.status %></td>
-    </tr>
+      <tr>
+        <td><%= number_to_phone d.number %></td>
+        <td>
+          <% unless d.name.nil? %>
+            <%= d.name %>
+          <% else %>
+            <span class="light">- not set -</span>
+          <% end %>
+        </td>
+        <td><code><%= d.app %> <%= d.app_data %></code></td>
+        <td><%= tick d.sms %></td>
+        <td><%= d.source.blank? ? '- unknown -' : d.source %></td>
+        <td><%= d.status %></td>
+      </tr>
     <% end %>
   </table>
-  
+
 <% elsif q == "vm" %>
 
-  <% vm_messages = PbxVmMessage.where(domain: "user-#{@user.id}").order(created_epoch: :desc).paginate(page: params[:page], per_page: 10)  %>
+  <% vm_messages = PbxVmMessage.where(domain: "user-#{@user.id}").order(created_epoch: :desc).paginate(page: params[:page], per_page: 10) %>
 
   <%= will_paginate vm_messages %>
   <table class="table table-condensed table-striped messages">
@@ -377,29 +396,29 @@
       <th>Forward By</th>
       <th></th>
     </tr>
-    <% vm_messages.each do |msg| 
-    		user = msg.username + '@' + msg.domain %>
-    <tr>
-      <td style="color: #666;" nowrap><%= Time.at(msg.created_epoch).strftime("%D %l:%M %P") %></td>
-      <td><%= user %></td>
-      <td><%= msg.cid_name %> <<%= msg.cid_number %>></td>
-  	  <td><%= msg.in_folder %></td>
-      <td><%= Time.at(msg.message_len).utc.strftime("%k:%M:%S") %></td>
-      <td><%= msg.flags %></td>
-      <td><%= msg.read_flags %></td>
-      <td><%= msg.forwarded_by %></td>
-      <td>
-     	 	<a href="<%= msg.file_path.sub('/mnt/nfs1', '') %>" class="audio">listen</a>
-      </td>
-    </tr>
+    <% vm_messages.each do |msg|
+      user = msg.username + '@' + msg.domain %>
+      <tr>
+        <td style="color: #666;" nowrap><%= Time.at(msg.created_epoch).strftime("%D %l:%M %P") %></td>
+        <td><%= user %></td>
+        <td><%= msg.cid_name %> <<%= msg.cid_number %>></td>
+        <td><%= msg.in_folder %></td>
+        <td><%= Time.at(msg.message_len).utc.strftime("%k:%M:%S") %></td>
+        <td><%= msg.flags %></td>
+        <td><%= msg.read_flags %></td>
+        <td><%= msg.forwarded_by %></td>
+        <td>
+          <a href="<%= msg.file_path.sub('/mnt/nfs1', '') %>" class="audio">listen</a>
+        </td>
+      </tr>
     <% end %>
   </table>
-  
+
 <% elsif q == "cdr" %>
 
   <%
-     domain = PbxDomain.find_by(user_id: params[:id])
-     cdr_list = PbxDbCdr.where(pbx_domain_id: domain.id).order(start_time: :desc).paginate(page: params[:page], per_page: 20) %>
+    domain = PbxDomain.find_by(user_id: params[:id])
+    cdr_list = PbxDbCdr.where(pbx_domain_id: domain.id).order(start_time: :desc).paginate(page: params[:page], per_page: 20) %>
 
   <%= will_paginate cdr_list %>
   <table class="table table-condensed">
@@ -412,34 +431,34 @@
       <th class="actions"></th>
     </tr>
     <% cdr_list.each do |cdr| %>
-    <tr>
-      <td style="color: #666;" nowrap><%= cdr.start_time.strftime("%D %l:%M %P") %></td>
-  	  <td><%= number_to_phone cdr.sip_from_user, area_code: true  %></td>
-      <td><%= number_to_phone cdr.sip_req_user, area_code: true %></td>
-      <td><%= Time.at(cdr.duration).utc.strftime("%k:%M:%S") %></td>
-      <td style="font-size: 0.85em;"><%= cdr.hangup_cause %></td>
-  	  <td><%= link_to "view", admin_pbx_cdr_path(cdr) %></td>
-    </tr>
+      <tr>
+        <td style="color: #666;" nowrap><%= cdr.start_time.strftime("%D %l:%M %P") %></td>
+        <td><%= number_to_phone cdr.sip_from_user, area_code: true %></td>
+        <td><%= number_to_phone cdr.sip_req_user, area_code: true %></td>
+        <td><%= Time.at(cdr.duration).utc.strftime("%k:%M:%S") %></td>
+        <td style="font-size: 0.85em;"><%= cdr.hangup_cause %></td>
+        <td><%= link_to "view", admin_pbx_cdr_path(cdr) %></td>
+      </tr>
     <% end %>
   </table>
 
 <% elsif q == "logs" %>
 
   <% logs = Log.where(user_id: @user.id).paginate(page: params[:page], per_page: 10).order(timestamp: :desc) %>
-  
+
   <%= will_paginate logs %>
   <table class="table table-striped table-condensed">
-  	<tr>
-  		<th>Timestamp</th>
+    <tr>
+      <th>Timestamp</th>
       <th>User</th>
       <th>IP Address</th>
       <th>Entity</th>
-  		<th>Event</th>
-  		<th>Data 1</th>
+      <th>Event</th>
+      <th>Data 1</th>
       <th>Data 2</th>
       <th>Data 3</th>
-  	</tr>
-  	<%= render logs %>
+    </tr>
+    <%= render logs %>
   </table>
 
 <% end %>
@@ -449,23 +468,25 @@
 
 
 <% content_for :title do %>
-	Users: <%= @user.name %>
+  Users: <%= @user.name %>
 <% end %>
 
 
 <% content_for :head do %>
   <style>
-  ul.pagination { margin-top: 10px; }
+      ul.pagination {
+          margin-top: 10px;
+      }
   </style>
 <% end %>
 
 <% content_for :menu do
-    render "admin/shared/system_menu"
+  render "admin/shared/system_menu"
 end %>
 
 
 <% content_for :breadcrumbs do %>
-	<li><a href="#">System</a></li>
-	<li><%= link_to "Users", admin_system_users_path %></li>
-	<li class="active"><%= @user.name %></li>
+  <li><a href="#">System</a></li>
+  <li><%= link_to "Users", admin_system_users_path %></li>
+  <li class="active"><%= @user.name %></li>
 <% end %>

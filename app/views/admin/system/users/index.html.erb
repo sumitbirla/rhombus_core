@@ -1,6 +1,6 @@
 <div class="pull-right">
-  <%= select_tag :role_id, options_from_collection_for_select(Role.all, :id, :name, params[:role_id]), prompt: 'All roles'%> &nbsp; 
-  <%= select_tag :status, options_for_select(User.distinct(:status).pluck(:status), params[:status]), prompt: 'Any status'%> &nbsp; 
+  <%= select_tag :role_id, options_from_collection_for_select(Role.all, :id, :name, params[:role_id]), prompt: 'All roles' %> &nbsp;
+  <%= select_tag :status, options_for_select(User.distinct(:status).pluck(:status), params[:status]), prompt: 'Any status' %> &nbsp;
   <%= link_to new_admin_system_user_path, class: 'btn btn-sm btn-default' do %>
     <i class="fa fa-plus"></i> New user
   <% end %>
@@ -14,16 +14,16 @@
 
 <%= will_paginate @users %>
 <table class="table table-striped table-condensed">
-	<tr>
+  <tr>
     <th><%= sortable "core_users.id", "ID" %></th>
-		<th><%= sortable "core_users.name", "Name" %></th>
-		<th><%= sortable "email" %></th>
-		<th><%= sortable "core_roles.name", "Role" %></th>
-		<th><%= sortable "core_users.created_at", "Created" %></th>
+    <th><%= sortable "core_users.name", "Name" %></th>
+    <th><%= sortable "email" %></th>
+    <th><%= sortable "core_roles.name", "Role" %></th>
+    <th><%= sortable "core_users.created_at", "Created" %></th>
     <th><%= sortable "status" %></th>
-		<th class="actions">&nbsp;</th>
-	</tr>
-	<%= render @users %>
+    <th class="actions">&nbsp;</th>
+  </tr>
+  <%= render @users %>
 </table>
 
 <%= render 'admin/shared/table_summary', data: @users %>
@@ -31,21 +31,21 @@
 
 
 <% content_for :title do %>
-	Users
+  Users
 <% end %>
 
 <% content_for :head do %>
   <script>
-    $(document).ready(function() {
-      $("#role_id, #status").change(function() {
-        window.location = "/admin/system/users?role_id=" + $("#role_id").val() + "&status=" + $("#status").val();
+      $(document).ready(function () {
+          $("#role_id, #status").change(function () {
+              window.location = "/admin/system/users?role_id=" + $("#role_id").val() + "&status=" + $("#status").val();
+          });
       });
-    });
   </script>
 <% end %>
 
 
 <% content_for :breadcrumbs do %>
-	<li><a href="#">System</a></li>
-	<li class="active">Users</li>
+  <li><a href="#">System</a></li>
+  <li class="active">Users</li>
 <% end %>

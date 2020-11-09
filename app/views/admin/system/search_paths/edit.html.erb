@@ -1,26 +1,26 @@
 <h2><i class="fa fa-search"></i> Short Code: <%= @search_path.short_code %></h2>
 <hr/>
-<%= simple_form_for [:admin, :system, @search_path]  do |f| %>
+<%= simple_form_for [:admin, :system, @search_path] do |f| %>
 
   <%= render 'admin/shared/error_messages', object: f.object %>
-  
-  <%= f.input :short_code, input_html: { class: 'short' } %>
+
+  <%= f.input :short_code, input_html: {class: 'short'} %>
   <%= f.input :url %>
   <%= f.input :description, as: :text %>
 
-  <%= button_tag "Save changes", :class => "btn btn-primary", data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait ..." } %>
+  <%= button_tag "Save changes", :class => "btn btn-primary", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait ..."} %>
 
 <% end %>
 
 
 
 <% content_for :title do %>
-    <%= @search_path.short_code %>
+  <%= @search_path.short_code %>
 <% end %>
 
 
 <% content_for :breadcrumbs do %>
-	<li><a href="#">System</a></li>
-	<li><%= link_to "Search Paths", admin_system_search_paths_path %></li>
-	<li class="active"><%= @search_path.short_code %></li>
+  <li><a href="#">System</a></li>
+  <li><%= link_to "Search Paths", admin_system_search_paths_path %></li>
+  <li class="active"><%= @search_path.short_code %></li>
 <% end %>

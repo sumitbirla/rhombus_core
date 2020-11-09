@@ -2,13 +2,13 @@
 <hr/>
 
 <%= simple_form_for [:admin, :system, @domain] do |f| %>
-  
+
   <%= render 'admin/shared/error_messages', object: f.object %>
   <%= f.input :name %>
   <%= f.input :url %>
   <%= f.input :data1 %>
   <%= f.input :data2 %>
-  <%= button_tag "Save changes", :class => "btn btn-primary", data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait ..." } %>
+  <%= button_tag "Save changes", :class => "btn btn-primary", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait ..."} %>
 
 <% end %>
 
@@ -16,15 +16,15 @@
 
 
 <% content_for :title do %>
-	Brands: <%= @domain.name %>
+  Brands: <%= @domain.name %>
 <% end %>
 
 
 
 <% content_for :breadcrumbs do %>
-	<li><a href="#">eCommerce</a></li>
-	<li><%= link_to "Domains", admin_system_domains_path %></li>
-	<li class="active"><%= @domain.name %></li>
+  <li><a href="#">eCommerce</a></li>
+  <li><%= link_to "Domains", admin_system_domains_path %></li>
+  <li class="active"><%= @domain.name %></li>
 <% end %>
 
 
