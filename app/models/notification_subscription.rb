@@ -1,7 +1,7 @@
 class NotificationSubscription < ActiveRecord::Base
 
   self.table_name = 'core_notification_subscriptions'
-  validates_presence_of :event_type_id
+  validates_presence_of :event_type_id, :user_id
   belongs_to :event_type
   belongs_to :user
 

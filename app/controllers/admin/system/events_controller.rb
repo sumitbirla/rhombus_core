@@ -8,7 +8,7 @@ class Admin::System::EventsController < Admin::BaseController
   end
 
   def new
-    @event = authorize Event.new(title: 'New event', web_delivery: true)
+    @event = authorize Event.new
     render 'edit'
   end
 

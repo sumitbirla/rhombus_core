@@ -1,0 +1,25 @@
+<h2><i class="icon-bell"></i> New Event</h2>
+<hr/>
+<%= simple_form_for [:admin, :system, @event] do |f| %>
+  <%= render 'admin/shared/error_messages', object: f.object %>
+
+  <%= f.association :event_type%>
+  <%= f.input :expires, as: :datetimepicker %>
+  <%= f.input :metadata %>
+
+  <%= button_tag "Save changes", :class => "btn btn-primary",
+                 data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait ..."} %>
+<% end %>
+
+
+
+<% content_for :title do %>
+  New Event
+<% end %>
+
+
+<% content_for :breadcrumbs do %>
+  <li><a href="#">System</a></li>
+  <li><%= link_to "Events", admin_system_events_path %></li>
+  <li class="active">New Event</li>
+<% end %>

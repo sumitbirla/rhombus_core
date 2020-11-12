@@ -65,7 +65,6 @@ Rails.application.routes.draw do
       resources :logs
       resources :notifications
       resources :notification_subscriptions
-      resources :notification_delivery_methods
       resources :events
       resources :event_types
       resources :categories

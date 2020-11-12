@@ -1,6 +1,13 @@
-<%= link_to new_admin_system_notification_subscription_path, class: 'btn btn-sm btn-default pull-right' do %>
-  <i class="fa fa-plus"></i> New event
-<% end %>
+<div class="pull-right">
+  <%= link_to admin_system_event_types_path, class: 'btn btn-sm btn-default' do %>
+    Manage event types
+  <% end %> &nbsp;
+  <%= link_to new_admin_system_event_path, class: 'btn btn-sm btn-default' do %>
+    <i class="fa fa-plus"></i> New event
+  <% end %>
+</div>
+
+
 <h2><i class="fa fa-bell"></i>&nbsp; Events</h2>
 <hr>
 
@@ -16,7 +23,7 @@
     <tr>
       <td><code><%= e.event_type %></code></td>
       <td><%= systime(e.expires) %></td>
-      <td><%= truncate(e.data) %></td>
+      <td class="light"><%= truncate(e.metadata, length: 60) %></td>
       <td class="text-right">
         <%= link_to "edit", edit_admin_system_event_path(e) %> &nbsp;
         <%= link_to "delete",
