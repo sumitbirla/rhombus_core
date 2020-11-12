@@ -7,8 +7,14 @@
     <% if current_user.has_permission?('Domain', 'index') %>
       <li><%= link_to "Domains", admin_system_domains_path %></li>
     <% end %>
+    <% if current_user.has_permission?('Event', 'index') %>
+      <li><%= link_to "Events", admin_system_domains_path %></li>
+    <% end %>
     <% if current_user.has_permission?('Log', 'index') %>
       <li><%= link_to "Logs", admin_system_logs_path(type: :session) %></li>
+    <% end %>
+    <% if current_user.has_permission?('NotificationSubscription', 'index') %>
+      <li><%= link_to "Notification Subscriptions", admin_system_notification_subscriptions_path(type: :session) %></li>
     <% end %>
     <% if current_user.has_permission?('Printer', 'index') %>
       <li><%= link_to "Printers", admin_system_printers_path %></li>

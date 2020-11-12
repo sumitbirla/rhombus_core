@@ -7,7 +7,7 @@ PATH
       countries
       country_select
       cupsffi
-      rails (= 5.2.3)
+      rails
       simple_form
       useragent
       will_paginate
