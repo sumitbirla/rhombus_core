@@ -35,11 +35,13 @@ class Event < ApplicationRecord
 
     # filter by delivery method if specified
     if opts[:delivery_method].present?
+
+      # check for valid delivery method types
       unless [:email, :sms, :web_push, :mobile_push, :slack].include?(opts[:delivery_method])
         raise "Unknown delivery method specified: '#{opts[:delivery_method]}'"
       end
 
-      users = users.where(opts[:delivery_method] => true)
+      users = users.where("core_notification_subscriptions.#{opts[:delivery_method]}" => true)
     end
 
     # restricts to users of a certain affiliate if specified
