@@ -52,4 +52,8 @@ class Event < ApplicationRecord
     users
   end
 
+  # PUNDIT
+  def self.policy_class
+    ApplicationPolicy
+  end
 end

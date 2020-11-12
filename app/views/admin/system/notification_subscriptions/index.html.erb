@@ -1,0 +1,56 @@
+<%= link_to new_admin_system_notification_subscription_path, class: 'btn btn-sm btn-default pull-right' do %>
+  <i class="fa fa-plus"></i> New subscription
+<% end %>
+<h2><i class="fa fa-bell"></i>&nbsp; Notifications</h2>
+<hr>
+
+<%= will_paginate @notification_subscriptions %>
+<table class="table table-striped table-condensed">
+  <tr>
+    <th>User</th>
+    <td>Affiliate</td>
+    <th>Event Type</th>
+    <th>Email</th>
+    <th>SMS</th>
+    <th>Web Push</th>
+    <th>Mobile Push</th>
+    <th>Slack</th>
+    <th>&nbsp;</th>
+  </tr>
+  <% @notification_subscriptions.each do |ns| %>
+    <tr>
+      <td><%= link_to ns.user.name, admin_system_user_path(ns.user) %></td>
+      <td><%= ns.user.affiliate %></td>
+      <td><code><%= ns.event_type %></code></td>
+      <td><%= tick(ns.email) %></td>
+      <td><%= tick(ns.sms) %></td>
+      <td><%= tick(ns.web_push) %></td>
+      <td><%= tick(ns.mobile_push) %></td>
+      <td><%= tick(ns.slack) %></td>
+      <td class="text-right">
+        <%= link_to "edit", edit_admin_system_notification_subscription_path(ns) %> &nbsp;
+        <%= link_to "delete",
+                    {action: "destroy", id: ns.id},
+                    method: :delete,
+                    data: {confirm: "Are you sure?"} %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= render 'admin/shared/table_summary', data: @notification_subscriptions %>
+
+
+<% content_for :title do %>
+  Notification Subscriptions
+<% end %>
+
+
+<% content_for :menu do
+  render "admin/shared/system_menu"
+end %>
+
+<% content_for :breadcrumbs do %>
+  <li><a href="#">System</a></li>
+  <li class="active">Notification Subscriptions</li>
+<% end %>

@@ -3,11 +3,13 @@ class Admin::System::NotificationSubscriptionsController < Admin::BaseController
   def index
     authorize NotificationSubscription.new
     @notification_subscriptions = NotificationSubscription.order(created_at: :desc)
-                                                          .include(:user, :event_type, :notification_delivery_method)
+                                                          .includes(:user, :event_type)
+                                                          .paginate(page: params[:page], per_page: @per_page)
+
   end
 
   def new
-    @notification_subscription = authorize NotificationSubscription.new(title: 'New notification_subscription', web_delivery: true)
+    @notification_subscription = authorize NotificationSubscription.new
     render 'edit'
   end
 
@@ -49,7 +51,7 @@ class Admin::System::NotificationSubscriptionsController < Admin::BaseController
   private
 
   def notification_subscription_params
-    params.require(:notification_subscription).permit(:title, :start_time, :expire_time, :user_id, :message, :web_delivery, :sms_delivery, :email_delivery)
+    params.require(:notification_subscription).permit!
   end
 
 end
