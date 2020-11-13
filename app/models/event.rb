@@ -31,12 +31,11 @@ class Event < ApplicationRecord
   #
   # @param [Hash] opts filter options
   # @option opts [Symbol] :delivery_method  restrict to specified delivery method
-  # @option opts [Integer] :affiliate_id restrict to users belonging to this Affiliate
   #
   # @return active_record relation of Users
   #
   def subscribers(opts = {})
-    users = User.joins(:notification_subscriptions)
+    users = User.joins(:notification_subscriptions, :role)
                 .where("core_notification_subscriptions.event_type_id = ?", event_type_id)
 
     # filter by delivery method if specified
@@ -49,9 +48,9 @@ class Event < ApplicationRecord
       users = users.where("core_notification_subscriptions.#{opts[:delivery_method]}" => true)
     end
 
-    # restricts to users of a certain affiliate if specified
-    if opts[:affiliate_id].present?
-      users = users.where(affiliate_id: opts[:affiliate_id])
+    # restricts to users of a certain affiliate (plus admin users) if specified
+    unless affiliate_id.nil?
+      users = users.where("affiliate_id = ? OR core_roles.super_user = 1", opts[:affiliate_id])
     end
 
     users
