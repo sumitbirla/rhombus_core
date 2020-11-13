@@ -35,19 +35,22 @@ class User < ActiveRecord::Base
 
   self.table_name = 'core_users'
 
+  attr_accessor :password, :password_confirmation, :current_password
+
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :extra_properties, -> { order "sort, name" }, as: :extra_property
   has_many :logs
   has_many :notification_subscriptions
-
-  attr_accessor :password, :password_confirmation, :current_password
+  accepts_nested_attributes_for :notification_subscriptions, allow_destroy: true
 
   belongs_to :domain
   belongs_to :role
   belongs_to :affiliate
+
   validates_presence_of :name, :role_id
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
   validates_uniqueness_of :email, scope: :domain_id
+
   before_validation :normalize_phone
 
   def authenticate(pwd)

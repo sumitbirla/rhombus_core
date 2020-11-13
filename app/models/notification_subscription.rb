@@ -7,6 +7,11 @@ class NotificationSubscription < ActiveRecord::Base
 
   validates_uniqueness_of :user_id, scope: :event_type_id
 
+  # Determine if one or more delivery methods have been specified
+  def delivery_methods_specified?
+    email || sms || web_push || mobile_push || slack
+  end
+
   # PUNDIT
   def self.policy_class
     ApplicationPolicy

@@ -3,9 +3,13 @@ class Admin::System::NotificationSubscriptionsController < Admin::BaseController
   def index
     authorize NotificationSubscription.new
     @notification_subscriptions = NotificationSubscription.order(created_at: :desc)
-                                                          .includes(:user, :event_type)
+                                                          .includes(:user, :event_type, [user: :affiliate])
                                                           .paginate(page: params[:page], per_page: @per_page)
 
+    # filter by event_type if parameter specified
+    if params[:event_type_id].present?
+      @notification_subscriptions = @notification_subscriptions.where(event_type_id: params[:event_type_id])
+    end
   end
 
   def new

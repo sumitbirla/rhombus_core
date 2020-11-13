@@ -30,11 +30,11 @@ class ApplicationController < ActionController::Base
   end
 
   def systime(time)
-    time.in_time_zone(sys_time_zone).strftime("%m/%d/%Y &nbsp;%I:%M %P").html_safe
+    time.in_time_zone(sys_time_zone).strftime("%Y-%m-%d %l:%M %p").html_safe
   end
 
   def sysdate(time)
-    time.in_time_zone(sys_time_zone).strftime("%m/%d/%Y").html_safe
+    time.in_time_zone(sys_time_zone).strftime("%Y-%m-%d").html_safe
   end
 
 end

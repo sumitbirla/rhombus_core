@@ -1,6 +1,14 @@
-<%= link_to new_admin_system_notification_subscription_path, class: 'btn btn-sm btn-default pull-right' do %>
-  <i class="fa fa-plus"></i> New subscription
-<% end %>
+
+<div class="pull-right">
+  <form style="display: inline;" method="get" id="form-filter" action"/admin/system/notification_subscriptions">
+    <%= select_tag(:event_type_id, options_for_select(EventType.all.map { |x| [x.name, x.id] }, selected: params[:event_type_id]), prompt: "- All Event Types -") %>
+  </form> &nbsp;
+  <%= link_to new_admin_system_notification_subscription_path, class: 'btn btn-sm btn-default' do %>
+    <i class="fa fa-plus"></i> New subscription
+  <% end %>
+</div>
+
+
 <h2><i class="fa fa-bell"></i>&nbsp; Notification Subscriptions</h2>
 <hr>
 
@@ -17,25 +25,7 @@
     <th>Slack</th>
     <th>&nbsp;</th>
   </tr>
-  <% @notification_subscriptions.each do |ns| %>
-    <tr>
-      <td><%= link_to ns.user.name, admin_system_user_path(ns.user) %></td>
-      <td><%= ns.user.affiliate %></td>
-      <td><code><%= ns.event_type %></code></td>
-      <td><%= tick(ns.email) %></td>
-      <td><%= tick(ns.sms) %></td>
-      <td><%= tick(ns.web_push) %></td>
-      <td><%= tick(ns.mobile_push) %></td>
-      <td><%= tick(ns.slack) %></td>
-      <td class="text-right">
-        <%= link_to "edit", edit_admin_system_notification_subscription_path(ns) %> &nbsp;
-        <%= link_to "delete",
-                    {action: "destroy", id: ns.id},
-                    method: :delete,
-                    data: {confirm: "Are you sure?"} %>
-      </td>
-    </tr>
-  <% end %>
+  <%= render @notification_subscriptions %>
 </table>
 
 <%= render 'admin/shared/table_summary', data: @notification_subscriptions %>
@@ -53,4 +43,16 @@ end %>
 <% content_for :breadcrumbs do %>
   <li><a href="#">System</a></li>
   <li class="active">Notification Subscriptions</li>
+<% end %>
+
+<% content_for :head do %>
+  <script>
+    $(document).ready(function() {
+
+        $("#event_type_id").change(function() {
+           $("#form-filter").submit();
+        });
+
+    });
+  </script>
 <% end %>
