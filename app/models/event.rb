@@ -4,20 +4,26 @@ class Event < ApplicationRecord
 
   # Create a system event with specified parameters. This is saved to 'core_events' table.
   #
-  # @param event_type_name [Symbol] the type of event to create (eg :order_received)
-  # @param data [Object] data associated with this event.  It will be converted to JSON
-  # @param expires [TimeWithZone] the time this event expires and will be removed
+  # @param [Symbol] event_type_name the type of event to create (eg :order_received)
+  # @param [Hash] opts optional data associated with this event saved to JSON column
+  # @options opts [TimeWithZone] :expires the time this event expires and will be removed
+  # @options opts [Integer] :user_id the user responsible for this event
+  # @options opts [Integer] :affiliate_id the affiliate responsible for this event
   #
   # @return [Event] the newly created event.
   #
-  def self.transmit(event_type_name, data, expires = 1.day.from_now)
+  def self.transmit(event_type_name, opts)
     eid = EventType.find_by(name: event_type_name).id
 
-    # delete any previous identical events which may be redundant now
-    Event.where(event_type_id: eid, metadata: data.to_json).delete_all
+    # no need to store user_id, affiliate_id or expires to the json_data column
+    data = opts.without(:user_id, :affiliate_id, :expires)
 
     # create the new event
-    Event.create(event_type_id: eid, metadata: data.to_json, expires: expires)
+    Event.create(event_type_id: eid,
+                 user_id: opts[:user_id],
+                 affiliate_id: opts[:affiliate_id],
+                 expires: opts[:expires] || 1.day.from_now,
+                 json_data: data)
   end
 
 
@@ -35,7 +41,6 @@ class Event < ApplicationRecord
 
     # filter by delivery method if specified
     if opts[:delivery_method].present?
-
       # check for valid delivery method types
       unless [:email, :sms, :web_push, :mobile_push, :slack].include?(opts[:delivery_method])
         raise "Unknown delivery method specified: '#{opts[:delivery_method]}'"
