@@ -32,7 +32,7 @@ require 'bcrypt'
 
 class User < ActiveRecord::Base
   include Exportable
-
+  acts_as_taggable_on :tags
   self.table_name = 'core_users'
 
   attr_accessor :password, :password_confirmation, :current_password
@@ -41,6 +41,7 @@ class User < ActiveRecord::Base
   has_many :extra_properties, -> { order "sort, name" }, as: :extra_property
   has_many :logs
   has_many :notification_subscriptions
+
   accepts_nested_attributes_for :notification_subscriptions, allow_destroy: true
 
   belongs_to :domain

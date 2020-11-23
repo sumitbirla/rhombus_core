@@ -25,4 +25,5 @@ Gem::Specification.new do |s|
   s.add_dependency "will_paginate"
   s.add_dependency "bootstrap-will_paginate"
   s.add_dependency "cupsffi"
+  s.add_dependency "acts-as-taggable-on", "~> 6.0"
 end

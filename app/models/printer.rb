@@ -18,7 +18,10 @@ require 'uri'
 require 'socket'
 
 class Printer < ActiveRecord::Base
+  include Exportable
+  acts_as_taggable_on :tags
   self.table_name = "core_printers"
+
   validates_presence_of :name, :url, :preferred_format
 
   # PUNDIT

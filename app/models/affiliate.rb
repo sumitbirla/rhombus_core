@@ -34,7 +34,7 @@
 
 class Affiliate < ActiveRecord::Base
   include Exportable
-
+  acts_as_taggable_on :tags
   self.table_name = 'core_affiliates'
 
   before_save :set_api_key
