@@ -19,6 +19,7 @@
   <%= f.input :preferred_format %>
   <%= f.input :location %>
   <%= f.input :print_count %>
+  <%= f.input :tag_list, as: :tags %>
   <%= button_tag "Save changes", class: "btn btn-primary", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait ...".html_safe} %>
 
 <% end %>

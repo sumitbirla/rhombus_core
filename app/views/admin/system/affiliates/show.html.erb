@@ -2,6 +2,7 @@
   <i class="fa fa-edit"></i> Edit
 <% end %>
 <h2><i class="fa fa-rocket"></i> <%= @affiliate.name %></h2>
+<%= tag_list @affiliate %>
 <hr>
 
 <% mods = Rails.configuration.modules %>

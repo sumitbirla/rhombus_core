@@ -14,8 +14,9 @@
   <% else %>
     <%= image_tag @user.avatar_url, size: "50x50" %>
   <% end %>
-  <%= @user.name %>
+  <%= @user.name %><br>
 </h2>
+<%= tag_list(@user) %>
 <hr>
 
 

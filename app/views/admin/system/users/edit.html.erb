@@ -17,6 +17,7 @@
     <%= f.input :name %>
     <%= f.association :domain %>
     <%= f.association :role %>
+    <%= f.input :tag_list, as: :tags %>
     <%= f.association :affiliate, collection: Affiliate.where(active: true).order(:name) %>
     <%= f.input :email %>
     <%= f.input :phone %>

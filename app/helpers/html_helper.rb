@@ -74,6 +74,8 @@ module HtmlHelper
       val = systime(val)
     when "BigDecimal"
       val = number_to_currency(val)
+    when "ActsAsTaggableOn::TagList"
+      val = tag_list(obj)
     end
 
     # auto link email, web and phone values
@@ -92,6 +94,17 @@ module HtmlHelper
 			<td>#{val || opts[:default]}</td>
 		</tr>  
     EOF
+
+    str.html_safe
+  end
+
+  # print a list of tags  (object.tag_list)
+  def tag_list(obj)
+    str = ""
+
+    obj.tag_list.each do |tag|
+      str += "<span class='label label-info'>#{tag}</span> &nbsp;"
+    end
 
     str.html_safe
   end
