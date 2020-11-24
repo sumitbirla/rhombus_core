@@ -25,7 +25,7 @@
       <td><%= systime(e.created_at) %></td>
       <td><code><%= e.event_type %></code></td>
       <td><%= distance_of_time_in_words(DateTime.now, e.expires) %></td>
-      <td class="light"><%= truncate(e.metadata, length: 60) %></td>
+      <td class="light"><%= truncate(e.json_data.to_s, length: 60) %></td>
       <td class="text-right">
         <%= link_to "edit", edit_admin_system_event_path(e) %> &nbsp;
         <%= link_to "delete",
