@@ -1,7 +1,6 @@
 <%= form_tag('/admin/system/extra_properties') do %>
 
   <input type="hidden" name="redirect" , value="<%= redirect %>">
-  <button class="btn btn-primary">Submit Changes</button>
 
   <div class="row">
     <% for ep in object.extra_properties %>

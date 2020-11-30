@@ -74,12 +74,22 @@ class Admin::BaseController < ActionController::Base
     time.in_time_zone(sys_time_zone).strftime("%Y-%m-%d").html_safe
   end
 
+  # set default pagination parameters
   def set_page_size
     unless params[:per_page].blank?
       cookies[:per_page] = params[:per_page]
       @per_page = params[:per_page]
     else
       @per_page = cookies[:per_page] || 20
+    end
+  end
+
+  # For form submissions,  set default redirection after submission processed
+  def redirect_to_origin(opts = {})
+    if params[:ret].present?
+      redirect_to params[:ret], opts
+    else
+      redirect_to opts.merge!(action: :index)
     end
   end
 

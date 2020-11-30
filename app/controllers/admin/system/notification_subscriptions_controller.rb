@@ -13,7 +13,7 @@ class Admin::System::NotificationSubscriptionsController < Admin::BaseController
   end
 
   def new
-    @notification_subscription = authorize NotificationSubscription.new
+    @notification_subscription = authorize NotificationSubscription.new(user_id: params[:user_id])
     render 'edit'
   end
 
@@ -21,7 +21,7 @@ class Admin::System::NotificationSubscriptionsController < Admin::BaseController
     @notification_subscription = authorize NotificationSubscription.new(notification_subscription_params)
 
     if @notification_subscription.save
-      redirect_to action: 'index', notice: 'Notification was successfully created.'
+      redirect_to_origin(notice: 'Notification was successfully created.')
     else
       render 'edit'
     end
@@ -39,7 +39,7 @@ class Admin::System::NotificationSubscriptionsController < Admin::BaseController
     @notification_subscription = authorize NotificationSubscription.find(params[:id])
 
     if @notification_subscription.update(notification_subscription_params)
-      redirect_to action: 'index', notice: 'Notification was successfully updated.'
+      redirect_to_origin(notice: 'Notification was successfully updated.')
     else
       render 'edit'
     end
@@ -48,7 +48,8 @@ class Admin::System::NotificationSubscriptionsController < Admin::BaseController
   def destroy
     @notification_subscription = authorize NotificationSubscription.find(params[:id])
     @notification_subscription.destroy
-    redirect_to action: 'index', notice: 'Notification has been deleted.'
+
+    redirect_back(fallback_location: { action: "index" })
   end
 
 

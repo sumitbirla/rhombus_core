@@ -42,18 +42,8 @@
       <%= obj_property @user, :referral_clicks %>
       <%= obj_property @user, :referral_signups %>
       <%= obj_property @user, :created_at, label: "Joined" %>
-      <tr>
-        <td>Last Login</td>
-        <td>
-          <% last_login = Log.where(user_id: @user.id, loggable_type: 'Session').last
-             unless last_login.nil?
-          %>
-            <%= systime last_login.timestamp %>
-          <% else %>
-            - never -
-          <% end %>
-        </td>
-      </tr>
+      <%= obj_property @user, :last_login, default: "- never -" %>
+      <%= obj_property(@user, :notification_subscriptions) { |x| x.map { |y| y.event_type.name }.join(", ") } %>
     </table>
   </div>
 </div>
@@ -69,7 +59,7 @@
   q = params[:q].presence || "logins"
 %>
 
-<ul class="nav nav-tabs" role="tablist">
+<ul class="nav nav-pills" role="tablist">
   <% if mods.include? :store %>
     <%
       order_count = Order.where(user_id: @user.id).count
@@ -135,8 +125,12 @@
         <a href="<%= admin_system_user_path(@user, q: "cdr") %>" role="tab">CDR</a></li>
     <% end %>
   <% end %>
+  <li class="<%= "active" if q == "notification_subscriptions" %>">
+    <a href="<%= admin_system_user_path(@user, q: "notification_subscriptions") %>" role="tab"><%= tab_count "Notifications", @user.notification_subscriptions.count %></a>
+  </li>
   <li class="<%= "active" if q == "logs" %>">
-    <a href="<%= admin_system_user_path(@user, q: "logs") %>" role="tab"><%= tab_count "Logs", log_count %></a></li>
+    <a href="<%= admin_system_user_path(@user, q: "logs") %>" role="tab"><%= tab_count "Logs", log_count %></a>
+  </li>
 </ul>
 
 
@@ -442,6 +436,25 @@
       </tr>
     <% end %>
   </table>
+
+<% elsif q == "notification_subscriptions" %>
+
+  <table class="table table-striped table-condensed">
+    <tr>
+      <th>User</th>
+      <td>Affiliate</td>
+      <th>Event Type</th>
+      <th>Email</th>
+      <th>SMS</th>
+      <th>Web Push</th>
+      <th>Mobile Push</th>
+      <th>Slack</th>
+      <th>&nbsp;</th>
+    </tr>
+    <%= render @user.notification_subscriptions %>
+  </table>
+
+  <%= link_to "New subscription", new_admin_system_notification_subscription_path(user_id: @user.id, ret: request.fullpath), class: "btn btn-default btn-sm" %>
 
 <% elsif q == "logs" %>
 

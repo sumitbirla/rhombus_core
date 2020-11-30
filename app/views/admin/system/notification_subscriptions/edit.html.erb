@@ -1,8 +1,8 @@
-<h2><i class="icon-bell"></i> New Notification Subscription</h2>
+<h2><i class="fa fa-bell"></i> New Notification Subscription</h2>
 <hr/>
 <%= simple_form_for [:admin, :system, @notification_subscription] do |f| %>
-
   <%= render 'admin/shared/error_messages', object: f.object %>
+  <%= hidden_field_tag :ret, params[:ret] %>
 
   <%= f.association :user %>
   <%= f.association :event_type%>
@@ -12,16 +12,13 @@
   <%= f.input :mobile_push %>
   <%= f.input :slack %>
 
-  <%= button_tag "Save changes", :class => "btn btn-primary", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait ..."} %>
-
+  <%= button_tag "Save changes",
+                 :class => "btn btn-primary",
+                 data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait ..."} %>
 <% end %>
 
 
-
-<% content_for :title do %>
-  New Notification Subscription
-<% end %>
-
+<% content_for :title, "New Notification Subscription" %>
 
 <% content_for :breadcrumbs do %>
   <li><a href="#">System</a></li>

@@ -109,6 +109,12 @@ class User < ActiveRecord::Base
     end
   end
 
+  # Return the last DateTime the user logged in
+  def last_login
+    log = Log.where(user_id: id, loggable_type: 'Session').last
+    log ? log.timestamp : nil
+  end
+
   # PUNDIT
   def self.policy_class
     ApplicationPolicy
