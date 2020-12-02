@@ -1,6 +1,6 @@
 
 <div class="pull-right">
-  <form style="display: inline;" method="get" id="form-filter" action"/admin/system/notification_subscriptions">
+  <form style="display: inline;" method="get" id="form-filter" action="/admin/system/notification_subscriptions">
     <%= select_tag(:event_type_id, options_for_select(EventType.all.map { |x| [x.name, x.id] }, selected: params[:event_type_id]), prompt: "- All Event Types -") %>
   </form> &nbsp;
   <%= link_to new_admin_system_notification_subscription_path, class: 'btn btn-sm btn-default' do %>
