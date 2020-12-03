@@ -22,7 +22,7 @@ class Event < ApplicationRecord
     Event.create(event_type_id: eid,
                  user_id: opts[:user_id],
                  affiliate_id: opts[:affiliate_id],
-                 expires: opts[:expires] || 1.day.from_now,
+                 expires: opts[:expires] || 3.days.from_now,
                  json_data: data)
   end
 
