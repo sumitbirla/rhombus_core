@@ -1,18 +1,15 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  #before_action :prepare_for_mobile
   helper_method :logged_in?
   helper_method :current_user
   helper_method :sysdate
   helper_method :systime
   helper_method :sort_column, :sort_direction
 
-
   def not_found(msg = 'Not found')
     raise ActionController::RoutingError.new('Page not found!')
   end
-
 
   private
 
@@ -36,5 +33,4 @@ class ApplicationController < ActionController::Base
   def sysdate(time)
     time.in_time_zone(sys_time_zone).strftime("%Y-%m-%d").html_safe
   end
-
 end

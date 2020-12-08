@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-
   layout 'single_column'
 
   def new
@@ -48,12 +47,9 @@ class UsersController < ApplicationController
     else
       render 'new'
     end
-
   end
 
-
   def reset_password
-
   end
 
   def reset_password_email
@@ -79,7 +75,6 @@ class UsersController < ApplicationController
     render 'shared/notice'
   end
 
-
   def new_password
     @token = TemporaryToken.find_by(value: params[:id])
 
@@ -90,7 +85,6 @@ class UsersController < ApplicationController
 
     @user = @token.user
   end
-
 
   def update_password
     @token = TemporaryToken.find_by(value: params[:token])
@@ -113,17 +107,14 @@ class UsersController < ApplicationController
     redirect_to login_path
   end
 
-
   def status
     user = User.find(params[:id])
     render json: {status: user.nil? ? "not found" : user.status}
   end
-
 
   private
 
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation, :data1, :data2)
   end
-
 end
