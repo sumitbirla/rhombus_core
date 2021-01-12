@@ -38,9 +38,9 @@ class User < ActiveRecord::Base
   attr_accessor :password, :password_confirmation, :current_password
 
   has_many :comments, as: :commentable, dependent: :destroy
-  has_many :extra_properties, -> { order "sort, name" }, as: :extra_property
-  has_many :logs
-  has_many :notification_subscriptions
+  has_many :extra_properties, -> { order "sort, name" }, as: :extra_property, dependent: :destroy
+  has_many :logs, dependent: :destroy
+  has_many :notification_subscriptions, dependent: :destroy
 
   accepts_nested_attributes_for :notification_subscriptions, allow_destroy: true
 
