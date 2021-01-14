@@ -18,6 +18,7 @@
     <th>Event Type</th>
     <th>Expires in</th>
     <th>Data</th>
+    <th>Processed</th>
     <th>&nbsp;</th>
   </tr>
   <% @events.each do |e| %>
@@ -26,12 +27,17 @@
       <td><code><%= e.event_type %></code></td>
       <td><%= distance_of_time_in_words(DateTime.now, e.expires) %></td>
       <td class="light"><%= truncate(e.json_data.to_s, length: 60) %></td>
+      <td><%= e.processed_at ? systime(e.processed_at) : "- queued -" %></td>
       <td class="text-right">
-        <%= link_to "edit", edit_admin_system_event_path(e) %> &nbsp;
-        <%= link_to "delete",
-                    {action: "destroy", id: e.id},
-                    method: :delete,
-                    data: {confirm: "Are you sure?"} %>
+        <% if e.processed_at %>
+          <%= link_to "edit", edit_admin_system_event_path(e) %> &nbsp;
+          <%= link_to "delete",
+                      {action: "destroy", id: e.id},
+                      method: :delete,
+                      data: {confirm: "Are you sure?"} %>
+        <% else %>
+          <%= link_to "view", admin_system_event_path(e) %>
+        <% end  %>
       </td>
     </tr>
   <% end %>
