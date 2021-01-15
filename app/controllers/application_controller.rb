@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
   end
 
   def systime(time)
-    time.in_time_zone(sys_time_zone).strftime("%Y-%m-%d %l:%M %p").html_safe
+    time.in_time_zone(sys_time_zone).strftime("%Y-%m-%d %l:%M %p %Z").html_safe
   end
 
   def sysdate(time)

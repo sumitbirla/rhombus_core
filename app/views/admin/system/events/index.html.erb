@@ -23,13 +23,18 @@
   </tr>
   <% @events.each do |e| %>
     <tr>
-      <td><%= systime(e.created_at) %></td>
+      <td>
+        <%= systime(e.created_at) %>
+        <% if e.json_data["errors"] %>
+          &nbsp; <i class="text-danger fa fa-exclamation-circle"></i>
+        <% end %>
+      </td>
       <td><code><%= e.event_type %></code></td>
       <td><%= distance_of_time_in_words(DateTime.now, e.expires) %></td>
       <td class="light"><%= truncate(e.json_data.to_s, length: 60) %></td>
       <td><%= e.processed_at ? systime(e.processed_at) : "- queued -" %></td>
       <td class="text-right">
-        <% if e.processed_at %>
+        <% unless e.processed_at %>
           <%= link_to "edit", edit_admin_system_event_path(e) %> &nbsp;
           <%= link_to "delete",
                       {action: "destroy", id: e.id},

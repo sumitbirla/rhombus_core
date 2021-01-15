@@ -1,0 +1,23 @@
+<h2><i class="icon-bell"></i> Event ID <%= @event.id %></h2>
+<hr/>
+
+<table class="summary table table-condensed table-bordered">
+  <%= obj_property(@event, :event_type) %>
+  <%= obj_property(@event, :expires) %>
+  <tr>
+    <td>JSON Data</td>
+    <td><pre id="json"><%= JSON.pretty_generate(@event.json_data) %></pre></td>
+  </tr>
+</table>
+
+
+<% content_for :title do %>
+  Event ID <%= @event.id %>
+<% end %>
+
+
+<% content_for :breadcrumbs do %>
+  <li><a href="#">System</a></li>
+  <li><%= link_to "Events", admin_system_events_path %></li>
+  <li class="active">Event ID <%= @event.id %></li>
+<% end %>
