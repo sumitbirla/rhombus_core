@@ -1,7 +1,13 @@
 <% ns = notification_subscription %>
 <tr>
-  <td><%= link_to ns.user.name, admin_system_user_path(ns.user) %></td>
-  <td><%= ns.user.affiliate %></td>
+  <td>
+    <% if ns.user %>
+      <%= link_to ns.user.name, admin_system_user_path(ns.user) %>
+    <% else %>
+      User ID: <%= ns.user_id %>
+    <% end  %>
+  </td>
+  <td><%= ns.user&.affiliate %></td>
   <td><code><%= ns.event_type %></code></td>
   <td class="text-center"><%= tick(ns.email) %></td>
   <td class="text-center"><%= tick(ns.sms) %></td>
