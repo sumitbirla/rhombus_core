@@ -23,6 +23,12 @@
           <pre><%= params.to_yaml %></pre>
         </td>
       </tr>
+      <tr>
+        <td>Back Trace:</td>
+        <td>
+          <pre><%= @error.backtrace.join("\n") %></pre>
+        </td>
+      </tr>
     </table>
   </div>
 </div>
