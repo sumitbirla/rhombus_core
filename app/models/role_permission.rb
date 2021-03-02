@@ -3,8 +3,13 @@
 # Table name: core_role_permissions
 #
 #  id            :integer          not null, primary key
-#  role_id       :integer          not null
 #  permission_id :integer          not null
+#  role_id       :integer          not null
+#
+# Indexes
+#
+#  index_role_permissions_on_permission_id  (permission_id)
+#  index_role_permissions_on_role_id        (role_id)
 #
 
 class RolePermission < ActiveRecord::Base

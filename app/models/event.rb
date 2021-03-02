@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: core_events
+#
+#  id            :bigint           not null, primary key
+#  expires       :datetime         not null
+#  json_data     :json
+#  processed_at  :datetime
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  affiliate_id  :integer
+#  event_type_id :integer          not null
+#  user_id       :integer
+#
 class Event < ApplicationRecord
   self.table_name = 'core_events'
   belongs_to :event_type

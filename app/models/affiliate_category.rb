@@ -6,6 +6,11 @@
 #  affiliate_id :integer          not null
 #  category_id  :integer          not null
 #
+# Indexes
+#
+#  index_affiliate_categories_on_affiliate_id  (affiliate_id)
+#  index_affiliate_categories_on_category_id   (category_id)
+#
 
 class AffiliateCategory < ActiveRecord::Base
   self.table_name = 'core_affiliate_categories'

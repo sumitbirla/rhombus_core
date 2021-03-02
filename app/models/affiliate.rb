@@ -2,34 +2,40 @@
 #
 # Table name: core_affiliates
 #
-#  id                   :integer          not null, primary key
-#  name                 :string(255)      not null
-#  code                 :string(255)
-#  slug                 :string(255)      default(""), not null
-#  featured             :boolean          default(FALSE), not null
-#  active               :boolean          default(FALSE), not null
-#  tax_id               :string(255)
-#  tax_exempt           :boolean          default(FALSE), not null
-#  contact_person       :string(255)
-#  street1              :string(255)
-#  street2              :string(255)
-#  city                 :string(255)
-#  state                :string(255)
-#  zip                  :string(255)
-#  country              :string(255)
-#  phone                :string(255)
-#  fax                  :string(255)
-#  email                :string(255)
-#  website              :string(255)
-#  logo                 :string(255)
-#  description          :text(65535)
-#  payment_terms        :string(255)
-#  summary              :text(65535)
-#  purchase_order_email :string(255)
-#  invoice_email        :string(255)
-#  shipment_email       :string(255)
-#  created_at           :datetime
-#  updated_at           :datetime
+#  id                  :integer          not null, primary key
+#  active              :boolean          default(FALSE), not null
+#  api_key             :string(255)
+#  city                :string(255)
+#  code                :string(255)
+#  contact_person      :string(255)
+#  country             :string(255)
+#  description         :text(65535)
+#  disable_invoicing   :boolean          default(FALSE), not null
+#  discount_percent    :decimal(5, 2)    default(0.0), not null
+#  email               :string(255)
+#  enable_edi          :boolean          default(FALSE), not null
+#  fax                 :string(255)
+#  featured            :boolean          default(FALSE), not null
+#  free_shipping       :boolean          default(FALSE), not null
+#  logo                :string(255)
+#  markup_percent      :decimal(5, 2)    default(0.0), not null
+#  name                :string(255)      not null
+#  payment_terms       :string(255)
+#  phone               :string(255)
+#  requires_approval   :boolean          default(FALSE), not null
+#  slug                :string(255)      default("")
+#  state               :string(255)
+#  street1             :string(255)
+#  street2             :string(255)
+#  summary             :text(65535)
+#  tax_exempt          :boolean          default(FALSE), not null
+#  transaction_fee     :decimal(5, 2)    default(0.0), not null
+#  transaction_percent :decimal(5, 2)    default(0.0), not null
+#  website             :string(255)
+#  zip                 :string(255)
+#  created_at          :datetime
+#  updated_at          :datetime
+#  tax_id              :string(255)
 #
 
 class Affiliate < ActiveRecord::Base
@@ -43,6 +49,7 @@ class Affiliate < ActiveRecord::Base
   has_many :categories, through: :affiliate_categories
   has_many :extra_properties, -> { order "sort, name" }, as: :extra_property
   has_many :users
+  has_many :comments, as: :commentable, dependent: :destroy
 
   validates_presence_of :name
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, unless: Proc.new { |a| a.email.blank? }
@@ -59,7 +66,6 @@ class Affiliate < ActiveRecord::Base
   def set_api_key
     self.api_key = SecureRandom.uuid if api_key.blank?
   end
-
 
   def address_as_text(opts = {})
     delim = opts[:delimiter] || "\n"

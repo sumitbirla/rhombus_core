@@ -3,29 +3,31 @@
 # Table name: core_users
 #
 #  id               :integer          not null, primary key
-#  domain_id        :integer          not null
-#  affiliate_id     :integer
-#  role_id          :integer          not null
-#  email            :string(255)      not null
-#  password_digest  :string(255)
-#  name             :string(255)      not null
-#  phone            :string(255)
+#  approved         :boolean          default(FALSE), not null
+#  avatar_url       :string(255)
 #  birth_date       :date
+#  email            :string(255)      not null
+#  extension        :string(255)
 #  gender           :string(255)
-#  time_zone        :string(255)
 #  locale           :string(255)
 #  location         :string(255)
-#  avatar_url       :string(255)
+#  name             :string(255)      not null
+#  password_digest  :string(255)
+#  phone            :string(255)
 #  pin              :string(255)
-#  referred_by      :integer
-#  referral_key     :string(255)
 #  referral_clicks  :integer          default(0), not null
+#  referral_key     :string(255)
 #  referral_signups :integer          default(0), not null
-#  approved         :boolean          default(FALSE), not null
-#  vip              :boolean          default(FALSE), not null
+#  referred_by      :integer
 #  status           :string(16)
+#  time_zone        :string(255)
+#  vip              :boolean          default(FALSE), not null
 #  created_at       :datetime
 #  updated_at       :datetime
+#  affiliate_id     :integer
+#  domain_id        :integer          not null
+#  external_id      :string(255)
+#  role_id          :integer          not null
 #
 
 require 'bcrypt'

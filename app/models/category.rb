@@ -3,19 +3,19 @@
 # Table name: core_categories
 #
 #  id          :integer          not null, primary key
-#  name        :string(255)      not null
-#  entity_type :string(255)      default(""), not null
-#  parent_id   :integer
-#  hidden      :boolean          default(FALSE), not null
-#  featured    :boolean          default(FALSE), not null
 #  code        :string(255)
-#  slug        :string(255)      not null
-#  sort        :integer          default(0), not null
 #  desc1       :text(65535)
 #  desc2       :text(65535)
+#  entity_type :string(255)      default(""), not null
+#  featured    :boolean          default(FALSE), not null
+#  hidden      :boolean          default(FALSE), not null
 #  image_path  :string(255)
+#  name        :string(255)      not null
+#  slug        :string(255)      default("")
+#  sort        :integer          default(0), not null
 #  created_at  :datetime
 #  updated_at  :datetime
+#  parent_id   :integer
 #
 
 class Category < ActiveRecord::Base

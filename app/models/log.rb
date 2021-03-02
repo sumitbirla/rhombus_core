@@ -3,15 +3,16 @@
 # Table name: core_logs
 #
 #  id            :integer          not null, primary key
-#  timestamp     :datetime         not null
-#  loggable_type :string(255)      not null
-#  loggable_id   :string(32)
-#  user_id       :integer
-#  ip_address    :string(255)      not null
-#  event         :string(255)      not null
 #  data1         :string(255)
 #  data2         :string(255)
 #  data3         :string(255)
+#  event         :string(255)      not null
+#  ip_address    :string(255)      not null
+#  json_data     :json
+#  loggable_type :string(255)      not null
+#  timestamp     :datetime         not null
+#  loggable_id   :string(32)
+#  user_id       :integer
 #
 
 class Log < ActiveRecord::Base
