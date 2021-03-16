@@ -5,6 +5,7 @@
 
   <%= f.association :event_type%>
   <%= f.input :expires, as: :datetimepicker %>
+  <%= f.input :processed_at, as: :datetimepicker %>
   <%= f.input :json_data %>
 
   <%= button_tag "Save changes", :class => "btn btn-primary",

@@ -65,7 +65,11 @@ Rails.application.routes.draw do
       resources :logs
       resources :notifications
       resources :notification_subscriptions
-      resources :events
+      resources :events do
+        member do
+          get 'resend'
+        end
+      end
       resources :event_types
       resources :categories
       resources :search_paths

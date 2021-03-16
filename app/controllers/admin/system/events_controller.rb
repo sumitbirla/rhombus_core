@@ -1,5 +1,4 @@
 class Admin::System::EventsController < Admin::BaseController
-
   def index
     authorize Event.new
     @events = Event.includes(:event_type)
@@ -46,11 +45,16 @@ class Admin::System::EventsController < Admin::BaseController
     redirect_to action: 'index', notice: 'Event has been deleted.'
   end
 
+  def resend
+    @event = Event.find(params[:id])
+    @event.update_column(:processed_at, nil)
+    flash[:info] = "Event has been re-dispatched."
+    redirect_back(fallback_location: admin_system_events_path)
+  end
 
   private
 
   def event_params
     params.require(:event).permit!
   end
-
 end

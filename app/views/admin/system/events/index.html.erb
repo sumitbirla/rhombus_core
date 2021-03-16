@@ -41,6 +41,7 @@
                       method: :delete,
                       data: {confirm: "Are you sure?"} %>
         <% else %>
+          <%= link_to "resend", resend_admin_system_event_path(e) %> &nbsp;
           <%= link_to "view", admin_system_event_path(e) %>
         <% end  %>
       </td>
