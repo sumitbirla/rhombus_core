@@ -26,8 +26,9 @@ class ApplicationController < ActionController::Base
     @timezone ||= Cache.setting(Rails.configuration.domain_id, :system, 'Time Zone')
   end
 
-  def systime(time)
-    time.in_time_zone(sys_time_zone).strftime("%Y-%b-%d &middot; %l:%M %p %Z").html_safe
+  def systime(time, opts = {})
+    opts[:separator] ||= "&middot;"
+    time.in_time_zone(sys_time_zone).strftime("%Y-%b-%d #{opts[:separator]} %l:%M %p %Z").html_safe
   end
 
   def sysdate(time)
