@@ -1,5 +1,4 @@
 class SessionsController < ApplicationController
-  force_ssl only: :new if Rails.env.production?
   layout 'single_column'
 
   def new

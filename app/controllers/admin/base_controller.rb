@@ -3,13 +3,11 @@ require "pundit"
 
 class Admin::BaseController < ActionController::Base
   include Pundit
-  force_ssl if Rails.env.production?
-
   protect_from_forgery
   layout 'admin/layouts/admin'
+
   before_action :require_login
   before_action :set_page_size
-
   helper_method :current_domain
   helper_method :current_user
   helper_method :systime
@@ -26,9 +24,7 @@ class Admin::BaseController < ActionController::Base
     render 'admin/shared/database_error'
   end
 
-
   private
-
 
   def require_login
     # bypass login requrements if digest parameter is passed, works only when params[:id] is present
@@ -92,5 +88,4 @@ class Admin::BaseController < ActionController::Base
       redirect_to opts.merge!(action: :index)
     end
   end
-
 end

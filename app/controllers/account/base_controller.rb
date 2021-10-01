@@ -1,6 +1,4 @@
 class Account::BaseController < ApplicationController
-  force_ssl if Rails.env.production?
-
   before_action :require_login
   before_action :set_page_size
   helper_method :current_user
