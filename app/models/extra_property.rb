@@ -19,4 +19,8 @@ class ExtraProperty < ActiveRecord::Base
   def is_empty?
     name.blank? && value.blank?
   end
+
+  def to_s
+    value
+  end
 end
