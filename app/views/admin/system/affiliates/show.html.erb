@@ -133,6 +133,10 @@
         <span class="label label-info">EDI</span> &nbsp;
       <% end %>
 
+      <% if @affiliate.tracks_inventory %>
+        <span class="label label-success">Tracks Inventory</span>
+      <% end %>
+
       <% if @affiliate.requires_approval %>
         <span class="label label-danger">Requires Approval</span> &nbsp;
       <% end %>
