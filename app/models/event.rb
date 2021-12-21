@@ -15,6 +15,8 @@
 class Event < ApplicationRecord
   self.table_name = 'core_events'
   belongs_to :event_type
+  belongs_to :affiliate
+  belongs_to :user
 
   # Create a system event with specified parameters. This is saved to 'core_events' table.
   #
