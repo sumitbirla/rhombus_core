@@ -18,7 +18,7 @@
     <%= f.association :domain %>
     <%= f.association :role %>
     <%= f.input :tag_list, as: :tags %>
-    <%= f.association :affiliate, collection: Affiliate.where(active: true).order(:name) %>
+    <%= f.association :affiliate, collection: Affiliate.where(active: true).order(:name), input_html: { class: 'chosen-select' } %>
     <%= f.input :email %>
     <%= f.input :phone %>
     <%= f.input :birth_date, as: :datepicker %>
@@ -83,4 +83,9 @@ end %>
         });
     </script>
   <% end %>
+  <script>
+    $(document).ready(function() {
+      $(".chosen-select").chosen({disable_search_threshold: 10});
+    });
+  </script>
 <% end %>
