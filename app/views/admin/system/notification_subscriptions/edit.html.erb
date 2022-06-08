@@ -4,7 +4,7 @@
   <%= render 'admin/shared/error_messages', object: f.object %>
   <%= hidden_field_tag :ret, params[:ret] %>
 
-  <%= f.association :user %>
+  <%= f.association :user, input_html: { class: 'chosen-select' } %>
   <%= f.association :event_type%>
   <%= f.input :email %>
   <%= f.input :sms %>
@@ -24,4 +24,12 @@
   <li><a href="#">System</a></li>
   <li><%= link_to "Notifications", admin_system_notifications_path %></li>
   <li class="active">New Notification Subscription</li>
+<% end %>
+
+<% content_for :head do %>
+    <script>
+      $(document).ready(function() {
+        $(".chosen-select").chosen({disable_search_threshold: 10});
+      });
+    </script>
 <% end %>
