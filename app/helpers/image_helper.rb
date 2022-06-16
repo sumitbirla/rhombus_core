@@ -1,11 +1,9 @@
 module ImageHelper
-
   def base_url
     @base_path ||= Cache.setting(Rails.configuration.domain_id, :system, 'Static Files Url')
   end
 
   def cdn_image_url(pic, width, height, mode)
-
     if pic.blank?
       path = '/images/no-image.png'
     elsif pic.kind_of? String
@@ -25,10 +23,8 @@ module ImageHelper
     base_url + path
   end
 
-
   def gravatar_url(email, size)
     gravatar = Digest::MD5::hexdigest(email).downcase
     url = "http://gravatar.com/avatar/#{gravatar}.png?s=#{size}&d=mp"
   end
-
 end

@@ -1,5 +1,4 @@
 module Cache
-
   def self.domains
     Rails.cache.fetch(:domains) do
       Domain.order(:name).all.load
@@ -70,5 +69,4 @@ module Cache
       Category.select("id, name, slug, image_path").where(entity_type: entity_type, parent_id: parent_id, hidden: false).order(sort_by).load
     end
   end
-
 end

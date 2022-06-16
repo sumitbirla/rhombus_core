@@ -1,5 +1,4 @@
 module HtmlHelper
-
   def tick(obj)
     if obj
       str = "&#10004;"
@@ -192,5 +191,4 @@ module HtmlHelper
     @base_path ||= Cache.setting(Rails.configuration.domain_id, :system, 'Static Files Url')
     @base_path + path
   end
-
 end
