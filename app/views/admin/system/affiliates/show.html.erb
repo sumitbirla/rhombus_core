@@ -9,7 +9,11 @@
 
 <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 12px;">
   <li role="presentation" class="<%= "active" if params[:q].blank? %>">
-    <a href="<%= admin_system_affiliate_path(@affiliate) %>" role="tab">Summary</a></li>
+    <a href="<%= admin_system_affiliate_path(@affiliate) %>" role="tab">Summary</a>
+  </li>
+  <li role="presentation" class="<%= "active" if params[:q] == "users" %>">
+    <a href="<%= admin_system_affiliate_path(@affiliate, q: "users") %>" role="tab"><%= tab_count('Users', @affiliate.users.count) %></a>
+  </li>
   <% if mods.include? :marketing %>
     <% campaign_count = AffiliateCampaign.where(affiliate_id: @affiliate.id).count %>
     <li role="presentation" class="<%= "active" if params[:q] == "campaigns" %>">
@@ -50,9 +54,6 @@
     </li>
     <li role="presentation" class="<%= "active" if params[:q] == "billing_arrangements" %>">
       <a href="<%= admin_system_affiliate_path(@affiliate, q: "billing_arrangements") %>" role="tab"><%= tab_count('Billing Arrangements', ba_count) %></a>
-    </li>
-    <li role="presentation" class="<%= "active" if params[:q] == "users" %>">
-      <a href="<%= admin_system_affiliate_path(@affiliate, q: "users") %>" role="tab"><%= tab_count('Users', @affiliate.users.count) %></a>
     </li>
   <% end %>
 </ul>
