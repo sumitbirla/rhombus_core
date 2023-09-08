@@ -1,7 +1,9 @@
 class Admin::System::CategoriesController < Admin::BaseController
 
   def index
-    @categories = Category.select("id, name, code, parent_id, slug, sort, hidden").where(entity_type: params[:type]).order(:sort)
+    @categories = Category.select("id, name, code, parent_id, slug, sort, hidden")
+                          .where(entity_type: params[:type])
+                          .order(:sort)
   end
 
   def new

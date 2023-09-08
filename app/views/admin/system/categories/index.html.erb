@@ -43,7 +43,7 @@
     <% children.each do |child| %>
       <tr class="child">
         <td></td>
-        <td> - <%= child.name %></td>
+        <td> &#8627; <%= child.name %></td>
         <td><%= child.code.presence || '-' %></td>
         <td><%= child.slug %></td>
         <td><%= raw tick !child.hidden %></td>
@@ -56,6 +56,25 @@
 
         </td>
       </tr>
+
+      <% grandchildren = @categories.select { |c| c.parent_id == child.id } %>
+      <% grandchildren.each do |gchild| %>
+        <tr class="child">
+          <td></td>
+          <td> &nbsp; &nbsp; &nbsp; &#8627; <%= gchild.name %></td>
+          <td><%= gchild.code.presence || '-' %></td>
+          <td><%= gchild.slug %></td>
+          <td><%= raw tick !gchild.hidden %></td>
+          <td class="actions">
+            <%= link_to "edit", edit_admin_system_category_path(gchild) %> &nbsp;
+            <%= link_to "delete",
+                        {action: "destroy", id: gchild.id},
+                        method: :delete,
+                        data: {confirm: "Are you sure?"} %>
+
+          </td>
+        </tr>
+      <% end %>
     <% end %>
   <% end %>
 </table>
