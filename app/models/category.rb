@@ -38,7 +38,7 @@ class Category < ActiveRecord::Base
   def level
     return 1 if parent_id.nil?
     return 2 if parent.parent_id.nil?
-    return 3 if parent.parent.parant_id.nil?
+    return 3 if parent.parent.parent_id.nil?
     raise "Level greater than 3 is unexpected."
   end
 end
