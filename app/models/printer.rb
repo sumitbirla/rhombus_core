@@ -72,7 +72,7 @@ class Printer < ActiveRecord::Base
     output_file = "/tmp/#{SecureRandom.hex(6)}.pdf"
     ret = system("wkhtmltopdf --load-error-handling ignore -q -s Letter #{urls.join(" ")} #{output_file}")
 
-    throw "Unable to generate PDF" unless File.exists?(output_file)
+    throw "Unable to generate PDF" unless File.exist?(output_file)
 
     uri = URI(url)
 
