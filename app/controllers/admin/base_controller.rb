@@ -2,7 +2,7 @@ require "digest/md5"
 require "pundit"
 
 class Admin::BaseController < ActionController::Base
-  include Pundit
+  include Pundit::Authorization
   protect_from_forgery
   layout 'admin/layouts/admin'
 

@@ -1,37 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<head>
+    <title><%= Cache.setting('System', 'Website Name') %> Login</title>
+    <link href="<%= cdn_url "/rhombus/sb-admin-2/css/bootstrap.min.css" %>" rel="stylesheet">
+    <link href="<%= cdn_url "/rhombus/sb-admin-2/css/sb-admin-2.css" %>" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
 
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="<%= cdn_url "/rhombus/sb-admin-2/js/bootstrap.min.js" %>"></script>
+    <script src="<%= cdn_url "/rhombus/sb-admin-2/js/sb-admin-2.js" %>"></script>
+    <script src="<%= cdn_url "/js/rails.js" %>"></script>
+    <%= yield :head %>
+  </head>
 
-  <title><%= Cache.setting('System', 'Website Name') %> Login</title>
-
-  <link href="<%= cdn_url "/rhombus/sb-admin-2/css/bootstrap.min.css" %>" rel="stylesheet">
-  <link href="<%= cdn_url "/rhombus/sb-admin-2/css/sb-admin-2.css" %>" rel="stylesheet">
-  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
-
-  <script src="<%= cdn_url "/rhombus/sb-admin-2/js/jquery-1.11.0.js" %>"></script>
-  <script src="<%= cdn_url "/rhombus/sb-admin-2/js/bootstrap.min.js" %>"></script>
-  <script src="<%= cdn_url "/rhombus/sb-admin-2/js/sb-admin-2.js" %>"></script>
-  <script src="<%= cdn_url "/js/rails.js" %>"></script>
-
-</head>
-
-<body>
-
-<div class="container">
-  <div class="row">
-    <div class="col-md-4 col-md-offset-4">
-      <%= yield %>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+          <%= yield %>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-
-</body>
-
+  </body>
 </html>

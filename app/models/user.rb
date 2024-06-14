@@ -39,6 +39,7 @@ class User < ActiveRecord::Base
 
   attr_accessor :password, :password_confirmation, :current_password
 
+  has_many :webauthn_credentials, dependent: :destroy
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :extra_properties, -> { order "sort, name" }, as: :extra_property, dependent: :destroy
   has_many :logs, dependent: :destroy

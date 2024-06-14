@@ -1,6 +1,5 @@
 <%= render 'admin/shared/error_messages', object: nil %>
 
-
 <div class="login-panel panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">Please Sign In</h3>
@@ -15,17 +14,71 @@
         <div class="form-group">
           <%= password_field_tag :password, nil, :placeholder => "Password", :class => "form-control" %>
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
           <%= check_box_tag :remember_me %>
           <%= label_tag(:remember_me, "remember me on this device") %>
-        </div>
-        <%= button_tag "Sign in", :class => "btn btn-success btn-block", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Logging in ..."} %>
+        </div> -->
+        <%= button_tag "Sign in with Password", :class => "btn btn-success btn-block", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Logging in ..."} %>
+        <hr style="margin-bottom: 0">
+        <p class="text-center">- or -</p>
+        <%= link_to "#", id: "passkey-login", :class => "btn btn-block", :style => "background-color: #444; color: #fff", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Logging in ..."} do %>
+          <i class="fa fa-key"></i> Login with Passkey
+      <% end %>
       </fieldset>
     <% end %>
-
   </div>
 </div>
 
-
-
 <div class="pull-right"><%= link_to "Forgot password?", admin_password_reset_path %></div>
+
+<form id="form-passkey-login" action="/admin/passkey_login" method="post">
+  <input type="hidden" id="id" name="id"/>
+  <input type="hidden" id="authenticatorData" name="authenticatorData"/>
+  <input type="hidden" id="clientDataJSON" name="clientDataJSON"/>
+  <input type="hidden" id="signature" name="signature"/>
+  <input type="hidden" id="userHandle" name="userHandle"/>
+</form>
+
+<% content_for :head do %>
+  <script type="module">
+      function arrayBufferToBase64(buffer) {
+          let binary = '';
+          const bytes = new Uint8Array(buffer);
+          const len = bytes.byteLength;
+          for (let i = 0; i < len; i++) {
+              binary += String.fromCharCode(bytes[i]);
+          }
+          return window.btoa(binary);
+      }
+
+      $(document).ready(function() {
+          $('#passkey-login').click(async function(){
+              const publicKeyCredentialRequestOptions = {
+                  challenge: Uint8Array.from(
+                      "<%= session[:challenge] %>", c => c.charCodeAt(0)),
+                  timeout: 6000,
+                  rpId: "<%= Rails.configuration.webauthn_rpid %>",
+                  userVerification: "preferred",
+                  allowCredentials: [],
+                  extensions: []
+              }
+
+              var assertion;
+              try {
+                  assertion = await navigator.credentials.get({
+                      publicKey: publicKeyCredentialRequestOptions
+                  });
+              } catch (err) {
+                  location.reload();
+              }
+
+              $("#id").val(assertion.id);
+              $("#authenticatorData").val(arrayBufferToBase64(assertion.response.authenticatorData));
+              $("#clientDataJSON").val(arrayBufferToBase64(assertion.response.clientDataJSON));
+              $("#signature").val(arrayBufferToBase64(assertion.response.signature));
+              $("#userHandle").val(arrayBufferToBase64(assertion.response.userHandle));
+              $("#form-passkey-login").submit();
+          });
+      });
+  </script>
+<% end %>

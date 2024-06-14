@@ -16,6 +16,9 @@
     <% if current_user.has_permission?('NotificationSubscription', 'index') %>
       <li><%= link_to "Notification Subscriptions", admin_system_notification_subscriptions_path(type: :session) %></li>
     <% end %>
+    <% if current_user.has_permission?('Passkey', 'index') %>
+      <li><%= link_to "Passkeys", admin_system_webauthn_credentials_path %></li>
+    <% end %>
     <% if current_user.has_permission?('Printer', 'index') %>
       <li><%= link_to "Printers", admin_system_printers_path %></li>
     <% end %>

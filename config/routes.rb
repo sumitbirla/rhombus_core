@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   resources :sessions
   resources :users do 
     member do 
@@ -24,26 +23,26 @@ Rails.application.routes.draw do
     patch 'profile/edit' => 'profile#update'
     resources :affiliate
 		resources :logs
+    resources :passkeys
   end
   
   namespace :admin do
-    
     resources :sessions
+    post 'passkey_login' => 'sessions#passkey_login'
     
     root 'dashboard#index'
-    
     get 'dashboard' => 'dashboard#index'
     get 'clear_cache' => 'dashboard#clear_cache'
     get 'login' => 'sessions#new'
     get 'logout' => 'sessions#destroy'
     get 'password_reset' => 'system/users#password_reset'
     get 'users/random' => 'system/users#random'
-
     get 'search' => 'search#index'
-    
+
     namespace :system do
       post 'printers/print_url' => 'printers#print_url'
-      
+      resources :webauthn_credentials
+
       resources :users do
         member do
           get 'logins' => 'users#show'
@@ -82,7 +81,5 @@ Rails.application.routes.draw do
         end
       end
     end
-    
   end
-  
 end
