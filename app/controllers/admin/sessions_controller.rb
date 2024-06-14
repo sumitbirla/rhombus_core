@@ -58,7 +58,7 @@ class Admin::SessionsController < Admin::BaseController
       flags = authenticator_data[32].unpack1("C")
       sign_count = authenticator_data[33..36].unpack1("N")
 
-      expected_rp_id_hash = OpenSSL::Digest::SHA256.digest("localhost")
+      expected_rp_id_hash = OpenSSL::Digest::SHA256.digest(Rails.configuration.webauthn_rpid)
       raise "RP ID hash mismatch" unless rp_id_hash == expected_rp_id_hash
       raise "User not present" unless flags & 0x01 != 0
 
