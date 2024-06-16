@@ -70,6 +70,12 @@ class Admin::SessionsController < Admin::BaseController
                                .first
       raise "Matching Passkey not found!" if cred.nil?
 
+      # Update the sign_count if needed
+      if sign_count > cred.sign_count
+        cred.sign_count = sign_count
+        cred.save!
+      end
+
       # Decode the COSE key
       key = COSE::Key.deserialize(cred.public_key_cbor)
       openssl_pkey = key.to_pkey

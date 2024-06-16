@@ -1,0 +1,32 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/account">Home</a></li>
+    <li class="breadcrumb-item"><a href="/account/passkeys">Passkeys</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Edit</li>
+  </ol>
+</nav>
+
+<div class="container-fluid pl-sm-5 pr-sm-5">
+  <h2><i class="fa fa-key"></i> Edit Passkey</h2>
+  <hr/>
+
+
+  <%= simple_form_for [:account, @webauthn_credential] do |f| %>
+    <table class="table table-bordered table-condensed summary">
+      <%= obj_property @webauthn_credential, :credential_id %>
+      <%= obj_property @webauthn_credential, :rp_id %>
+      <%= obj_property @webauthn_credential, :created_at %>
+      <%= obj_property @webauthn_credential, :updated_at %>
+      <%= obj_property @webauthn_credential, :last_used %>
+    </table>
+
+    <%= render 'admin/shared/error_messages', object: f.object %>
+    <%= f.input :nickname %>
+    <%= button_tag "Save changes", class: "btn btn-primary", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait ...".html_safe} %>
+  <% end %>
+</div>
+
+
+<% content_for :title do %>
+  Edit Passkey
+<% end %>

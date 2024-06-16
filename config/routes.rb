@@ -23,7 +23,7 @@ Rails.application.routes.draw do
     patch 'profile/edit' => 'profile#update'
     resources :affiliate
 		resources :logs
-    resources :passkeys
+    resources :webauthn_credentials
   end
   
   namespace :admin do

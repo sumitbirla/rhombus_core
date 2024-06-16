@@ -1,11 +1,12 @@
 require 'cbor'
 require 'base64'
 
-class Account::PasskeysController < Account::BaseController
+class Account::WebauthnCredentialsController < Account::BaseController
   skip_before_action :verify_authenticity_token
 
   def index
     @credentials = WebauthnCredential.where(user_id: session[:user_id])
+                                     .order(created_at: :desc)
 
     # Set a webauthn user_handle in case one isn't already set
     if current_user.webauthn_user_handle.nil?
@@ -40,6 +41,19 @@ class Account::PasskeysController < Account::BaseController
     render plain: "Created", status: :ok
   end
 
+  def edit
+    @webauthn_credential = WebauthnCredential.find_by(id: params[:id], user_id: current_user.id)
+  end
+
+  def update
+    @webauthn_credential = WebauthnCredential.find_by(id: params[:id], user_id: current_user.id)
+    if @webauthn_credential.update(webauthn_credential_params)
+      return redirect_to action: :index
+    end
+
+    render 'edit'
+  end
+
   def destroy
     cred = WebauthnCredential.find_by(id: params[:id], user_id: session[:user_id])
     cred.destroy!
@@ -49,6 +63,9 @@ class Account::PasskeysController < Account::BaseController
 
 
   private
+  def webauthn_credential_params
+    params.require(:webauthn_credential).permit(:nickname)
+  end
 
   def parse_auth_data(auth_data)
     rp_id_hash = auth_data[0, 32]
