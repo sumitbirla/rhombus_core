@@ -33,8 +33,6 @@ class Account::WebauthnCredentialsController < Account::BaseController
     attestation_data = CBOR.decode(Base64.decode64(params[:attestationObject]))
     auth_data = parse_auth_data(attestation_data["authData"])
 
-    ap auth_data
-
     WebauthnCredential.create!(user_id: session[:user_id],
                                credential_id: params[:credential_id],
                                user_present: auth_data[:flags][:user_present],
