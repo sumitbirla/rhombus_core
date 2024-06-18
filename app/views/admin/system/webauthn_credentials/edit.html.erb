@@ -3,14 +3,20 @@
 
 <%
   public_key = CBOR.decode(@webauthn_credential.public_key_cbor)
+  extension_data = CBOR.decode(@webauthn_credential.extension_data_cbor) unless @webauthn_credential.extension_data_cbor.nil?
 %>
 
-<%= simple_form_for [:admin, :system, @webauthn_credential] do |f| %>
+<%= simple_form_for [:admin, :system, @webauthn_credential], html: { class: "col-md-6"} do |f| %>
   <table class="table table-bordered table-condensed summary">
-    <%= obj_property @webauthn_credential, :credential_id %>
     <%= obj_property(@webauthn_credential, :user) { |x| link_to x.name, admin_system_user_path(x.id) } %>
+    <%= obj_property @webauthn_credential, :authenticator_type %>
+    <%= obj_property @webauthn_credential, :credential_id %>
     <%= obj_property @webauthn_credential, :rp_id %>
+    <%= obj_property @webauthn_credential, :user_present %>
+    <%= obj_property @webauthn_credential, :user_verified %>
+    <%= obj_property @webauthn_credential, :sign_count %>
     <%= obj_property(@webauthn_credential, :public_key_cbor) { public_key } %>
+    <%= obj_property(@webauthn_credential, :extension_data_cbor) { extension_data } %>
     <%= obj_property @webauthn_credential, :created_at %>
     <%= obj_property @webauthn_credential, :updated_at %>
     <%= obj_property @webauthn_credential, :last_used %>

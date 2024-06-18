@@ -6,6 +6,7 @@ class Account::WebauthnCredentialsController < Account::BaseController
 
   def index
     @credentials = WebauthnCredential.where(user_id: session[:user_id])
+                                     .includes(:authenticator_type)
                                      .order(created_at: :desc)
 
     # Set a webauthn user_handle in case one isn't already set

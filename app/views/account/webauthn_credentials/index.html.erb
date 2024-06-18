@@ -18,7 +18,7 @@
     <% @credentials.each do |cred| %>
       <tr id="<%= cred.id %>">
         <td>
-          <%= cred.nickname || "Name not set" %> &nbsp;
+          <%= cred.nickname || cred.authenticator_type %> &nbsp;
           <%= link_to "<i class='fa fa-edit'></i>".html_safe, edit_account_webauthn_credential_path(cred) %><br>
           <small class="text-muted"><%= cred.credential_id %></small>
         </td>
