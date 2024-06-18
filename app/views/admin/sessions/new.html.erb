@@ -55,7 +55,7 @@
           $('#passkey-login').click(async function(){
               const publicKeyCredentialRequestOptions = {
                   challenge: Uint8Array.from(
-                      "<%= session[:challenge] %>", c => c.charCodeAt(0)),
+                      "<%= session[:authentication_challenge] %>", c => c.charCodeAt(0)),
                   timeout: 6000,
                   rpId: "<%= Rails.configuration.webauthn_rpid %>",
                   userVerification: "preferred",

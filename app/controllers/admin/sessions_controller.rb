@@ -12,7 +12,7 @@ class Admin::SessionsController < Admin::BaseController
 
   def new
     @challenge = SecureRandom.base64(32)
-    session[:challenge] = @challenge  # Passkey challenge for verification in create action
+    session[:authentication_challenge] = @challenge  # Passkey challenge for verification in create action
   end
 
   def create
@@ -43,13 +43,12 @@ class Admin::SessionsController < Admin::BaseController
       authenticator_data = Base64.decode64(params[:authenticatorData])
       signature = Base64.decode64(params[:signature])
       credential_id = Base64.decode64(params[:id])
-
       client_data = JSON.parse(client_data_json)
 
       # First check that the type is "webauthn.create" and the challenge matches
       if client_data["type"] != "webauthn.get"
         raise "Passkey operation type is not webauthn.get"
-      elsif Base64.decode64(client_data["challenge"]) != session[:challenge]
+      elsif Base64.decode64(client_data["challenge"]) != session[:authentication_challenge]
         raise "Passkey challenge does not match"
       end
 
@@ -87,6 +86,7 @@ class Admin::SessionsController < Admin::BaseController
       is_valid = openssl_pkey.dsa_verify_asn1(OpenSSL::Digest::SHA256.digest(verification_data), signature)
       raise "Signature verification failed" unless is_valid
     rescue => e
+      Rails.logger.error e.message + e.backtrace.join("\n")
       flash[:error] = e.message
       return redirect_back(fallback_location: admin_login_path)
     end

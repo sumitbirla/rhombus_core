@@ -58,7 +58,7 @@
   <script type="module">
       const publicKeyCredentialCreationOptions = {
           challenge: Uint8Array.from(
-            "<%= session[:challenge] %>", c => c.charCodeAt(0)),
+            "<%= session[:creation_challenge] %>", c => c.charCodeAt(0)),
           rp: {
               name: "<%= Rails.configuration.website_name %>",
               id: "<%= Rails.configuration.webauthn_rpid %>",
