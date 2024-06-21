@@ -70,8 +70,8 @@
               displayName: "<%= current_user.name %>",
           },
           pubKeyCredParams: [
-              {alg: -7, type: "public-key"},
-              {alg: -257, type: "public-key"}
+              {alg: -7, type: "public-key"},    // ES256
+              {alg: -257, type: "public-key"}   // RS256
           ],
           authenticatorSelection: {
               "residentKey": "required",
